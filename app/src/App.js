@@ -1,21 +1,18 @@
 import * as React from 'react'
-import Container from '@mui/material/Container'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
 import Header from './components/Header'
+import Main from './pages/Main'
 
 function App() {
   return (
-    <>
+    <div
+      style={{
+        background: 'linear-gradient(45deg, black, transparent)',
+        minHeight: '100vh',
+      }}
+    >
       <Header />
-      <Container>
-        <Box sx={{ my: 4 }}>
-          <Typography variant='h4' component='h1' gutterBottom>
-            NFT Marketplace
-          </Typography>
-        </Box>
-      </Container>
-    </>
+      <Main />
+    </div>
   )
 }
 
