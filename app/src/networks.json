@@ -1,0 +1,17 @@
+{
+  "80001": {
+    "name": "Mumbai",
+    "image": "https://mumbai.polygonscan.com/images/svg/brands/poly.png?v=1.3",
+    "params": {
+      "chainId": "0x13881",
+      "chainName": "Mumbai",
+      "nativeCurrency": {
+        "name": "MATIC",
+        "symbol": "MATIC",
+        "decimals": 18
+      },
+      "rpcUrls": ["https://endpoints.omniatech.io/v1/matic/mumbai/public/"],
+      "blockExplorerUrls": ["https://mumbai.polygonscan.com/"]
+    }
+  }
+}
