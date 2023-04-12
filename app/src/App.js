@@ -19,7 +19,7 @@ function App() {
       <Header />
       <Routes>
         <Route exact path='/' element={<Main />} />
-        <Route path='/marketplace' element={<Marketplace />} />
+        <Route path='/marketplace/*' element={<Marketplace />} />
         <Route path='*' element={<Main />} />
       </Routes>
       <Footer />
