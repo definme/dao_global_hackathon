@@ -1,0 +1,16 @@
+{
+  "name": "Transport 4",
+  "image": "https://ether-luxe.definme.com/images/transport4.png",
+  "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad aut cupiditate earum eius error fuga hic id impedit ipsa iste itaque nisi quae quo recusandae sed sunt veniam, vero.",
+  "attributes": [
+    {
+      "trait_type": "Type",
+      "value": "Transport"
+    },
+    {
+      "trait_type": "Level",
+      "value": 1,
+      "max_value": 10
+    }
+  ]
+}
