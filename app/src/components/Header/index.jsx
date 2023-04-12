@@ -17,6 +17,7 @@ function Header() {
   const [currentLocation, setCurrentLocation] = useState({
     home: false,
     marketplace: false,
+    profile: false,
   })
 
   useEffect(() => {
@@ -24,11 +25,19 @@ function Header() {
       setCurrentLocation({
         home: false,
         marketplace: true,
+        profile: false,
+      })
+    } else if (location.pathname.includes('/profile')) {
+      setCurrentLocation({
+        home: false,
+        marketplace: false,
+        profile: true,
       })
     } else {
       setCurrentLocation({
         home: true,
         marketplace: false,
+        profile: false,
       })
     }
   }, [location])
@@ -47,6 +56,12 @@ function Header() {
               to='/marketplace'
             >
               Marketplace
+            </MenuLink>
+            <MenuLink
+              current={currentLocation.profile.toString()}
+              to='/profile'
+            >
+              Profile
             </MenuLink>
           </MenuContainer>
           {userAddress ? (
