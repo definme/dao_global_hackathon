@@ -20,7 +20,7 @@ function Header() {
   })
 
   useEffect(() => {
-    if (location.pathname === '/marketplace') {
+    if (location.pathname.includes('/marketplace')) {
       setCurrentLocation({
         home: false,
         marketplace: true,
