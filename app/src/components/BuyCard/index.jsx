@@ -40,7 +40,7 @@ function BuyCard({ title, description, price, image }) {
           {description}
         </Typography>
         <Typography gutterBottom color='white'>
-          Price: {price}
+          Price: {price} MATIC
         </Typography>
         <Button
           variant='contained'
