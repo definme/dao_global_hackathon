@@ -44,4 +44,14 @@ export const MenuLink = styled(Link)`
 export const MenuContainer = styled.div`
   display: flex;
   gap: 8px;
+  flex-grow: 1;
+  margin-left: 100px;
+`
+
+export const LogoLink = styled(Link)`
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: 500;
 `

@@ -3,15 +3,15 @@ import { useLocation } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import ChainIndicator from '../ChainIndicator'
 import { ConnectionContext } from '../../contexts/ConnectionContext'
 import { shortenAddress } from '../../utils'
-import { MenuLink, MenuContainer } from './Header.styled'
+import { MenuLink, MenuContainer, LogoLink } from './Header.styled'
 
 function Header() {
-  const { userAddress, chainId, connectWallet } = useContext(ConnectionContext)
+  const { userAddress, chainId, connectWallet, balance } =
+    useContext(ConnectionContext)
   const location = useLocation()
 
   const [currentLocation, setCurrentLocation] = useState({
@@ -37,9 +37,7 @@ function Header() {
     <Box>
       <AppBar position='static' sx={{ background: 'rgba(0, 0, 0, 0.8)' }}>
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Typography variant='h6' component='div'>
-            EtherLuxe
-          </Typography>
+          <LogoLink to='/'>EtherLuxe</LogoLink>
           <MenuContainer>
             <MenuLink current={currentLocation.home.toString()} to='/'>
               Home
@@ -60,6 +58,7 @@ function Header() {
                 gap: '10px',
               }}
             >
+              {Number(balance.toFixed(2))} MATIC
               <ChainIndicator chain={chainId} />
               {shortenAddress(userAddress)}
             </Box>

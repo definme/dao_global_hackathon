@@ -11,6 +11,7 @@ const ConnectionProvider = ({ children }) => {
     getUserAddress,
     connectWallet,
     switchNetwork,
+    balance,
   } = useConnection()
 
   return (
@@ -22,6 +23,7 @@ const ConnectionProvider = ({ children }) => {
         getUserAddress,
         connectWallet,
         switchNetwork,
+        balance,
       }}
     >
       {children}

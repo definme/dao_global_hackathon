@@ -6,11 +6,19 @@ import { APP_NETWORK } from '../constants'
 const useConnection = () => {
   const [userAddress, setUserAddress] = useState('')
   const [chainId, setChainId] = useState('')
+  const [balance, setBalance] = useState(0)
 
   function getChain() {
     window.ethereum
       .request({ method: 'eth_chainId' })
       .then(chain => setChainId(parseInt(chain, 16).toString()))
+      .catch(e => console.log(e))
+  }
+
+  function getBalance() {
+    window.ethereum
+      .request({ method: 'eth_getBalance', params: [userAddress, 'latest'] })
+      .then(res => setBalance(Number(utils.formatEther(res))))
       .catch(e => console.log(e))
   }
 
@@ -77,6 +85,7 @@ const useConnection = () => {
   useEffect(() => {
     if (userAddress) {
       getChain()
+      getBalance()
     }
   }, [userAddress])
 
@@ -100,6 +109,7 @@ const useConnection = () => {
     getUserAddress,
     connectWallet,
     switchNetwork,
+    balance,
   }
 }
 
