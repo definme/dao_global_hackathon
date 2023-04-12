@@ -5,6 +5,7 @@ import Footer from './components/Footer'
 import Box from '@mui/material/Box'
 import Main from './pages/Main'
 import Marketplace from './pages/Marketplace'
+import Profile from './pages/Profile'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <Routes>
         <Route exact path='/' element={<Main />} />
         <Route path='/marketplace/*' element={<Marketplace />} />
+        <Route path='/profile' element={<Profile />} />
         <Route path='*' element={<Main />} />
       </Routes>
       <Footer />
