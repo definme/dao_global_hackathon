@@ -1,8 +1,10 @@
 import * as React from 'react'
+import { Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Box from '@mui/material/Box'
 import Main from './pages/Main'
+import Marketplace from './pages/Marketplace'
 
 function App() {
   return (
@@ -15,7 +17,11 @@ function App() {
       }}
     >
       <Header />
-      <Main />
+      <Routes>
+        <Route exact path='/' element={<Main />} />
+        <Route path='/marketplace' element={<Marketplace />} />
+        <Route path='*' element={<Main />} />
+      </Routes>
       <Footer />
     </Box>
   )

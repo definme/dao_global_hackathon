@@ -1,7 +1,6 @@
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
-import BuyCard from '../../components/BuyCard'
 
 function Main() {
   return (
@@ -13,7 +12,7 @@ function Main() {
           gutterBottom
           sx={{ m: '40px auto 60px', textAlign: 'center', fontWeight: 700 }}
         >
-          EtherLuxe NFT Marketplace
+          EtherLuxe NFTxDAO
         </Typography>
         <Box
           sx={{
@@ -22,26 +21,24 @@ function Main() {
             flexWrap: 'wrap',
             gap: '20px',
             justifyContent: 'center',
+            mb: '40px',
           }}
         >
-          <BuyCard
-            title='Character'
-            description='Some Description'
-            price='100'
-            image={require('../../images/char.png')}
-          />
-          <BuyCard
-            title='Transport'
-            description='Some Description'
-            price='20'
-            image={require('../../images/bike.png')}
-          />
-          <BuyCard
-            title='Weapon'
-            description='Some Description'
-            price='20'
-            image={require('../../images/weapon.png')}
-          />
+          <Typography
+            variant='p'
+            component='p'
+            gutterBottom
+            sx={{ m: '10px', textAlign: 'center', fontWeight: 700 }}
+          >
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sequi non
+            magnam perspiciatis perferendis veniam nam, aut alias ab debitis
+            fugiat. Esse assumenda, aliquam eum quos ducimus perspiciatis
+            similique temporibus tempora! Lorem ipsum dolor sit amet consectetur
+            adipisicing elit. Delectus, repudiandae velit voluptatem iusto
+            magnam, repellat deserunt dolorum provident blanditiis quasi
+            laudantium. Vel, libero. Obcaecati minus ut corporis ipsa! Impedit,
+            laborum!
+          </Typography>
         </Box>
       </Box>
     </Container>
