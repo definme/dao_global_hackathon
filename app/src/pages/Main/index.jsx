@@ -5,7 +5,7 @@ import BuyCard from '../../components/BuyCard'
 
 function Main() {
   return (
-    <Container>
+    <Container sx={{ mb: '40px' }}>
       <Box>
         <Typography
           variant='h4'
