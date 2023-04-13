@@ -18,6 +18,7 @@ function Header() {
     home: false,
     marketplace: false,
     profile: false,
+    dao: false,
   })
 
   useEffect(() => {
@@ -26,18 +27,28 @@ function Header() {
         home: false,
         marketplace: true,
         profile: false,
+        dao: false,
       })
     } else if (location.pathname.includes('/profile')) {
       setCurrentLocation({
         home: false,
         marketplace: false,
         profile: true,
+        dao: false,
+      })
+    } else if (location.pathname.includes('/dao')) {
+      setCurrentLocation({
+        home: false,
+        marketplace: false,
+        profile: false,
+        dao: true,
       })
     } else {
       setCurrentLocation({
         home: true,
         marketplace: false,
         profile: false,
+        dao: false,
       })
     }
   }, [location])
@@ -62,6 +73,9 @@ function Header() {
               to='/profile'
             >
               Profile
+            </MenuLink>
+            <MenuLink current={currentLocation.dao.toString()} to='/dao'>
+              DAO
             </MenuLink>
           </MenuContainer>
           {userAddress ? (

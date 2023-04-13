@@ -6,6 +6,7 @@ import Box from '@mui/material/Box'
 import Main from './pages/Main'
 import Marketplace from './pages/Marketplace'
 import Profile from './pages/Profile'
+import DAO from './pages/DAO'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route exact path='/' element={<Main />} />
         <Route path='/marketplace/*' element={<Marketplace />} />
         <Route path='/profile' element={<Profile />} />
+        <Route path='/dao' element={<DAO />} />
         <Route path='*' element={<Main />} />
       </Routes>
       <Footer />
