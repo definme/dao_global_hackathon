@@ -1,5 +1,6 @@
 import React from 'react'
 import useConnection from '../hooks/useConnection'
+import useDAO from '../hooks/useDAO'
 
 export const ConnectionContext = React.createContext()
 
@@ -14,6 +15,8 @@ const ConnectionProvider = ({ children }) => {
     balance,
   } = useConnection()
 
+  const { dao } = useDAO(userAddress)
+
   return (
     <ConnectionContext.Provider
       value={{
@@ -24,6 +27,7 @@ const ConnectionProvider = ({ children }) => {
         connectWallet,
         switchNetwork,
         balance,
+        dao,
       }}
     >
       {children}
