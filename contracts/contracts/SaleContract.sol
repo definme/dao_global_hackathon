@@ -14,10 +14,12 @@ contract SaleContract is AccessControl {
         keccak256("PRICE_MODERATOR_ROLE");
     bytes32 public constant PURCHASE_ADMINISTRATOR_ROLE =
         keccak256("PURCHASE_ADMINISTRATOR_ROLE");
+    bytes32 public constant INVARIANT_ADMINISTRATOR_ROLE = 
+        keccak256("INVARIANT_ADMINISTRATOR_ROLE");
 
     mapping(Collection => uint256) public collectionPrice;
 
-    uint256 public priceInvariant;
+    uint256 public governanceTokensInvariant;
 
     IERC20 governanceToken;
     SaleContractOracle oracle;
@@ -37,23 +39,23 @@ contract SaleContract is AccessControl {
         uint256 providedNativeAmount
     );
 
-    event PurchaseRequestFailed(
-        bytes32 creationTxHash,
-        address buyer,
-        uint256 providedNativeAmount
-    );
-
     constructor(
-        IERC20 _governanceToken,
-        SaleContractOracle _oracle,
-        uint256 _priceInvariant
+        IERC20 governanceTokenAddress,
+        SaleContractOracle oracleAddress,
+        uint256 governanceTokensInvariantValue,
+        address nftAdministrator,
+        address priceModerator,
+        address purchaseAdministrator,
+        address invariantAdministrator
     ) {
-        governanceToken = _governanceToken;
-        priceInvariant = _priceInvariant;
-        oracle = _oracle;
+        governanceToken = governanceTokenAddress;
+        governanceTokensInvariant = governanceTokensInvariantValue;
+        oracle = oracleAddress;
         _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
-        _grantRole(NFT_ADMINISTATOR_ROLE, _msgSender());
-        _grantRole(PRICE_MODERATOR_ROLE, _msgSender());
+        _grantRole(NFT_ADMINISTATOR_ROLE, nftAdministrator);
+        _grantRole(PRICE_MODERATOR_ROLE, priceModerator);
+        _grantRole(PURCHASE_ADMINISTRATOR_ROLE, purchaseAdministrator);
+        _grantRole(INVARIANT_ADMINISTRATOR_ROLE, invariantAdministrator);
     }
 
     function addNFT(
@@ -81,34 +83,50 @@ contract SaleContract is AccessControl {
             uint256 tokenId,
             uint256 providedNativeAmount
         ) = oracle.getPurchaseRequest(creationTxHash);
+        require(buyer != address(0), "BAD_BUYER");
+        require(collection != address(0), "BAD_COLLECTION");
+
+        Collection collectionInstance = Collection(collection);
+        uint256 price = getPrice(collectionInstance);
+        require(providedNativeAmount == price, "BAD_NATIVE_AMOUNT");
+
         uint256 governanceTokenAmount = getGovernanceTokensAmount();
-        if (governanceToken.balanceOf(address(this)) >= governanceTokenAmount) {
-            governanceToken.transferFrom(
-                address(this),
-                buyer,
-                governanceTokenAmount
-            );
-            Collection(collection).mint(_msgSender(), tokenId);
-            emit PurchaseRequestCompleted(
-                creationTxHash,
-                buyer,
-                collection,
-                tokenId,
-                governanceTokenAmount,
-                providedNativeAmount
-            );
+        if (
+            governanceToken.balanceOf(address(this)) >= governanceTokenAmount &&
+            governanceTokenAmount != 0
+        ) {
+            governanceToken.transfer(buyer, governanceTokenAmount);
         } else {
-            emit PurchaseRequestFailed(
-                creationTxHash,
-                buyer,
-                providedNativeAmount
-            );
+            // event with 0 governance token amount means
+            // no governance tokens are available
+            governanceTokenAmount = 0;
         }
+        collectionInstance.mint(buyer, tokenId);
+        emit PurchaseRequestCompleted(
+            creationTxHash,
+            buyer,
+            collection,
+            tokenId,
+            governanceTokenAmount,
+            providedNativeAmount
+        );
+    }
+
+    function setGovernanceTokensInvariant(uint256 value) public onlyRole(INVARIANT_ADMINISTRATOR_ROLE) {
+        governanceTokensInvariant = value;
+    }
+
+    function setPrice(Collection collection, uint256 price) public onlyRole(PRICE_MODERATOR_ROLE) {
+        collectionPrice[collection] = price;
+    }
+
+    function setGovernanceToken(ERC20 token) public onlyRole(DEFAULT_ADMIN_ROLE) {
+        governanceToken = token;
     }
 
     function getPrice(Collection collection) public view returns (uint256) {
         uint256 price = collectionPrice[collection];
-        require(price > 0, "BAD_COLLECTION_ID");
+        require(price > 0, "BAD_COLLECTION");
         return price;
     }
 
@@ -117,7 +135,7 @@ contract SaleContract is AccessControl {
         if (divisor == 0) {
             divisor = 1;
         }
-        return priceInvariant / divisor;
+        return governanceTokensInvariant / divisor;
     }
 
     function withdraw() public onlyRole(DEFAULT_ADMIN_ROLE) {
