@@ -1,8 +1,13 @@
+import { useContext } from 'react'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
+import { ConnectionContext } from '../../contexts/ConnectionContext'
 
 function DAO() {
+  const { dao } = useContext(ConnectionContext)
+
+  console.log(dao)
   return (
     <Container sx={{ mb: '40px' }}>
       <Box>
