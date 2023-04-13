@@ -1,8 +1,20 @@
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
+import { Client } from '@aragon/sdk-client'
+import { context } from '../../contexts/DAOContext'
 
 function DAO() {
+  const client = new Client(context)
+  const daoAddressOrEns = '0x1234567890123456789012345678901234567890'
+
+  async function getDao() {
+    const dao = await client.methods.getDao(daoAddressOrEns)
+    console.log({ dao })
+  }
+
+  getDao()
+
   return (
     <Container sx={{ mb: '40px' }}>
       <Box>
