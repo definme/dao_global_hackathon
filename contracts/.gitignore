@@ -1,5 +1,6 @@
 node_modules
 .env
+mnemonic.csv
 coverage
 coverage.json
 typechain
