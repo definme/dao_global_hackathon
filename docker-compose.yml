@@ -1,0 +1,59 @@
+version: '3'
+services:
+  nginx:
+    build: ./nginx/
+    ports:
+      - "443:443"
+    image: nginx
+    volumes:
+      - static:/static/
+      - /opt/ssl:/ssl
+    restart: on-failure
+    depends_on:
+      - api
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+
+  api_db:
+    image: postgres
+    volumes:
+      - db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: '${DB_NAME}'
+      POSTGRES_USER: '${DB_USER}'
+      POSTGRES_PASSWORD: '${DB_PASSWORD}'
+    ports:
+      - "5432:5432"
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+
+  api:
+    image: api
+    build: ./api/
+    volumes:
+      - static:/static/
+      - media:/app/media/
+    environment:
+      DB_HOST: '${DB_HOST}'
+      DB_PASSWORD: '${DB_PASSWORD}'
+      DB_USER: '${DB_USER}'
+      DB_NAME: '${DB_NAME}'
+      SECRET_KEY: '${SECRET_KEY}'
+    restart: on-failure
+    depends_on:
+      - api_db
+    command: "/bin/sh ./entrypoint_api.sh"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+
+volumes:
+  static:
+  media:
+  db:
