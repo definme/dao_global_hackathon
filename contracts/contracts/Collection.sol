@@ -13,7 +13,7 @@ contract Collection is ERC721Enumerable, AccessControl {
     bytes32 public constant SALE_CONTRACT_ROLE = keccak256("SALE_CONTRACT_ROLE");
 
     constructor(string memory name, string memory symbol) ERC721(name, symbol) {
-        _grantRole(MINTER_ROLE, _msgSender());
+        _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
     }
 
     function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721Enumerable, AccessControl) returns (bool) {

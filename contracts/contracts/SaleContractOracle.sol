@@ -17,8 +17,9 @@ contract SaleContractOracle is AccessControl {
 
     mapping(bytes32 => PurchaseRequest) purchaseRequests;
 
-    constructor() {
+    constructor(address oracleWorker) {
         _grantRole(DEFAULT_ADMIN_ROLE, _msgSender());
+        _grantRole(ORACLE_WORKER_ROLE, oracleWorker);
     }
 
     function addPurchaseRequest(
