@@ -21,8 +21,8 @@ contract SaleContract is AccessControl {
 
     uint256 public governanceTokensInvariant;
 
-    IERC20 governanceToken;
-    SaleContractOracle oracle;
+    IERC20 public governanceToken;
+    SaleContractOracle public oracle;
 
     event PurchaseRequestCreated(
         address buyer,
