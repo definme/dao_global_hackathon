@@ -15,6 +15,7 @@ const useDAO = userAddress => {
   const daoAddressOrEns = '0xf47cf722840a814f826cbe22d1ca6130974fcdc8'
   const [client, setClient] = useState()
   const [dao, setDao] = useState()
+  const [proposals, setProposals] = useState()
   const [tokenVotingClient, setTokenVotingClient] = useState()
 
   const queryParams = {
@@ -33,7 +34,7 @@ const useDAO = userAddress => {
 
   async function getProposals() {
     const proposals = await tokenVotingClient.methods.getProposals(queryParams)
-    console.log({ proposals })
+    setProposals({ proposals })
   }
 
   useEffect(() => {
@@ -73,6 +74,7 @@ const useDAO = userAddress => {
 
   return {
     dao,
+    proposals,
   }
 }
 

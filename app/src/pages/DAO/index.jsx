@@ -2,13 +2,14 @@ import { useContext } from 'react'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
+import Proposal from '../../components/Proposal'
 import { ConnectionContext } from '../../contexts/ConnectionContext'
 import networks from '../../networks.json'
 import { APP_NETWORK } from '../../constants'
 import { DAOLink, DAOAddressLink } from './DAO.styled'
 
 function DAO() {
-  const { dao } = useContext(ConnectionContext)
+  const { dao, proposals } = useContext(ConnectionContext)
 
   function getIPFSLink(ipfs) {
     if (!ipfs) return
@@ -90,6 +91,10 @@ function DAO() {
           </Box>
         </Box>
       )}
+      {proposals &&
+        proposals.proposals.map((proposal, key) => (
+          <Proposal key={key} proposal={proposal} />
+        ))}
     </Container>
   )
 }
