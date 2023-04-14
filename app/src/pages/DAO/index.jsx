@@ -11,6 +11,7 @@ function DAO() {
   const { dao } = useContext(ConnectionContext)
 
   function getIPFSLink(ipfs) {
+    if (!ipfs) return
     return 'https://ipfs.eth.aragon.network/ipfs/' + ipfs.split('//')[1]
   }
 
@@ -81,8 +82,8 @@ function DAO() {
               >
                 {dao.dao?.metadata?.description}
               </Typography>
-              <DAOLink href={dao.dao?.metadata?.links[0].url} target='_blank'>
-                {dao.dao?.metadata?.links[0].url}
+              <DAOLink href={dao.dao?.metadata?.links[0]?.url} target='_blank'>
+                {dao.dao?.metadata?.links[0]?.url}
               </DAOLink>
             </Box>
             <img src={getIPFSLink(dao.dao?.metadata?.avatar)} alt='avatar' />
