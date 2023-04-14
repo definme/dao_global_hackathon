@@ -29,6 +29,10 @@ contract SaleContractOracle is AccessControl {
         uint256 tokenId,
         uint256 providedNativeAmount
     ) public onlyRole(ORACLE_WORKER_ROLE) {
+        require(purchaseRequests[txHash].buyer == address(0), "ALREADY_OPERATED");
+        require(purchaseRequests[txHash].collection == address(0), "ALREADY_OPERATED");
+        require(purchaseRequests[txHash].tokenId == 0, "ALREADY_OPERATED");
+        require(purchaseRequests[txHash].providedNativeAmount == 0, "ALREADY_OPERATED");
         purchaseRequests[txHash] = PurchaseRequest(buyer, collection, tokenId, providedNativeAmount);
     }
 
