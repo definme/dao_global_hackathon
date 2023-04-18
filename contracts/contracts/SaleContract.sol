@@ -1,10 +1,10 @@
-//SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "./Collection.sol";
+import "./EtherLuxeCollection.sol";
 import "./SaleContractOracle.sol";
 
 contract SaleContract is AccessControl {
@@ -17,7 +17,7 @@ contract SaleContract is AccessControl {
     bytes32 public constant INVARIANT_ADMINISTRATOR_ROLE = 
         keccak256("INVARIANT_ADMINISTRATOR_ROLE");
 
-    mapping(Collection => uint256) public collectionPrice;
+    mapping(EtherLuxeCollection => uint256) public collectionPrice;
 
     uint256 public governanceTokensInvariant;
 
@@ -27,14 +27,14 @@ contract SaleContract is AccessControl {
     event PurchaseRequestCreated(
         address buyer,
         address collection,
-        uint256 tokenId
+        uint256 kind
     );
 
     event PurchaseRequestCompleted(
         bytes32 creationTxHash,
         address buyer,
         address collection,
-        uint256 tokenId,
+        uint256 kind,
         uint256 governanceTokenAmount,
         uint256 providedNativeAmount
     );
@@ -59,19 +59,18 @@ contract SaleContract is AccessControl {
     }
 
     function addNFT(
-        Collection collection,
+        EtherLuxeCollection collection,
         uint256 initialPrice
     ) public onlyRole(NFT_ADMINISTATOR_ROLE) {
         require(collectionPrice[collection] == 0, "ALREADY_ADDED");
         collectionPrice[collection] = initialPrice;
     }
 
-    function requestNFTPurchase(Collection collection) public payable {
+    function requestNFTPurchase(EtherLuxeCollection collection, uint256 kind) public payable {
         uint256 price = getPrice(collection);
         require(msg.value == price, "BAD_NATIVE_AMOUNT");
-        uint256 id = collection.totalSupply() + 1;
         address buyer = _msgSender();
-        emit PurchaseRequestCreated(buyer, address(collection), id);
+        emit PurchaseRequestCreated(buyer, address(collection), kind);
     }
 
     function processNFTPurchase(
@@ -80,13 +79,13 @@ contract SaleContract is AccessControl {
         (
             address buyer,
             address collection,
-            uint256 tokenId,
+            uint256 kind,
             uint256 providedNativeAmount
         ) = oracle.getPurchaseRequest(creationTxHash);
         require(buyer != address(0), "BAD_BUYER");
         require(collection != address(0), "BAD_COLLECTION");
 
-        Collection collectionInstance = Collection(collection);
+        EtherLuxeCollection collectionInstance = EtherLuxeCollection(collection);
         uint256 price = getPrice(collectionInstance);
         require(providedNativeAmount == price, "BAD_NATIVE_AMOUNT");
 
@@ -101,12 +100,12 @@ contract SaleContract is AccessControl {
             // no governance tokens are available
             governanceTokenAmount = 0;
         }
-        collectionInstance.mint(buyer, tokenId);
+        collectionInstance.mintKind(buyer, kind);
         emit PurchaseRequestCompleted(
             creationTxHash,
             buyer,
             collection,
-            tokenId,
+            kind,
             governanceTokenAmount,
             providedNativeAmount
         );
@@ -116,7 +115,7 @@ contract SaleContract is AccessControl {
         governanceTokensInvariant = value;
     }
 
-    function setPrice(Collection collection, uint256 price) public onlyRole(PRICE_MODERATOR_ROLE) {
+    function setPrice(EtherLuxeCollection collection, uint256 price) public onlyRole(PRICE_MODERATOR_ROLE) {
         collectionPrice[collection] = price;
     }
 
@@ -124,7 +123,7 @@ contract SaleContract is AccessControl {
         governanceToken = token;
     }
 
-    function getPrice(Collection collection) public view returns (uint256) {
+    function getPrice(EtherLuxeCollection collection) public view returns (uint256) {
         uint256 price = collectionPrice[collection];
         require(price > 0, "BAD_COLLECTION");
         return price;

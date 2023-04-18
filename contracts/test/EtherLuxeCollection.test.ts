@@ -1,8 +1,17 @@
-const { expect } = require('chai')
-const { ethers } = require('hardhat')
-const BASE_URI = 'ipfs://ipfs'
+import { BigNumber, Contract, ContractFactory, Signer } from "ethers";
+import { expect, use } from "chai";
+import { EtherLuxeCollection, EtherLuxeCollection__factory} from "../typechain-types";
+import { ethers } from "hardhat";
 
 describe('EtherLuxeCollection', function () {
+  let collectionFactory: EtherLuxeCollection__factory;
+  let collection: EtherLuxeCollection;
+
+  const BASE_URI = 'ipfs://ipfs'
+  const type0 = 0x0000
+  const type1 = 0x0001;
+  const type2 = 0x0002;
+  
   before(async function () {
     this.signers = await ethers.getSigners()
     this.deployer = this.signers[0]
@@ -26,7 +35,6 @@ describe('EtherLuxeCollection', function () {
       await this.collection.SALE_CONTRACT_ROLE(),
       this.minter.address
     )
-    type0 = 0x0000
     await this.collection.addKind(type0, 'Kind0')
   })
 
@@ -39,10 +47,6 @@ describe('EtherLuxeCollection', function () {
   })
 
   describe('check kind', async function () {
-    beforeEach(async function () {
-      type1 = 0x0001;
-      type2 = 0x0002;
-    })
 
     it('minter can add kind', async function () {
       expect(await this.collection.getKindName(type1)).to.equal('')
