@@ -1,4 +1,4 @@
-//SPDX-License-Identifier: UNLISENCED
+// SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.0;
 
@@ -11,7 +11,7 @@ contract SaleContractOracle is AccessControl {
     struct PurchaseRequest {
         address buyer;
         address collection;
-        uint256 tokenId;
+        uint256 kind;
         uint256 providedNativeAmount;
     }
 
@@ -26,22 +26,22 @@ contract SaleContractOracle is AccessControl {
         bytes32 txHash,
         address buyer,
         address collection,
-        uint256 tokenId,
+        uint256 kind,
         uint256 providedNativeAmount
     ) public onlyRole(ORACLE_WORKER_ROLE) {
         require(purchaseRequests[txHash].buyer == address(0), "ALREADY_OPERATED");
         require(purchaseRequests[txHash].collection == address(0), "ALREADY_OPERATED");
-        require(purchaseRequests[txHash].tokenId == 0, "ALREADY_OPERATED");
+        require(purchaseRequests[txHash].kind == 0, "ALREADY_OPERATED");
         require(purchaseRequests[txHash].providedNativeAmount == 0, "ALREADY_OPERATED");
-        purchaseRequests[txHash] = PurchaseRequest(buyer, collection, tokenId, providedNativeAmount);
+        purchaseRequests[txHash] = PurchaseRequest(buyer, collection, kind, providedNativeAmount);
     }
 
     function getPurchaseRequest(
         bytes32 txHash
-    ) public view returns (address buyer, address collection, uint256 tokenId, uint256 providedNativeAmount) {
+    ) public view returns (address buyer, address collection, uint256 kind, uint256 providedNativeAmount) {
         buyer = purchaseRequests[txHash].buyer;
         collection = purchaseRequests[txHash].collection;
-        tokenId = purchaseRequests[txHash].tokenId;
+        kind = purchaseRequests[txHash].kind;
         providedNativeAmount = purchaseRequests[txHash].providedNativeAmount;
     }
 }
