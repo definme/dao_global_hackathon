@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+// import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/Strings.sol"; 
 
-contract EtherLuxeCollection is ERC721, AccessControl {
+contract EtherLuxeCollection is ERC721Enumerable, AccessControl {
     using Strings for uint256;
 
     uint256 internal constant KIND_MASK = 0xffff0000;
@@ -29,7 +30,7 @@ contract EtherLuxeCollection is ERC721, AccessControl {
         public
         view
         virtual
-        override(ERC721, AccessControl)
+        override(ERC721Enumerable, AccessControl)
         returns (bool)
     {
         return super.supportsInterface(interfaceId);
@@ -90,4 +91,28 @@ contract EtherLuxeCollection is ERC721, AccessControl {
     function _baseURI() internal view virtual override returns (string memory) {
         return _baseUri;
     }
+}
+
+contract EtherLuxeCollectionCharacters is EtherLuxeCollection {
+    constructor(
+        string memory uri, 
+        string memory name, 
+        string memory symbol
+    ) EtherLuxeCollection (uri, name, symbol) {}
+}
+
+contract EtherLuxeCollectionTransports is EtherLuxeCollection {
+    constructor(
+        string memory uri, 
+        string memory name, 
+        string memory symbol
+    ) EtherLuxeCollection (uri, name, symbol) {}
+}
+
+contract EtherLuxeCollectionWeapons is EtherLuxeCollection {
+    constructor(
+        string memory uri, 
+        string memory name, 
+        string memory symbol
+    ) EtherLuxeCollection (uri, name, symbol) {}
 }

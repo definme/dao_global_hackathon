@@ -5,14 +5,17 @@ envs();
 module.exports = async function main(hre: HardhatRuntimeEnvironment) {
     const signers = await hre.ethers.getSigners();
     const deployer = signers[0].address;
+    const collectionName = "Weapons";
+    const collectionContractName = "EtherLuxeCollection" + collectionName;
     console.log(`Deployer: ${deployer}`);
+    console.log(`Contract: ${collectionContractName}`);
 
-    const deployment = await hre.deployments.deploy("EtherLuxeCollection", {
+    const deployment = await hre.deployments.deploy(collectionContractName, {
         from: deployer,
         args: [
-          'https://api-ether-luxe.definme.com/metadata/transports', 'EtherLuxeCollectionTransports', 'ELCT'
+          'https://api-ether-luxe.definme.com/metadata/weapons', 'EtherLuxeCollectionWeapons', 'ELCW'
         ]
     });
     console.log(`Deployed at ${deployment.address}`);
 }
-module.exports.tags = ["EtherLuxeCollectionTransports"];
+module.exports.tags = ["EtherLuxeCollectionWeapons"];

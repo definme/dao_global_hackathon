@@ -5,10 +5,10 @@ import {
     SaleContract__factory,
     GovernanceToken,
     GovernanceToken__factory,
-    Collection__factory,
+    EtherLuxeCollection,
+    EtherLuxeCollection__factory,
     SaleContractOracle,
-    SaleContractOracle__factory,
-    Collection
+    SaleContractOracle__factory
 } from "../typechain-types";
 import { ethers } from "hardhat";
 
@@ -21,8 +21,8 @@ describe("SaleContract", () => {
     let governanceTokenFactory: GovernanceToken__factory;
     let governanceToken: GovernanceToken;
 
-    let collectionFactory: Collection__factory;
-    let collection: Collection;
+    let collectionFactory: EtherLuxeCollection__factory;
+    let collection: EtherLuxeCollection;
 
     let oracle: SaleContractOracle;
     let oracleFactory: SaleContractOracle__factory;
@@ -34,6 +34,8 @@ describe("SaleContract", () => {
     let oracleWorker: Signer;
     let invariantAdministrator: Signer;
 
+    const BASE_URI = 'ipfs://ipfs'
+    const type0 = 0x0000
     const initialGovernanceTokenAmount = ethers.utils.parseEther("6665");
     const governanceInvariant = ethers.utils.parseEther("10000");
 
@@ -41,8 +43,9 @@ describe("SaleContract", () => {
         governanceTokenFactory = await ethers.getContractFactory("GovernanceToken") as GovernanceToken__factory;
         governanceToken = await governanceTokenFactory.deploy();
 
-        collectionFactory = await ethers.getContractFactory("Collection") as Collection__factory;
-        collection = await collectionFactory.deploy("Collection", "COLL");
+        collectionFactory = await ethers.getContractFactory("EtherLuxeCollection") as EtherLuxeCollection__factory;
+        collection = await collectionFactory.deploy(BASE_URI, "EtherLuxeCollectionTest", "ELCT");
+        await collection.addKind(type0, 'Kind0')
 
         const signers = await ethers.getSigners()
         user = signers[1];
@@ -92,7 +95,7 @@ describe("SaleContract", () => {
         it("should revert buying non-added NFT", async () => {
             // some dummy address which is not NFT collection
             const dummyAddress = "0xf5c80c305803280b587f8cabbccdc4d9bf522abd";
-            const attempt = contract.connect(user).requestNFTPurchase(dummyAddress);
+            const attempt = contract.connect(user).requestNFTPurchase(dummyAddress, type0);
             await expect(attempt).to.be.revertedWith("BAD_COLLECTION");
         }); 
 
@@ -101,7 +104,7 @@ describe("SaleContract", () => {
         let nftId: BigNumber
         it("should perform NFT purchase when providing needed native amount", async () => {
             providedNativeAmount = await contract.getPrice(collection.address);
-            const tx = await contract.connect(user).requestNFTPurchase(collection.address, {
+            const tx = await contract.connect(user).requestNFTPurchase(collection.address, type0, {
                 value: providedNativeAmount
             });
             creationTxHash = tx.hash;
@@ -113,7 +116,6 @@ describe("SaleContract", () => {
                 const item = data.substring(64 * index, 64 * (index + 1));
                 eventData.push(item);
             }
-            nftId = BigNumber.from(`0x${eventData[2]}`);
         });
 
         it("should add purchase request to oracle", async () => {
@@ -121,7 +123,7 @@ describe("SaleContract", () => {
                 creationTxHash,
                 await user.getAddress(),
                 collection.address,
-                nftId,
+                type0,
                 providedNativeAmount
             );
         });
@@ -137,8 +139,8 @@ describe("SaleContract", () => {
         });
 
         it("should mint needed NFT to user", async () => {
-            const ownerOf = await collection.ownerOf(nftId);
-            expect(ownerOf).eq(await user.getAddress());
+            const owner = await user.getAddress()
+            expect(await collection.balanceOf(owner)).to.equal(1);
         });
 
     });
