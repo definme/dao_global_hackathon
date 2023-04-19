@@ -1,9 +1,30 @@
 import React from 'react'
+import { ethers } from 'ethers'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
+import { getCollectionSale } from '../../api/contracts'
 
-function BuyCard({ title, description, price, image }) {
+function BuyCard({
+  title,
+  description,
+  price,
+  image,
+  collectionContract,
+  kind,
+}) {
+  async function buyCollectionToken() {
+    const CollectionSale = getCollectionSale()
+
+    await CollectionSale.requestNFTPurchase(collectionContract, kind, {
+      value: price,
+    })
+      .then(tx => {
+        tx.wait().then(res => console.log(res))
+      })
+      .catch(e => console.log(e))
+  }
+
   return (
     <Box
       sx={{
@@ -40,7 +61,7 @@ function BuyCard({ title, description, price, image }) {
           {description}
         </Typography>
         <Typography gutterBottom color='white'>
-          Price: {price} MATIC
+          Price: {price ? ethers.utils.formatEther(price) : '0'} MATIC
         </Typography>
         <Button
           variant='contained'
@@ -49,6 +70,7 @@ function BuyCard({ title, description, price, image }) {
             width: '100%',
             background: 'lightseagreen',
           }}
+          onClick={buyCollectionToken}
         >
           BUY
         </Button>
