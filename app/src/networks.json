@@ -12,6 +12,12 @@
       },
       "rpcUrls": ["https://endpoints.omniatech.io/v1/matic/mumbai/public/"],
       "blockExplorerUrls": ["https://mumbai.polygonscan.com/"]
+    },
+    "contracts": {
+      "collectionSale": "0x16bfB6Cfb8d27917aD9EFb11Fdd3469b39d50993",
+      "charactersCollection": "0x9ae020883651b080b98880AF7AAA24eC6491202E",
+      "transportCollection": "0x0A7136cC22fa43E1Abc32bEC3E7F8e5289a089E4",
+      "weaponCollection": "0xC6CD47F89a9880478d2E0A56A4A638A8646594B0"
     }
   }
 }
