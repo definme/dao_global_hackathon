@@ -15,9 +15,9 @@
     },
     "contracts": {
       "collectionSale": "0x16bfB6Cfb8d27917aD9EFb11Fdd3469b39d50993",
-      "charactersCollection": "0x9ae020883651b080b98880AF7AAA24eC6491202E",
-      "transportCollection": "0x0A7136cC22fa43E1Abc32bEC3E7F8e5289a089E4",
-      "weaponCollection": "0xC6CD47F89a9880478d2E0A56A4A638A8646594B0"
+      "charactersCollection": "0xDE902AA6AF10F448D42Aad43FFd9C4120888f9Dc",
+      "transportCollection": "0xe7ACF60acA272fA1d5de712C94aE189a9aBCD1C7",
+      "weaponCollection": "0xf01898f291d989a29620C6530b7a473291c619Ad"
     }
   }
 }

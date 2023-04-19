@@ -1,15 +1,16 @@
 import { useContext } from 'react'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import Proposal from '../../components/Proposal'
 import { ConnectionContext } from '../../contexts/ConnectionContext'
 import networks from '../../networks.json'
 import { APP_NETWORK } from '../../constants'
-import { DAOLink, DAOAddressLink } from './DAO.styled'
+import { DAOLink, DAOAddressLink, DAOImg } from './DAO.styled'
 
 function DAO() {
-  const { dao, proposals } = useContext(ConnectionContext)
+  const { dao, proposals, createProposal } = useContext(ConnectionContext)
 
   function getIPFSLink(ipfs) {
     if (!ipfs) return
@@ -67,18 +68,23 @@ function DAO() {
             sx={{
               display: 'flex',
               justifyContent: 'space-between',
-              alignItems: 'flex-start',
               gap: '20px',
             }}
           >
-            <Box sx={{ maxWidth: '800px' }}>
+            <Box
+              sx={{
+                maxWidth: '800px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+              }}
+            >
               <Typography
                 variant='p'
                 component='p'
                 gutterBottom
                 sx={{
                   color: 'white',
-                  mb: '40px',
                 }}
               >
                 {dao.dao?.metadata?.description}
@@ -86,8 +92,19 @@ function DAO() {
               <DAOLink href={dao.dao?.metadata?.links[0]?.url} target='_blank'>
                 {dao.dao?.metadata?.links[0]?.url}
               </DAOLink>
+              <Button
+                onClick={createProposal}
+                variant='contained'
+                sx={{
+                  fontWeight: 'bold',
+                  background: 'lightseagreen',
+                  mt: '40px',
+                }}
+              >
+                Create new proposal
+              </Button>
             </Box>
-            <img src={getIPFSLink(dao.dao?.metadata?.avatar)} alt='avatar' />
+            <DAOImg src={getIPFSLink(dao.dao?.metadata?.avatar)} alt='avatar' />
           </Box>
         </Box>
       )}

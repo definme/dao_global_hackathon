@@ -7,12 +7,16 @@ import {
   TokenVotingClient,
   SortDirection,
   ProposalSortBy,
+  ProposalCreationSteps,
+  ProposalStatus,
 } from '@aragon/sdk-client'
 import networks from '../networks.json'
 import { APP_NETWORK, IPFS_API_KEY } from '../constants'
 
 const useDAO = userAddress => {
   const daoAddressOrEns = '0xf47cf722840a814f826cbe22d1ca6130974fcdc8'
+  const pluginAddress = '0x6bcc8dd13bc076d8b3fe8d075db8ca78acb576a0'
+
   const [client, setClient] = useState()
   const [dao, setDao] = useState()
   const [proposals, setProposals] = useState()
@@ -25,6 +29,42 @@ const useDAO = userAddress => {
     direction: SortDirection.DESC, // optional, otherwise DESC ("descending")
     sortBy: ProposalSortBy.CREATED_AT, // optional, otherwise NAME, VOTES (POPULARITY coming soon)
     // status: ProposalStatus.ACTIVE, // optional, otherwise PENDING, SUCCEEDED, EXECUTED, DEFEATED
+  }
+
+  const metadata = {
+    title: 'test',
+    summary: 'This is a short description',
+    description: 'This is a long description',
+  }
+
+  async function createProposal() {
+    const metadataUri = await tokenVotingClient.methods.pinMetadata(metadata)
+
+    const proposalParams = {
+      pluginAddress,
+      metadataUri,
+      actions: [],
+      startDate: new Date(Date.now() + 300000), // 5 minutes
+      endDate: new Date(Date.now() + 86400000), // 24 hours
+    }
+
+    const steps = tokenVotingClient.methods.createProposal(proposalParams)
+    for await (const step of steps) {
+      try {
+        // eslint-disable-next-line default-case
+        switch (step.key) {
+          case ProposalCreationSteps.CREATING:
+            console.log(step.txHash)
+            break
+          case ProposalCreationSteps.DONE:
+            console.log(step.proposalId)
+            break
+        }
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    getProposals()
   }
 
   async function getDao() {
@@ -75,6 +115,7 @@ const useDAO = userAddress => {
   return {
     dao,
     proposals,
+    createProposal,
   }
 }
 
