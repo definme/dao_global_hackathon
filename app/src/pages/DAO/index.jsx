@@ -1,21 +1,26 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import Proposal from '../../components/Proposal'
+import AddProposalModal from '../../components/AddProposalModal'
 import { ConnectionContext } from '../../contexts/ConnectionContext'
 import networks from '../../networks.json'
 import { APP_NETWORK } from '../../constants'
 import { DAOLink, DAOAddressLink, DAOImg } from './DAO.styled'
 
 function DAO() {
-  const { dao, proposals, createProposal } = useContext(ConnectionContext)
+  const { dao, proposals } = useContext(ConnectionContext)
+  const [proposalModalOpen, setProposalModalOpen] = useState(false)
 
   function getIPFSLink(ipfs) {
     if (!ipfs) return
     return 'https://ipfs.eth.aragon.network/ipfs/' + ipfs.split('//')[1]
   }
+
+  const handleOpenModal = () => setProposalModalOpen(true)
+  const handleCloseModal = () => setProposalModalOpen(false)
 
   return (
     <Container sx={{ mb: '40px' }}>
@@ -93,7 +98,7 @@ function DAO() {
                 {dao.dao?.metadata?.links[0]?.url}
               </DAOLink>
               <Button
-                onClick={createProposal}
+                onClick={handleOpenModal}
                 variant='contained'
                 sx={{
                   fontWeight: 'bold',
@@ -112,6 +117,7 @@ function DAO() {
         proposals.proposals.map((proposal, key) => (
           <Proposal key={key} proposal={proposal} />
         ))}
+      <AddProposalModal isOpen={proposalModalOpen} onClose={handleCloseModal} />
     </Container>
   )
 }

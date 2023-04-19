@@ -8,7 +8,6 @@ import {
   SortDirection,
   ProposalSortBy,
   ProposalCreationSteps,
-  ProposalStatus,
 } from '@aragon/sdk-client'
 import networks from '../networks.json'
 import { APP_NETWORK, IPFS_API_KEY } from '../constants'
@@ -31,13 +30,13 @@ const useDAO = userAddress => {
     // status: ProposalStatus.ACTIVE, // optional, otherwise PENDING, SUCCEEDED, EXECUTED, DEFEATED
   }
 
-  const metadata = {
-    title: 'test',
-    summary: 'This is a short description',
-    description: 'This is a long description',
-  }
+  async function createProposal(title, description) {
+    const metadata = {
+      title,
+      summary: description,
+      description,
+    }
 
-  async function createProposal() {
     const metadataUri = await tokenVotingClient.methods.pinMetadata(metadata)
 
     const proposalParams = {
