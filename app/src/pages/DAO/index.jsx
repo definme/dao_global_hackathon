@@ -8,10 +8,11 @@ import AddProposalModal from '../../components/AddProposalModal'
 import { ConnectionContext } from '../../contexts/ConnectionContext'
 import networks from '../../networks.json'
 import { APP_NETWORK } from '../../constants'
-import { DAOLink, DAOAddressLink, DAOImg } from './DAO.styled'
+import { DAOLink, DAOAddressLink, DAOImg, DAOATokenLink } from './DAO.styled'
 
 function DAO() {
-  const { dao, proposals } = useContext(ConnectionContext)
+  const { dao, proposals, governanceContractBalance } =
+    useContext(ConnectionContext)
   const [proposalModalOpen, setProposalModalOpen] = useState(false)
 
   function getIPFSLink(ipfs) {
@@ -94,6 +95,23 @@ function DAO() {
               >
                 {dao.dao?.metadata?.description}
               </Typography>
+              <Typography
+                variant='p'
+                component='p'
+                gutterBottom
+                sx={{
+                  color: 'white',
+                }}
+              >
+                {Number(governanceContractBalance).toFixed(0)} free DAO
+                Governance tokens!{' '}
+                <DAOATokenLink
+                  href={`${networks[APP_NETWORK].params.blockExplorerUrls[0]}address/${networks[APP_NETWORK].contracts.governanceToken}`}
+                  target='_blank'
+                >
+                  (ELT)
+                </DAOATokenLink>
+              </Typography>
               <DAOLink href={dao.dao?.metadata?.links[0]?.url} target='_blank'>
                 {dao.dao?.metadata?.links[0]?.url}
               </DAOLink>
@@ -104,6 +122,7 @@ function DAO() {
                   fontWeight: 'bold',
                   background: 'lightseagreen',
                   mt: '40px',
+                  maxWidth: '250px',
                 }}
               >
                 Create new proposal
