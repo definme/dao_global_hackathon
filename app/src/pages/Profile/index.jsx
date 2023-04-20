@@ -1,12 +1,26 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import ProfileCard from '../../components/ProfileCard'
 import { ConnectionContext } from '../../contexts/ConnectionContext'
+import { getCollectionTokens } from '../../api'
 
 function Profile() {
-  const { governanceUserBalance } = useContext(ConnectionContext)
+  const { governanceUserBalance, userAddress } = useContext(ConnectionContext)
+  const [collection, setCollection] = useState([])
+
+  function getNFTs() {
+    getCollectionTokens(userAddress)
+      .then(res => {
+        setCollection(res)
+      })
+      .catch(e => console.log(e))
+  }
+
+  useEffect(() => {
+    if (userAddress) getNFTs()
+  }, [userAddress])
 
   return (
     <Container sx={{ mb: '40px' }}>
@@ -58,26 +72,12 @@ function Profile() {
             flexWrap: 'wrap',
             gap: '20px',
             justifyContent: 'center',
+            mb: '60px',
           }}
         >
-          <ProfileCard
-            title='Transport'
-            description='Some Description'
-            price='20'
-            image={require('../../images/bike.png')}
-          />
-          <ProfileCard
-            title='Transport'
-            description='Some Description'
-            price='20'
-            image={require('../../images/bike.png')}
-          />
-          <ProfileCard
-            title='Transport'
-            description='Some Description'
-            price='20'
-            image={require('../../images/bike.png')}
-          />
+          {collection.map((token, key) => (
+            <ProfileCard key={key} {...token} />
+          ))}
         </Box>
       </Box>
     </Container>

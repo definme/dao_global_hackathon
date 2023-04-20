@@ -2,7 +2,14 @@ import React from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-function ProfileCard({ title, description, image }) {
+function ProfileCard({
+  collection,
+  image_uri,
+  name,
+  level,
+  contract_token_id,
+  kind,
+}) {
   return (
     <Box
       sx={{
@@ -16,7 +23,7 @@ function ProfileCard({ title, description, image }) {
       }}
     >
       <img
-        src={image}
+        src={image_uri}
         width='100%'
         height='300px'
         style={{ objectFit: 'contain' }}
@@ -33,10 +40,19 @@ function ProfileCard({ title, description, image }) {
           gutterBottom
           color='white'
         >
-          {title}
+          {collection.name}
         </Typography>
         <Typography gutterBottom color='white'>
-          {description}
+          Name: {name}
+        </Typography>
+        <Typography gutterBottom color='white'>
+          Level: {level}
+        </Typography>
+        <Typography gutterBottom color='white'>
+          Kind: {kind}
+        </Typography>
+        <Typography gutterBottom color='white'>
+          ID: {contract_token_id}
         </Typography>
       </Box>
     </Box>

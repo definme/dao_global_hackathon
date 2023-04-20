@@ -32,7 +32,6 @@ const useConnection = () => {
       .then(res => {
         const token = Number(utils.formatEther(res))
         setGovernanceUserBalance(token)
-        console.log(token)
       })
       .catch(e => console.log(e))
   }
@@ -44,7 +43,6 @@ const useConnection = () => {
       .then(res => {
         const token = Number(utils.formatEther(res))
         setGovernanceContractBalance(token)
-        console.log(token)
       })
       .catch(e => console.log(e))
   }
