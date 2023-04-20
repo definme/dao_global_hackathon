@@ -14,3 +14,8 @@ export const DAOImg = styled.img`
   height: 180px;
   border-radius: 50%;
 `
+
+export const DAOATokenLink = styled.a`
+  color: white;
+  text-decoration: none;
+`
