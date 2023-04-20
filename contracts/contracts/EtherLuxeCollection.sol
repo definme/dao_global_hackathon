@@ -15,9 +15,6 @@ contract EtherLuxeCollection is ERC721Enumerable, AccessControl {
 
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
-    // unique role related to SaleContract which can mint tokens on buying them 
-    bytes32 public constant SALE_CONTRACT_ROLE = keccak256("SALE_CONTRACT_ROLE");
-
     string internal _baseUri;
 
     constructor(string memory uri, string memory name, string memory symbol) ERC721(name, symbol) {
