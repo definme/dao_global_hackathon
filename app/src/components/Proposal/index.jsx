@@ -1,10 +1,17 @@
+import { useState } from 'react'
 import { utils } from 'ethers'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
+import VoteModal from '../VoteModal'
 
 function Proposal({ proposal }) {
+  const [voteModalOpen, setVoteModalOpen] = useState(false)
+
+  const handleOpenModal = () => setVoteModalOpen(true)
+  const handleCloseModal = () => setVoteModalOpen(false)
+  
   return (
     <Container sx={{ mb: '40px' }}>
       <Box
@@ -79,6 +86,7 @@ function Proposal({ proposal }) {
               {proposal.token.symbol}
             </Typography>
             <Button
+              onClick={handleOpenModal}
               variant='contained'
               sx={{
                 fontWeight: 'bold',
@@ -136,6 +144,7 @@ function Proposal({ proposal }) {
           {proposal.status}
         </Typography>
       </Box>
+      <VoteModal isOpen={voteModalOpen} onClose={handleCloseModal} />
     </Container>
   )
 }
