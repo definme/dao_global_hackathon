@@ -1,9 +1,12 @@
-import React from 'react'
+import { useState } from 'react'
 import { ethers } from 'ethers'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import { getCollectionSale } from '../../api/contracts'
+import { shortenAddress } from '../../utils'
+import { APP_NETWORK } from '../../constants'
+import networks from '../../networks.json'
 
 function BuyCard({
   title,
@@ -13,6 +16,9 @@ function BuyCard({
   collectionContract,
   kind,
 }) {
+  const [txHash, setTxHash] = useState()
+  const [success, setSuccess] = useState()
+
   async function buyCollectionToken() {
     const CollectionSale = getCollectionSale()
 
@@ -20,9 +26,15 @@ function BuyCard({
       value: price,
     })
       .then(tx => {
-        tx.wait().then(res => console.log(res))
+        setTxHash(tx.hash)
+        tx.wait()
+          .then(res => setSuccess('SUCCESS!!'))
+          .catch(e => setSuccess('FAILED'))
       })
-      .catch(e => console.log(e))
+      .catch(e => {
+        setSuccess('FAILED')
+        console.log(e)
+      })
   }
 
   return (
@@ -63,17 +75,37 @@ function BuyCard({
         <Typography gutterBottom color='white'>
           Price: {price ? ethers.utils.formatEther(price) : '0'} MATIC
         </Typography>
-        <Button
-          variant='contained'
-          sx={{
-            fontWeight: 'bold',
-            width: '100%',
-            background: 'lightseagreen',
-          }}
-          onClick={buyCollectionToken}
-        >
-          BUY
-        </Button>
+        {txHash ? (
+          <Button
+            variant='contained'
+            sx={{
+              fontWeight: 'bold',
+              width: '100%',
+              background: 'lightseagreen',
+              minHeight: '36px',
+            }}
+          >
+            <a
+              href={`${networks[APP_NETWORK].params.blockExplorerUrls}tx/${txHash}`}
+              target='_blank'
+              rel='noreferrer'
+            >
+              {success ? success : txHash && shortenAddress(txHash)}
+            </a>
+          </Button>
+        ) : (
+          <Button
+            variant='contained'
+            sx={{
+              fontWeight: 'bold',
+              width: '100%',
+              background: 'lightseagreen',
+            }}
+            onClick={buyCollectionToken}
+          >
+            BUY
+          </Button>
+        )}
       </Box>
     </Box>
   )
