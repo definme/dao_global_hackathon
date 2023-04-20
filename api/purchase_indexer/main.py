@@ -73,12 +73,14 @@ class PurchaseIndexer:
                 collection = res.args.collection
                 kind = res.args.kind
                 value = w3.eth.get_transaction(tx_hash).value
-                unsigned_tx = oracle_contract.functions.addPurchaseRequest(tx_hash, buyer, collection, kind,
-                                                                           value).build_transaction({
-                    'from': self.oracle_worker.address,
-                    'chainId': w3.eth.chain_id,
-                    'nonce': w3.eth.get_transaction_count(self.oracle_worker.address)
-                })
+                unsigned_tx = oracle_contract.functions.addPurchaseRequest(
+                    tx_hash, buyer, collection, kind, value).build_transaction(
+                    {
+                        'from': self.oracle_worker.address,
+                        'chainId': w3.eth.chain_id,
+                        'nonce': w3.eth.get_transaction_count(self.oracle_worker.address)
+                    }
+                )
                 signed_tx = self.oracle_worker.sign_transaction(unsigned_tx)['rawTransaction']
                 add_purchase_tx_hash = w3.eth.send_raw_transaction(signed_tx)
                 receipt = w3.eth.wait_for_transaction_receipt(add_purchase_tx_hash)
