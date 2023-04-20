@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import ModalComponent from '../Modal'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
@@ -7,8 +7,10 @@ import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
+import { ConnectionContext } from '../../contexts/ConnectionContext'
 
-export default function VoteModal({ isOpen, onClose }) {
+export default function VoteModal({ isOpen, onClose, proposalId }) {
+  const { voteProposal } = useContext(ConnectionContext)
   const [vote, setVote] = useState('yes')
 
   const handleChange = event => {
@@ -17,6 +19,7 @@ export default function VoteModal({ isOpen, onClose }) {
 
   async function onSubmit(e) {
     e.preventDefault()
+    await voteProposal(proposalId, vote)
     onClose()
   }
 

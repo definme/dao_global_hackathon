@@ -8,6 +8,8 @@ import {
   SortDirection,
   ProposalSortBy,
   ProposalCreationSteps,
+  VoteValues,
+  VoteProposalStep,
 } from '@aragon/sdk-client'
 import networks from '../networks.json'
 import { APP_NETWORK, IPFS_API_KEY } from '../constants'
@@ -66,6 +68,45 @@ const useDAO = userAddress => {
     getProposals()
   }
 
+  async function voteProposal(proposalId, voteValue) {
+    let vote
+    switch (voteValue) {
+      case 'yes':
+        vote = VoteValues.YES
+        break
+      case 'no':
+        vote = VoteValues.NO
+        break
+      case 'abstain':
+        vote = VoteValues.ABSTAIN
+        break
+      default:
+        break
+    }
+    const voteParams = {
+      proposalId,
+      vote,
+    }
+
+    const steps = tokenVotingClient.methods.voteProposal(voteParams)
+
+    for await (const step of steps) {
+      try {
+        // eslint-disable-next-line default-case
+        switch (step.key) {
+          case VoteProposalStep.VOTING:
+            console.log(step.txHash)
+            break
+          case VoteProposalStep.DONE:
+            break
+        }
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    getProposals()
+  }
+
   async function getDao() {
     const dao = await client.methods.getDao(daoAddressOrEns)
     setDao({ dao })
@@ -115,6 +156,7 @@ const useDAO = userAddress => {
     dao,
     proposals,
     createProposal,
+    voteProposal,
   }
 }
 
