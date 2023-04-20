@@ -17,5 +17,14 @@ module.exports = async function main(hre: HardhatRuntimeEnvironment) {
         ]
     });
     console.log(`Deployed at ${deployment.address}`);
+
+    const MINTER_ROLE = await hre.deployments.read(collectionContractName, "MINTER_ROLE");
+    const saleContract = await  hre.deployments.get("SaleContract")
+    await hre.deployments.execute(collectionContractName, 
+      {from: deployer, log: true,}, 
+      "grantRole", MINTER_ROLE, saleContract.address
+      );
 }
+
 module.exports.tags = ["EtherLuxeCollectionCharacters"];
+module.exports.dependencies = ["SaleContract"];
