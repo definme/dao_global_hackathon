@@ -134,7 +134,7 @@ contract SaleContract is AccessControl {
         if (divisor == 0) {
             divisor = 1;
         }
-        return governanceTokensInvariant / divisor;
+        return governanceTokensInvariant / divisor * 1 ether;
     }
 
     function withdraw() public onlyRole(DEFAULT_ADMIN_ROLE) {
