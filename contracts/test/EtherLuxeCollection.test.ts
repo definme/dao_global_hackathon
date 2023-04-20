@@ -11,7 +11,7 @@ describe('EtherLuxeCollection', function () {
   const type0 = 0x0000
   const type1 = 0x0001;
   const type2 = 0x0002;
-  
+
   before(async function () {
     this.signers = await ethers.getSigners()
     this.deployer = this.signers[0]
@@ -29,10 +29,6 @@ describe('EtherLuxeCollection', function () {
 
     await this.collection.grantRole(
       await this.collection.MINTER_ROLE(),
-      this.minter.address
-    )
-    await this.collection.grantRole(
-      await this.collection.SALE_CONTRACT_ROLE(),
       this.minter.address
     )
     await this.collection.addKind(type0, 'Kind0')

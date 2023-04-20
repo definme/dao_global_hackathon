@@ -36,8 +36,8 @@ describe("SaleContract", () => {
 
     const BASE_URI = 'ipfs://ipfs'
     const type0 = 0x0000
-    const initialGovernanceTokenAmount = ethers.utils.parseEther("6665");
-    const governanceInvariant = ethers.utils.parseEther("10000");
+    const initialGovernanceTokenAmount = ethers.utils.parseEther("10000");
+    const governanceInvariant = ethers.utils.parseEther("250000");
 
     before(async () => {
         governanceTokenFactory = await ethers.getContractFactory("GovernanceToken") as GovernanceToken__factory;
@@ -133,9 +133,9 @@ describe("SaleContract", () => {
         });
 
         it("should give accrued governance tokens", async () => {
-            const expectedGovernanceTokenBalance = governanceInvariant.div(initialGovernanceTokenAmount);
+            const expectedGovernanceTokenBalance = governanceInvariant.div(initialGovernanceTokenAmount) ;
             const balance = await governanceToken.balanceOf(await user.getAddress());
-            expect(balance).eq(expectedGovernanceTokenBalance);
+            expect(balance).eq(ethers.utils.parseEther(expectedGovernanceTokenBalance.toString()));
         });
 
         it("should mint needed NFT to user", async () => {

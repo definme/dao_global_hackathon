@@ -13,7 +13,6 @@ module.exports = async function main(hre: HardhatRuntimeEnvironment) {
     console.log(`Using EtherLuxeCollectionTransports at ${transports.address}`);
     console.log(`Using EtherLuxeCollectionWeapons at ${weapons.address}`);
 
-    const tokenKind = 0;
     const charactersPrice = 100000000000000;
     const transportsPrice = 10000000000000;
     const weaponsPrice = 5000000000000;
