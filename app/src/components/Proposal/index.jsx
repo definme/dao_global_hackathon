@@ -11,7 +11,7 @@ function Proposal({ proposal }) {
 
   const handleOpenModal = () => setVoteModalOpen(true)
   const handleCloseModal = () => setVoteModalOpen(false)
-  
+
   return (
     <Container sx={{ mb: '40px' }}>
       <Box
@@ -144,7 +144,11 @@ function Proposal({ proposal }) {
           {proposal.status}
         </Typography>
       </Box>
-      <VoteModal isOpen={voteModalOpen} onClose={handleCloseModal} />
+      <VoteModal
+        isOpen={voteModalOpen}
+        onClose={handleCloseModal}
+        proposalId={proposal.id}
+      />
     </Container>
   )
 }
