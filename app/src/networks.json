@@ -14,10 +14,10 @@
       "blockExplorerUrls": ["https://mumbai.polygonscan.com/"]
     },
     "contracts": {
-      "collectionSale": "0x16bfB6Cfb8d27917aD9EFb11Fdd3469b39d50993",
-      "charactersCollection": "0xDE902AA6AF10F448D42Aad43FFd9C4120888f9Dc",
-      "transportCollection": "0xe7ACF60acA272fA1d5de712C94aE189a9aBCD1C7",
-      "weaponCollection": "0xf01898f291d989a29620C6530b7a473291c619Ad"
+      "collectionSale": "0x83280fF66f592Fa76346f1bF19081C6592Db6F12",
+      "charactersCollection": "0x1B0aEdC47657Ca0488Db7a112221BE99957209fF",
+      "transportCollection": "0xe850d9f15DD8469eebbDc0E42955222326640A53",
+      "weaponCollection": "0xBa8Ab694cc247D65aAe6557784B0CCbf104DBAA2"
     }
   }
 }
