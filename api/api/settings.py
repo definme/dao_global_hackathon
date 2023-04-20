@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'ether_luxe'
+    'ether_luxe',
+    'django_filters'
 ]
 
 MIDDLEWARE = [

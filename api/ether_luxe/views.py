@@ -1,7 +1,10 @@
 import json
 
-from django.shortcuts import render
-from rest_framework import views, renderers, response
+from rest_framework import views, renderers, response, viewsets
+from django_filters import rest_framework, FilterSet, CharFilter
+
+from .models import Token
+from .serializer import TokenSerializer
 
 
 class CharacterMetadataView(views.APIView):
@@ -80,3 +83,20 @@ class WeaponMetadataView(views.APIView):
             data = json.load(json_file)
 
         return response.Response(data)
+
+
+class TokenFilter(FilterSet):
+    owner = CharFilter(field_name='owner')
+    collection_address = CharFilter(field_name='collection__contract_address')
+    collection_name = CharFilter(field_name='collection__name')
+    token_name = CharFilter(field_name='name')
+    contract_token_id = CharFilter(field_name='contract_token_id')
+    kind = CharFilter(field_name='kind')
+
+
+class TokenViewSet(viewsets.ModelViewSet):
+    http_method_names = ["get", "options", "head"]
+    queryset = Token.objects.all()
+    serializer_class = TokenSerializer
+    filter_backends = [rest_framework.DjangoFilterBackend]
+    filterset_class = TokenFilter

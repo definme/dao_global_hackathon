@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from ether_luxe.views import CharacterMetadataView, TransportMetadataView, WeaponMetadataView
 
 urlpatterns = [
@@ -23,4 +23,5 @@ urlpatterns = [
     path('metadata/characters/<str:contract_token_id>.json', CharacterMetadataView.as_view()),
     path('metadata/transports/<str:contract_token_id>.json', TransportMetadataView.as_view()),
     path('metadata/weapons/<str:contract_token_id>.json', WeaponMetadataView.as_view()),
+    path('api/', include("ether_luxe.urls")),
 ]
