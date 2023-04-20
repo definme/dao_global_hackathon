@@ -57,6 +57,8 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile
+      args:
+        REACT_APP_IPFS_API_KEY: '${REACT_APP_IPFS_API_KEY}'
     image: app
     restart: always
 
