@@ -2,11 +2,14 @@ import { useState, useEffect } from 'react'
 import { utils } from 'ethers'
 import networks from '../networks.json'
 import { APP_NETWORK } from '../constants'
+import { getGovernanceTokenWithProvider } from '../api/contracts'
 
 const useConnection = () => {
   const [userAddress, setUserAddress] = useState('')
   const [chainId, setChainId] = useState('')
   const [balance, setBalance] = useState(0)
+  const [governanceUserBalance, setGovernanceUserBalance] = useState(0)
+  const [governanceContractBalance, setGovernanceContractBalance] = useState(0)
 
   function getChain() {
     window.ethereum
@@ -19,6 +22,30 @@ const useConnection = () => {
     window.ethereum
       .request({ method: 'eth_getBalance', params: [userAddress, 'latest'] })
       .then(res => setBalance(Number(utils.formatEther(res))))
+      .catch(e => console.log(e))
+  }
+
+  async function getGovernanceUserBalance() {
+    const GovernanceToken = await getGovernanceTokenWithProvider()
+
+    GovernanceToken.balanceOf(userAddress)
+      .then(res => {
+        const token = Number(utils.formatEther(res))
+        setGovernanceUserBalance(token)
+        console.log(token)
+      })
+      .catch(e => console.log(e))
+  }
+
+  async function getGovernanceContractBalance() {
+    const GovernanceToken = await getGovernanceTokenWithProvider()
+
+    GovernanceToken.balanceOf(networks[APP_NETWORK].contracts.collectionSale)
+      .then(res => {
+        const token = Number(utils.formatEther(res))
+        setGovernanceContractBalance(token)
+        console.log(token)
+      })
       .catch(e => console.log(e))
   }
 
@@ -86,6 +113,8 @@ const useConnection = () => {
     if (userAddress) {
       getChain()
       getBalance()
+      getGovernanceUserBalance()
+      getGovernanceContractBalance()
     }
   }, [userAddress])
 
@@ -110,6 +139,8 @@ const useConnection = () => {
     connectWallet,
     switchNetwork,
     balance,
+    governanceUserBalance,
+    governanceContractBalance,
   }
 }
 

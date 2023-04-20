@@ -13,6 +13,8 @@ const ConnectionProvider = ({ children }) => {
     connectWallet,
     switchNetwork,
     balance,
+    governanceUserBalance,
+    governanceContractBalance,
   } = useConnection()
 
   const { dao, proposals, createProposal, voteProposal } = useDAO(userAddress)
@@ -31,6 +33,8 @@ const ConnectionProvider = ({ children }) => {
         proposals,
         createProposal,
         voteProposal,
+        governanceUserBalance,
+        governanceContractBalance,
       }}
     >
       {children}
