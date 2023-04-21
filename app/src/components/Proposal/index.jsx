@@ -7,10 +7,12 @@ import Box from '@mui/material/Box'
 import VoteModal from '../VoteModal'
 import { ConnectionContext } from '../../contexts/ConnectionContext'
 
-function Proposal({ proposal }) {
-  const { userCanVote, userAddress } = useContext(ConnectionContext)
+function Proposal({ proposal, success }) {
+  const { userCanVote, userAddress, getProposal } =
+    useContext(ConnectionContext)
   const [voteModalOpen, setVoteModalOpen] = useState(false)
   const [canVote, setCanVote] = useState(false)
+  const [hasAction, setHasAction] = useState(false)
 
   const handleOpenModal = () => setVoteModalOpen(true)
   const handleCloseModal = () => setVoteModalOpen(false)
@@ -18,6 +20,8 @@ function Proposal({ proposal }) {
   useEffect(() => {
     if (userAddress) {
       userCanVote(proposal.id).then(res => setCanVote(res.canVote))
+      if (success)
+        getProposal(proposal.id).then(res => setHasAction(res.actions[0]))
     }
   }, [userAddress, proposal])
 
@@ -94,20 +98,37 @@ function Proposal({ proposal }) {
               {Number(utils.formatEther(proposal.totalVotingWeight))}{' '}
               {proposal.token.symbol}
             </Typography>
-            <Button
-              disabled={!canVote}
-              onClick={handleOpenModal}
-              variant='contained'
-              sx={{
-                fontWeight: 'bold',
-                width: '100%',
-                minWidth: '150px',
-                background: 'lightseagreen',
-                mt: '20px',
-              }}
-            >
-              VOTE
-            </Button>
+            {success ? (
+              <Button
+                disabled={!hasAction}
+                onClick={handleOpenModal}
+                variant='contained'
+                sx={{
+                  fontWeight: 'bold',
+                  width: '100%',
+                  minWidth: '150px',
+                  background: 'lightseagreen',
+                  mt: '20px',
+                }}
+              >
+                Execute
+              </Button>
+            ) : (
+              <Button
+                disabled={!canVote}
+                onClick={handleOpenModal}
+                variant='contained'
+                sx={{
+                  fontWeight: 'bold',
+                  width: '100%',
+                  minWidth: '150px',
+                  background: 'lightseagreen',
+                  mt: '20px',
+                }}
+              >
+                VOTE
+              </Button>
+            )}
           </Box>
         </Box>
         <Box

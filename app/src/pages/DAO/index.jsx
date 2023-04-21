@@ -11,8 +11,13 @@ import { APP_NETWORK } from '../../constants'
 import { DAOLink, DAOAddressLink, DAOImg, DAOATokenLink } from './DAO.styled'
 
 function DAO() {
-  const { dao, proposals, governanceContractBalance, pendingProposals } =
-    useContext(ConnectionContext)
+  const {
+    dao,
+    proposals,
+    governanceContractBalance,
+    pendingProposals,
+    successProposals,
+  } = useContext(ConnectionContext)
   const [proposalModalOpen, setProposalModalOpen] = useState(false)
 
   function getIPFSLink(ipfs) {
@@ -135,6 +140,10 @@ function DAO() {
       {pendingProposals &&
         pendingProposals.map((proposal, key) => (
           <Proposal key={key} proposal={proposal} />
+        ))}
+      {successProposals &&
+        successProposals.map((proposal, key) => (
+          <Proposal key={key} proposal={proposal} success />
         ))}
       {proposals &&
         proposals.map((proposal, key) => (
