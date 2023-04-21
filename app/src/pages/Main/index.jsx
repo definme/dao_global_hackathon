@@ -16,11 +16,12 @@ function Main() {
         </Typography>
         <Box
           sx={{
-            width: '100%',
+            width: '80%',
             display: 'flex',
             flexWrap: 'wrap',
             gap: '20px',
             justifyContent: 'center',
+            m: 'auto',
             mb: '40px',
           }}
         >
@@ -28,16 +29,53 @@ function Main() {
             variant='p'
             component='p'
             gutterBottom
-            sx={{ m: '10px', textAlign: 'center', fontWeight: 700 }}
+            sx={{ fontWeight: 700 }}
           >
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sequi non
-            magnam perspiciatis perferendis veniam nam, aut alias ab debitis
-            fugiat. Esse assumenda, aliquam eum quos ducimus perspiciatis
-            similique temporibus tempora! Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Delectus, repudiandae velit voluptatem iusto
-            magnam, repellat deserunt dolorum provident blanditiis quasi
-            laudantium. Vel, libero. Obcaecati minus ut corporis ipsa! Impedit,
-            laborum!
+            Introducing EtherLuxe DAO, allowing players to influence the further
+            development of the game!
+          </Typography>
+          <Typography
+            variant='p'
+            component='p'
+            gutterBottom
+            sx={{ fontWeight: 500, lineHeight: '24px' }}
+          >
+            To achieve our goals, we used Aragon DAO and ERC721 game tokens. The
+            principle of our project is: <br />
+            <br />
+            - user buys a game character token on the "Marketplace" page using
+            the network's native tokens(MATIC) <br />
+            <br />- for the purchase of a character, user is credited with a
+            certain number of game governance tokens(ELT). The starting number
+            of tokens awarded for purchasing a character is 250 ELT. The more
+            characters sold, the less governance tokens will be credited for the
+            purchase - this is how we encourage our first users. The total
+            balance of governance tokens is 10000 ELT, before they are
+            distributed among users, they are stored on the "CollectionSale"
+            contract.
+            <br />
+            <br />- when 7000 ELT are distributed among users, we will enable
+            the ability to create promotions with suggestions for improvements
+            in the game.
+            <br />
+            <br />- if the proposal gets enough “yes” votes, then we will take
+            it into development and add it to the game!
+          </Typography>
+          <Typography
+            variant='p'
+            component='p'
+            gutterBottom
+            sx={{ textAlign: 'center', fontWeight: 500, lineHeight: '24px' }}
+          >
+            Rules for taking proposal:
+          </Typography>
+          <Typography
+            variant='p'
+            component='p'
+            gutterBottom
+            sx={{ textAlign: 'center', fontWeight: 500, lineHeight: '24px' }}
+          >
+            - 15% participants <br /> - 50% "yes" votes
           </Typography>
         </Box>
       </Box>
