@@ -5,12 +5,17 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import { ConnectionContext } from '../../contexts/ConnectionContext'
+import networks from '../../networks.json'
+import { APP_NETWORK } from '../../constants'
+import { shortenAddress } from '../../utils'
 
 export default function AddProposalModal({ isOpen, onClose }) {
   const { createProposal } = useContext(ConnectionContext)
   const [title, setTitle] = useState('')
   const [shortDescription, setShortDescription] = useState('')
   const [titleError, setTitleError] = useState('')
+  const [txHash, setTxHash] = useState()
+  const [success, setSuccess] = useState()
 
   async function onSubmit(e) {
     e.preventDefault()
@@ -18,7 +23,7 @@ export default function AddProposalModal({ isOpen, onClose }) {
     if (title === '') {
       setTitleError('Title not set')
     } else {
-      await createProposal(title, shortDescription)
+      await createProposal(title, shortDescription, setTxHash, setSuccess)
       onClose()
     }
   }
@@ -62,17 +67,37 @@ export default function AddProposalModal({ isOpen, onClose }) {
           value={shortDescription}
           onChange={onShortDescriptionChange}
         />
-        <Button
-          variant='contained'
-          onClick={onSubmit}
-          sx={{
-            fontWeight: 'bold',
-            background: 'lightseagreen',
-            minWidth: '150px',
-          }}
-        >
-          Create
-        </Button>
+        {txHash ? (
+          <Button
+            variant='contained'
+            sx={{
+              fontWeight: 'bold',
+              minWidth: '150px',
+              background: 'lightseagreen',
+              minHeight: '36px',
+            }}
+          >
+            <a
+              href={`${networks[APP_NETWORK].params.blockExplorerUrls}tx/${txHash}`}
+              target='_blank'
+              rel='noreferrer'
+            >
+              {success ? success : txHash && shortenAddress(txHash)}
+            </a>
+          </Button>
+        ) : (
+          <Button
+            variant='contained'
+            onClick={onSubmit}
+            sx={{
+              fontWeight: 'bold',
+              background: 'lightseagreen',
+              minWidth: '150px',
+            }}
+          >
+            Create
+          </Button>
+        )}
       </Box>
     </ModalComponent>
   )
