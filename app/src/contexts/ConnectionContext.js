@@ -17,8 +17,14 @@ const ConnectionProvider = ({ children }) => {
     governanceContractBalance,
   } = useConnection()
 
-  const { dao, proposals, createProposal, voteProposal, userCanVote } =
-    useDAO(userAddress)
+  const {
+    dao,
+    proposals,
+    createProposal,
+    voteProposal,
+    userCanVote,
+    pendingProposals,
+  } = useDAO(userAddress)
 
   return (
     <ConnectionContext.Provider
@@ -37,6 +43,7 @@ const ConnectionProvider = ({ children }) => {
         governanceUserBalance,
         governanceContractBalance,
         userCanVote,
+        pendingProposals,
       }}
     >
       {children}

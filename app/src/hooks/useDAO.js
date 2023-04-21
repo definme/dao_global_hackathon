@@ -10,6 +10,7 @@ import {
   ProposalCreationSteps,
   VoteValues,
   VoteProposalStep,
+  ProposalStatus,
 } from '@aragon/sdk-client'
 import networks from '../networks.json'
 import { APP_NETWORK, IPFS_API_KEY } from '../constants'
@@ -20,16 +21,23 @@ const useDAO = userAddress => {
 
   const [client, setClient] = useState()
   const [dao, setDao] = useState()
-  const [proposals, setProposals] = useState()
+  const [proposals, setProposals] = useState([])
+  const [pendingProposals, setPendingProposals] = useState([])
   const [tokenVotingClient, setTokenVotingClient] = useState()
 
   const queryParams = {
     daoAddressOrEns,
-    skip: 0, // optional
-    // limit: 10, // optional
-    direction: SortDirection.DESC, // optional, otherwise DESC ("descending")
-    sortBy: ProposalSortBy.CREATED_AT, // optional, otherwise NAME, VOTES (POPULARITY coming soon)
-    // status: ProposalStatus.ACTIVE, // optional, otherwise PENDING, SUCCEEDED, EXECUTED, DEFEATED
+    skip: 0,
+    direction: SortDirection.DESC,
+    sortBy: ProposalSortBy.CREATED_AT,
+    status: ProposalStatus.ACTIVE,
+  }
+  const queryParamsPending = {
+    daoAddressOrEns,
+    skip: 0,
+    direction: SortDirection.DESC,
+    sortBy: ProposalSortBy.CREATED_AT,
+    status: ProposalStatus.PENDING,
   }
 
   async function createProposal(title, description, setTxHash, setSuccess) {
@@ -116,7 +124,11 @@ const useDAO = userAddress => {
 
   async function getProposals() {
     const proposals = await tokenVotingClient.methods.getProposals(queryParams)
-    setProposals({ proposals })
+    setProposals(proposals)
+    const pendingProposals = await tokenVotingClient.methods.getProposals(
+      queryParamsPending
+    )
+    setPendingProposals(pendingProposals)
   }
 
   async function userCanVote(proposalId) {
@@ -167,6 +179,7 @@ const useDAO = userAddress => {
   return {
     dao,
     proposals,
+    pendingProposals,
     createProposal,
     voteProposal,
     userCanVote,

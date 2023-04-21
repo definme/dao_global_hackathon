@@ -11,7 +11,7 @@ import { APP_NETWORK } from '../../constants'
 import { DAOLink, DAOAddressLink, DAOImg, DAOATokenLink } from './DAO.styled'
 
 function DAO() {
-  const { dao, proposals, governanceContractBalance } =
+  const { dao, proposals, governanceContractBalance, pendingProposals } =
     useContext(ConnectionContext)
   const [proposalModalOpen, setProposalModalOpen] = useState(false)
 
@@ -132,8 +132,12 @@ function DAO() {
           </Box>
         </Box>
       )}
+      {pendingProposals &&
+        pendingProposals.map((proposal, key) => (
+          <Proposal key={key} proposal={proposal} />
+        ))}
       {proposals &&
-        proposals.proposals.map((proposal, key) => (
+        proposals.map((proposal, key) => (
           <Proposal key={key} proposal={proposal} />
         ))}
       <AddProposalModal isOpen={proposalModalOpen} onClose={handleCloseModal} />
