@@ -12,8 +12,11 @@ import {
   VoteProposalStep,
   ProposalStatus,
 } from '@aragon/sdk-client'
+import { hexToBytes } from '@aragon/sdk-common'
+import { Contract } from '@ethersproject/contracts'
 import networks from '../networks.json'
 import { APP_NETWORK, IPFS_API_KEY } from '../constants'
+import CollectionAbi from '../abi/Collection.json'
 
 const useDAO = userAddress => {
   const daoAddressOrEns = '0xf47cf722840a814f826cbe22d1ca6130974fcdc8'
@@ -23,6 +26,7 @@ const useDAO = userAddress => {
   const [dao, setDao] = useState()
   const [proposals, setProposals] = useState([])
   const [pendingProposals, setPendingProposals] = useState([])
+  const [successProposals, setSuccessProposals] = useState([])
   const [tokenVotingClient, setTokenVotingClient] = useState()
 
   const queryParams = {
@@ -38,6 +42,13 @@ const useDAO = userAddress => {
     direction: SortDirection.DESC,
     sortBy: ProposalSortBy.CREATED_AT,
     status: ProposalStatus.PENDING,
+  }
+  const queryParamsSuccess = {
+    daoAddressOrEns,
+    skip: 0,
+    direction: SortDirection.DESC,
+    sortBy: ProposalSortBy.CREATED_AT,
+    status: ProposalStatus.SUCCEEDED,
   }
 
   async function createProposal(title, description, setTxHash, setSuccess) {
@@ -55,6 +66,62 @@ const useDAO = userAddress => {
       actions: [],
       startDate: new Date(Date.now() + 300000), // 5 minutes
       endDate: new Date(Date.now() + 86400000), // 24 hours
+    }
+
+    const steps = tokenVotingClient.methods.createProposal(proposalParams)
+    for await (const step of steps) {
+      try {
+        // eslint-disable-next-line default-case
+        switch (step.key) {
+          case ProposalCreationSteps.CREATING:
+            setTxHash(step.txHash)
+            break
+          case ProposalCreationSteps.DONE:
+            console.log(step.proposalId)
+            setSuccess('SUCCESS!!')
+            break
+        }
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    getProposals()
+  }
+
+  async function createProposalWithAction(
+    title,
+    description,
+    setTxHash,
+    setSuccess
+  ) {
+    const metadata = {
+      title,
+      summary: description,
+      description,
+    }
+
+    const metadataUri = await tokenVotingClient.methods.pinMetadata(metadata)
+
+    const iface = new Contract(
+      networks[APP_NETWORK].contracts.charactersCollection,
+      CollectionAbi
+    ).interface
+    const data = iface.encodeFunctionData('addKind', ['1', 'newKind'])
+    const configAction = {
+      to: userAddress,
+      value: ethers.BigNumber.from(0),
+      data: hexToBytes(data),
+    }
+
+    // const configAction = { to: userAddress, value: ethers.utils.parseEther('0.01'), data: new Uint8Array() }
+
+    const proposalParams = {
+      pluginAddress,
+      metadataUri,
+      actions: [configAction],
+      startDate: new Date(Date.now() + 300000), // 5 minutes
+      endDate: new Date(Date.now() + 3900000), // min 1 hour
+      // endDate: new Date(Date.now() + 86400000), // 24 hours
     }
 
     const steps = tokenVotingClient.methods.createProposal(proposalParams)
@@ -129,6 +196,15 @@ const useDAO = userAddress => {
       queryParamsPending
     )
     setPendingProposals(pendingProposals)
+    const successProposals = await tokenVotingClient.methods.getProposals(
+      queryParamsSuccess
+    )
+    setSuccessProposals(successProposals)
+  }
+
+  async function getProposal(proposalId) {
+    const proposal = await tokenVotingClient.methods.getProposal(proposalId)
+    return proposal
   }
 
   async function userCanVote(proposalId) {
@@ -180,9 +256,12 @@ const useDAO = userAddress => {
     dao,
     proposals,
     pendingProposals,
+    successProposals,
     createProposal,
     voteProposal,
     userCanVote,
+    getProposal,
+    createProposalWithAction,
   }
 }
 
