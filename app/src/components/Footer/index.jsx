@@ -15,13 +15,15 @@ export default function Footer() {
         p: '40px',
       }}
     >
-      <img
-        src={require('../../images/definme.svg').default}
-        alt='definmeLogo'
-        style={{
-          marginBottom: '10px',
-        }}
-      />
+      <a href='https://definme.com/' target='_blank' rel='noreferrer'>
+        <img
+          src={require('../../images/definme.svg').default}
+          alt='definmeLogo'
+          style={{
+            marginBottom: '10px',
+          }}
+        />
+      </a>
       <Typography
         sx={{
           fontFamily: '"Inter", sans-serif',

@@ -8,10 +8,15 @@ import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import { ConnectionContext } from '../../contexts/ConnectionContext'
+import networks from '../../networks.json'
+import { APP_NETWORK } from '../../constants'
+import { shortenAddress } from '../../utils'
 
 export default function VoteModal({ isOpen, onClose, proposalId }) {
   const { voteProposal } = useContext(ConnectionContext)
   const [vote, setVote] = useState('yes')
+  const [txHash, setTxHash] = useState()
+  const [success, setSuccess] = useState()
 
   const handleChange = event => {
     setVote(event.target.value)
@@ -19,7 +24,7 @@ export default function VoteModal({ isOpen, onClose, proposalId }) {
 
   async function onSubmit(e) {
     e.preventDefault()
-    await voteProposal(proposalId, vote)
+    await voteProposal(proposalId, vote, setTxHash, setSuccess)
     onClose()
   }
 
@@ -68,18 +73,39 @@ export default function VoteModal({ isOpen, onClose, proposalId }) {
             />
           </RadioGroup>
         </FormControl>
-        <Button
-          variant='contained'
-          onClick={onSubmit}
-          sx={{
-            fontWeight: 'bold',
-            background: 'lightseagreen',
-            minWidth: '150px',
-            mt: '20px',
-          }}
-        >
-          Submit
-        </Button>
+        {txHash ? (
+          <Button
+            variant='contained'
+            sx={{
+              fontWeight: 'bold',
+              minWidth: '150px',
+              background: 'lightseagreen',
+              minHeight: '36px',
+              mt: '20px',
+            }}
+          >
+            <a
+              href={`${networks[APP_NETWORK].params.blockExplorerUrls}tx/${txHash}`}
+              target='_blank'
+              rel='noreferrer'
+            >
+              {success ? success : txHash && shortenAddress(txHash)}
+            </a>
+          </Button>
+        ) : (
+          <Button
+            variant='contained'
+            onClick={onSubmit}
+            sx={{
+              fontWeight: 'bold',
+              background: 'lightseagreen',
+              minWidth: '150px',
+              mt: '20px',
+            }}
+          >
+            Submit
+          </Button>
+        )}
       </Box>
     </ModalComponent>
   )

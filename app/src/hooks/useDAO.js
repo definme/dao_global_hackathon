@@ -32,7 +32,7 @@ const useDAO = userAddress => {
     // status: ProposalStatus.ACTIVE, // optional, otherwise PENDING, SUCCEEDED, EXECUTED, DEFEATED
   }
 
-  async function createProposal(title, description) {
+  async function createProposal(title, description, setTxHash, setSuccess) {
     const metadata = {
       title,
       summary: description,
@@ -55,10 +55,11 @@ const useDAO = userAddress => {
         // eslint-disable-next-line default-case
         switch (step.key) {
           case ProposalCreationSteps.CREATING:
-            console.log(step.txHash)
+            setTxHash(step.txHash)
             break
           case ProposalCreationSteps.DONE:
             console.log(step.proposalId)
+            setSuccess('SUCCESS!!')
             break
         }
       } catch (err) {
@@ -68,7 +69,7 @@ const useDAO = userAddress => {
     getProposals()
   }
 
-  async function voteProposal(proposalId, voteValue) {
+  async function voteProposal(proposalId, voteValue, setTxHash, setSuccess) {
     let vote
     switch (voteValue) {
       case 'yes':
@@ -95,9 +96,10 @@ const useDAO = userAddress => {
         // eslint-disable-next-line default-case
         switch (step.key) {
           case VoteProposalStep.VOTING:
-            console.log(step.txHash)
+            setTxHash(step.txHash)
             break
           case VoteProposalStep.DONE:
+            setSuccess('SUCCESS!!')
             break
         }
       } catch (err) {
