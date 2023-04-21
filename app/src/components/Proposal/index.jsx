@@ -1,16 +1,25 @@
-import { useState } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { utils } from 'ethers'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
 import VoteModal from '../VoteModal'
+import { ConnectionContext } from '../../contexts/ConnectionContext'
 
 function Proposal({ proposal }) {
+  const { userCanVote, userAddress } = useContext(ConnectionContext)
   const [voteModalOpen, setVoteModalOpen] = useState(false)
+  const [canVote, setCanVote] = useState(false)
 
   const handleOpenModal = () => setVoteModalOpen(true)
   const handleCloseModal = () => setVoteModalOpen(false)
+
+  useEffect(() => {
+    if (userAddress) {
+      userCanVote(proposal.id).then(res => setCanVote(res.canVote))
+    }
+  }, [userAddress, proposal])
 
   return (
     <Container sx={{ mb: '40px' }}>
@@ -86,6 +95,7 @@ function Proposal({ proposal }) {
               {proposal.token.symbol}
             </Typography>
             <Button
+              disabled={!canVote}
               onClick={handleOpenModal}
               variant='contained'
               sx={{
