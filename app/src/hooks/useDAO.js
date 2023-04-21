@@ -119,6 +119,16 @@ const useDAO = userAddress => {
     setProposals({ proposals })
   }
 
+  async function userCanVote(proposalId) {
+    const canVoteParams = {
+      proposalId,
+      voterAddressOrEns: userAddress,
+      vote: VoteValues.YES,
+    }
+    const canVote = await tokenVotingClient.methods.canVote(canVoteParams)
+    return { canVote }
+  }
+
   useEffect(() => {
     if (!userAddress) return
     const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -159,6 +169,7 @@ const useDAO = userAddress => {
     proposals,
     createProposal,
     voteProposal,
+    userCanVote,
   }
 }
 
