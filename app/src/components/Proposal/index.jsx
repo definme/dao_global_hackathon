@@ -6,13 +6,18 @@ import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
 import VoteModal from '../VoteModal'
 import { ConnectionContext } from '../../contexts/ConnectionContext'
+import { APP_NETWORK } from '../../constants'
+import networks from '../../networks.json'
+import { shortenAddress } from '../../utils'
 
 function Proposal({ proposal, success }) {
-  const { userCanVote, userAddress, getProposal } =
+  const { userCanVote, userAddress, getProposal, executeProposal } =
     useContext(ConnectionContext)
   const [voteModalOpen, setVoteModalOpen] = useState(false)
   const [canVote, setCanVote] = useState(false)
   const [hasAction, setHasAction] = useState(false)
+  const [txHash, setTxHash] = useState()
+  const [txSuccess, setTxSuccess] = useState()
 
   const handleOpenModal = () => setVoteModalOpen(true)
   const handleCloseModal = () => setVoteModalOpen(false)
@@ -98,10 +103,31 @@ function Proposal({ proposal, success }) {
               {Number(utils.formatEther(proposal.totalVotingWeight))}{' '}
               {proposal.token.symbol}
             </Typography>
-            {success ? (
+            {txHash ? (
+              <Button
+                variant='contained'
+                sx={{
+                  fontWeight: 'bold',
+                  minWidth: '150px',
+                  background: 'lightseagreen',
+                  minHeight: '36px',
+                  mt: '20px',
+                }}
+              >
+                <a
+                  href={`${networks[APP_NETWORK].params.blockExplorerUrls}tx/${txHash}`}
+                  target='_blank'
+                  rel='noreferrer'
+                >
+                  {txSuccess ? txSuccess : txHash && shortenAddress(txHash)}
+                </a>
+              </Button>
+            ) : success ? (
               <Button
                 disabled={!hasAction}
-                onClick={handleOpenModal}
+                onClick={() =>
+                  executeProposal(proposal.id, setTxHash, setTxSuccess)
+                }
                 variant='contained'
                 sx={{
                   fontWeight: 'bold',
@@ -129,6 +155,7 @@ function Proposal({ proposal, success }) {
                 VOTE
               </Button>
             )}
+            {}
           </Box>
         </Box>
         <Box
