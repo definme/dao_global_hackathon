@@ -11,6 +11,7 @@ import {
   VoteValues,
   VoteProposalStep,
   ProposalStatus,
+  ExecuteProposalStep,
 } from '@aragon/sdk-client'
 import { hexToBytes } from '@aragon/sdk-common'
 import { Contract } from '@ethersproject/contracts'
@@ -108,7 +109,7 @@ const useDAO = userAddress => {
     ).interface
     const data = iface.encodeFunctionData('addKind', ['1', 'newKind'])
     const configAction = {
-      to: userAddress,
+      to: networks[APP_NETWORK].contracts.charactersCollection,
       value: ethers.BigNumber.from(0),
       data: hexToBytes(data),
     }
@@ -175,6 +176,27 @@ const useDAO = userAddress => {
             break
           case VoteProposalStep.DONE:
             setSuccess('SUCCESS!!')
+            break
+        }
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    getProposals()
+  }
+
+  async function executeProposal(proposalId, setTxHash, setTxSuccess) {
+    const steps = tokenVotingClient.methods.executeProposal(proposalId)
+
+    for await (const step of steps) {
+      try {
+        // eslint-disable-next-line default-case
+        switch (step.key) {
+          case ExecuteProposalStep.EXECUTING:
+            setTxHash(step.txHash)
+            break
+          case ExecuteProposalStep.DONE:
+            setTxSuccess('SUCCESS!!')
             break
         }
       } catch (err) {
@@ -262,6 +284,7 @@ const useDAO = userAddress => {
     userCanVote,
     getProposal,
     createProposalWithAction,
+    executeProposal,
   }
 }
 
