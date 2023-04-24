@@ -29,7 +29,12 @@ function Profile() {
           variant='h4'
           component='h1'
           gutterBottom
-          sx={{ m: '40px auto 20px', textAlign: 'center', fontWeight: 700 }}
+          sx={{
+            m: '40px auto 20px',
+            textAlign: 'center',
+            fontWeight: 700,
+            color: '#E2E2E2',
+          }}
         >
           DAO Governance Token Balance
         </Typography>
@@ -61,7 +66,12 @@ function Profile() {
           variant='h4'
           component='h1'
           gutterBottom
-          sx={{ m: '40px auto 60px', textAlign: 'center', fontWeight: 700 }}
+          sx={{
+            m: '40px auto 60px',
+            textAlign: 'center',
+            fontWeight: 700,
+            color: '#E2E2E2',
+          }}
         >
           My NFTs
         </Typography>
