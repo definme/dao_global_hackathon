@@ -58,7 +58,7 @@ class PurchaseIndexer:
                                           abi=self.oracle_contract_abi)
         start_block = chain.last_indexed_block
         last_block_in_chain = w3.eth.get_block('latest')['number']
-        to_block = int(min(start_block + self.indexer_interval, last_block_in_chain))
+        to_block = int(min(start_block + 100, last_block_in_chain))
 
         event_template = sale_contract.events.PurchaseRequestCreated
         print(f'Taking events from {start_block} to {to_block}')

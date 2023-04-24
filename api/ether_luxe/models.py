@@ -6,6 +6,7 @@ class Chain(Model):
     chain_id = IntegerField(unique=True)
     rpc_url = CharField()
     last_indexed_block = PositiveBigIntegerField(default=0)
+    last_indexed_block_collection = PositiveBigIntegerField(default=0)
     creation_time = DateTimeField(auto_now_add=True)
     last_update = DateTimeField(auto_now=True)
 
