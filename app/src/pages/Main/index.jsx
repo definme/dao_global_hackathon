@@ -10,7 +10,12 @@ function Main() {
           variant='h4'
           component='h1'
           gutterBottom
-          sx={{ m: '40px auto 60px', textAlign: 'center', fontWeight: 700 }}
+          sx={{
+            m: '40px auto 60px',
+            textAlign: 'center',
+            fontWeight: 700,
+            color: '#FFFFFF',
+          }}
         >
           EtherLuxe NFTxDAO
         </Typography>
@@ -29,7 +34,7 @@ function Main() {
             variant='p'
             component='p'
             gutterBottom
-            sx={{ fontWeight: 700 }}
+            sx={{ fontWeight: 700, color: '#E2E2E2' }}
           >
             Introducing EtherLuxe DAO, allowing players to influence the further
             development of the game!
@@ -38,7 +43,7 @@ function Main() {
             variant='p'
             component='p'
             gutterBottom
-            sx={{ fontWeight: 500, lineHeight: '24px' }}
+            sx={{ fontWeight: 500, lineHeight: '24px', color: '#E2E2E2' }}
           >
             To achieve our goals, we used Aragon DAO and ERC721 game tokens. The
             principle of our project is: <br />
@@ -65,7 +70,12 @@ function Main() {
             variant='p'
             component='p'
             gutterBottom
-            sx={{ textAlign: 'center', fontWeight: 500, lineHeight: '24px' }}
+            sx={{
+              textAlign: 'center',
+              fontWeight: 500,
+              lineHeight: '24px',
+              color: '#E2E2E2',
+            }}
           >
             Rules for taking proposal:
           </Typography>
@@ -73,7 +83,12 @@ function Main() {
             variant='p'
             component='p'
             gutterBottom
-            sx={{ textAlign: 'center', fontWeight: 500, lineHeight: '24px' }}
+            sx={{
+              textAlign: 'center',
+              fontWeight: 500,
+              lineHeight: '24px',
+              color: '#E2E2E2',
+            }}
           >
             - 15% participants <br /> - 50% "yes" votes
           </Typography>

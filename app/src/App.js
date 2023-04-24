@@ -12,7 +12,7 @@ function App() {
   return (
     <Box
       sx={{
-        background: 'linear-gradient(45deg, black, transparent)',
+        background: '#161819',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
