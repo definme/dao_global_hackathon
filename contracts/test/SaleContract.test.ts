@@ -22,7 +22,10 @@ describe("SaleContract", () => {
     let governanceToken: GovernanceToken;
 
     let collectionFactory: EtherLuxeCollection__factory;
+    // is governance collection
     let collection: EtherLuxeCollection;
+    // is no-governance collection
+    let utilityCollection: EtherLuxeCollection;
 
     let oracle: SaleContractOracle;
     let oracleFactory: SaleContractOracle__factory;
@@ -45,7 +48,9 @@ describe("SaleContract", () => {
 
         collectionFactory = await ethers.getContractFactory("EtherLuxeCollection") as EtherLuxeCollection__factory;
         collection = await collectionFactory.deploy(BASE_URI, "EtherLuxeCollectionTest", "ELCT");
-        await collection.addKind(type0, 'Kind0')
+        utilityCollection = await collectionFactory.deploy(BASE_URI, "UtilityCollection", "UTIL");
+        await collection.addKind(type0, "Kind0");
+        await utilityCollection.addKind(type0, "Dummy kind");
 
         const signers = await ethers.getSigners()
         user = signers[1];
@@ -54,7 +59,6 @@ describe("SaleContract", () => {
         purchaseAdministrator = signers[4];
         oracleWorker = signers[5];
         invariantAdministrator = signers[6];
-
 
         oracleFactory = await ethers.getContractFactory("SaleContractOracle") as SaleContractOracle__factory;
         oracle = await oracleFactory.deploy(await oracleWorker.getAddress());
@@ -71,26 +75,31 @@ describe("SaleContract", () => {
 
         await governanceToken.mint(contract.address, initialGovernanceTokenAmount);
         await collection.grantRole((await collection.MINTER_ROLE()), contract.address);
+        await utilityCollection.grantRole((await utilityCollection.MINTER_ROLE()), contract.address);
     });
 
     const initialPrice = ethers.utils.parseUnits("1000", "gwei");
     describe("Add NFT process", () => {
         it("should perform NFT adding process from nft administrator", async () => {
-            await contract.connect(nftAdministrator).addNFT(collection.address, initialPrice);
+            await contract.connect(nftAdministrator).addNFT(collection.address, initialPrice, true);
+        });
+
+        it("should add supplemental NFT with no-governance status", async () => {
+            await contract.connect(nftAdministrator).addNFT(utilityCollection.address, initialPrice, false);
         });
 
         it("should revert NFT adding process from stranger", async () => {
-            const attempt = contract.connect(user).addNFT(collection.address, initialPrice);
+            const attempt = contract.connect(user).addNFT(collection.address, initialPrice, true);
             await expect(attempt).to.be.reverted;
         });
 
         it("should revert NFT adding of already added NFT", async () => {
-            const attempt = contract.connect(nftAdministrator).addNFT(collection.address, initialPrice);
+            const attempt = contract.connect(nftAdministrator).addNFT(collection.address, initialPrice, true);
             await expect(attempt).to.be.revertedWith("ALREADY_ADDED");
         });
     });
 
-    describe("Buy NFT process", () => {
+    describe("Buy governance NFT process", () => {
 
         it("should revert buying non-added NFT", async () => {
             // some dummy address which is not NFT collection
@@ -143,6 +152,36 @@ describe("SaleContract", () => {
             expect(await collection.balanceOf(owner)).to.equal(1);
         });
 
+    });
+
+    describe("Buy no-governance supplemental NFT process", () => {
+        let txHash: string;
+        let balanceBefore: BigNumber;
+
+        it("should init buying process", async () => {
+            balanceBefore = await governanceToken.balanceOf(await user.getAddress());
+            const tx = await contract.connect(user).requestNFTPurchase(utilityCollection.address, type0, {
+                value: initialPrice
+            });
+            txHash = tx.hash;
+        });
+
+        it("should add purchase request to oracle", async () => {
+            await oracle.connect(oracleWorker).addPurchaseRequest(txHash,
+                await user.getAddress(),
+                utilityCollection.address,
+                type0,
+                initialPrice);
+        });
+
+        it("should process purchase request", async () => {
+            await contract.connect(purchaseAdministrator).processNFTPurchase(txHash);
+        });
+
+        it("should not change user's governance token balance", async () => {
+            const balanceAfter = await governanceToken.balanceOf(await user.getAddress());
+            expect(balanceBefore).eq(balanceAfter);
+        });
     });
 
     describe("Change Collection's price process", () => {
