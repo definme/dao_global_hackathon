@@ -1,13 +1,27 @@
 import { useContext, useEffect, useState } from 'react'
-import Container from '@mui/material/Container'
-import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import ProfileCard from '../../components/ProfileCard'
 import { ConnectionContext } from '../../contexts/ConnectionContext'
 import { getCollectionTokens } from '../../api'
+import {
+  ProfileTitle,
+  ProfileContainer,
+  ProfileBalances,
+  ProfileBalanceItem,
+  ProfileBalanceWrapper,
+  ProfileBalanceAmount,
+  ProfileBalanceAmountSpan,
+  ProfileBalanceName,
+  ProfileBalanceImageContainer,
+  ProfileInfo,
+  ProfileInfoTitle,
+  ProfileInfoSubtitle,
+  ProfileInfoButton,
+} from './Profile.styled'
 
 function Profile() {
-  const { governanceUserBalance, userAddress } = useContext(ConnectionContext)
+  const { governanceUserBalance, userAddress, balance } =
+    useContext(ConnectionContext)
   const [collection, setCollection] = useState([])
 
   function getNFTs() {
@@ -23,74 +37,75 @@ function Profile() {
   }, [userAddress])
 
   return (
-    <Container sx={{ mb: '40px' }}>
-      <Box>
-        <Typography
-          variant='h4'
-          component='h1'
-          gutterBottom
-          sx={{
-            m: '40px auto 20px',
-            textAlign: 'center',
-            fontWeight: 700,
-            color: '#E2E2E2',
-          }}
-        >
-          DAO Governance Token Balance
-        </Typography>
-        <Box
-          sx={{
-            width: '100%',
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '20px',
-            justifyContent: 'center',
-          }}
-        >
-          <Box
-            sx={{
-              background: 'rgba(0, 0, 0, 0.8)',
-              p: '40px',
-              borderRadius: '20px',
-            }}
-          >
-            <Typography
-              color='white'
-              sx={{ fontSize: '20px', fontWeight: 600 }}
-            >
-              {Number(governanceUserBalance).toFixed(2)} EtherLuxeToken(ELT)
-            </Typography>
-          </Box>
-        </Box>
-        <Typography
-          variant='h4'
-          component='h1'
-          gutterBottom
-          sx={{
-            m: '40px auto 60px',
-            textAlign: 'center',
-            fontWeight: 700,
-            color: '#E2E2E2',
-          }}
-        >
-          My NFTs
-        </Typography>
-        <Box
-          sx={{
-            width: '100%',
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '20px',
-            justifyContent: 'center',
-            mb: '60px',
-          }}
-        >
-          {collection.map((token, key) => (
-            <ProfileCard key={key} {...token} />
-          ))}
-        </Box>
+    <ProfileContainer>
+      <ProfileTitle>DAO Governance Token Balance</ProfileTitle>
+      <ProfileBalances>
+        <ProfileBalanceItem>
+          <ProfileBalanceImageContainer>
+            <img
+              src={require('../../images/network.png')}
+              alt='matic'
+              width='40px'
+              height='36px'
+            />
+          </ProfileBalanceImageContainer>
+          <ProfileBalanceWrapper>
+            <ProfileBalanceAmount>
+              <ProfileBalanceAmountSpan>
+                {Number(balance).toFixed(2)}
+              </ProfileBalanceAmountSpan>{' '}
+              MATIC
+            </ProfileBalanceAmount>
+            <ProfileBalanceName>Balance</ProfileBalanceName>
+          </ProfileBalanceWrapper>
+        </ProfileBalanceItem>
+        <ProfileBalanceItem>
+          <ProfileBalanceImageContainer elt>
+            <img
+              src={require('../../images/Logo.png')}
+              alt='elt'
+              width='30px'
+              height='45px'
+            />
+          </ProfileBalanceImageContainer>
+          <ProfileBalanceWrapper>
+            <ProfileBalanceAmount>
+              <ProfileBalanceAmountSpan>
+                {Number(governanceUserBalance).toFixed(2)}
+              </ProfileBalanceAmountSpan>{' '}
+              ELT
+            </ProfileBalanceAmount>
+            <ProfileBalanceName>Balance</ProfileBalanceName>
+          </ProfileBalanceWrapper>
+        </ProfileBalanceItem>
+      </ProfileBalances>
+      <ProfileTitle>My NFTs</ProfileTitle>
+      <Box
+        sx={{
+          width: '100%',
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '20px',
+          justifyContent: 'center',
+          mb: '60px',
+        }}
+      >
+        {collection.length > 0 ? (
+          collection.map((token, key) => <ProfileCard key={key} {...token} />)
+        ) : (
+          <ProfileInfo>
+            <ProfileInfoTitle>You don't have an NFTs yet.</ProfileInfoTitle>
+            <ProfileInfoSubtitle>
+              You can go to the Marketplace section and purchase any NFT you
+              like.
+            </ProfileInfoSubtitle>
+            <ProfileInfoButton to='/marketplace'>
+              Go to marketplace
+            </ProfileInfoButton>
+          </ProfileInfo>
+        )}
       </Box>
-    </Container>
+    </ProfileContainer>
   )
 }
 
