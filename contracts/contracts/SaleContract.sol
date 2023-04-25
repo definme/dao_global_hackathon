@@ -14,10 +14,11 @@ contract SaleContract is AccessControl {
         keccak256("PRICE_MODERATOR_ROLE");
     bytes32 public constant PURCHASE_ADMINISTRATOR_ROLE =
         keccak256("PURCHASE_ADMINISTRATOR_ROLE");
-    bytes32 public constant INVARIANT_ADMINISTRATOR_ROLE = 
+    bytes32 public constant INVARIANT_ADMINISTRATOR_ROLE =
         keccak256("INVARIANT_ADMINISTRATOR_ROLE");
 
     mapping(EtherLuxeCollection => uint256) public collectionPrice;
+    mapping(EtherLuxeCollection => bool) public isCollectionGovernance;
 
     uint256 public governanceTokensInvariant;
 
@@ -60,13 +61,18 @@ contract SaleContract is AccessControl {
 
     function addNFT(
         EtherLuxeCollection collection,
-        uint256 initialPrice
+        uint256 initialPrice,
+        bool isGovernance
     ) public onlyRole(NFT_ADMINISTATOR_ROLE) {
         require(collectionPrice[collection] == 0, "ALREADY_ADDED");
         collectionPrice[collection] = initialPrice;
+        isCollectionGovernance[collection] = isGovernance;
     }
 
-    function requestNFTPurchase(EtherLuxeCollection collection, uint256 kind) public payable {
+    function requestNFTPurchase(
+        EtherLuxeCollection collection,
+        uint256 kind
+    ) public payable {
         uint256 price = getPrice(collection);
         require(msg.value == price, "BAD_NATIVE_AMOUNT");
         address buyer = _msgSender();
@@ -85,16 +91,21 @@ contract SaleContract is AccessControl {
         require(buyer != address(0), "BAD_BUYER");
         require(collection != address(0), "BAD_COLLECTION");
 
-        EtherLuxeCollection collectionInstance = EtherLuxeCollection(collection);
+        EtherLuxeCollection collectionInstance = EtherLuxeCollection(
+            collection
+        );
         uint256 price = getPrice(collectionInstance);
         require(providedNativeAmount == price, "BAD_NATIVE_AMOUNT");
 
         uint256 governanceTokenAmount = getGovernanceTokensAmount();
-        if (
-            governanceToken.balanceOf(address(this)) >= governanceTokenAmount &&
-            governanceTokenAmount != 0
-        ) {
-            governanceToken.transfer(buyer, governanceTokenAmount);
+        if (isCollectionGovernance[collectionInstance]) {
+            if (
+                governanceToken.balanceOf(address(this)) >=
+                governanceTokenAmount &&
+                governanceTokenAmount != 0
+            ) {
+                governanceToken.transfer(buyer, governanceTokenAmount);
+            }
         } else {
             // event with 0 governance token amount means
             // no governance tokens are available
@@ -111,19 +122,28 @@ contract SaleContract is AccessControl {
         );
     }
 
-    function setGovernanceTokensInvariant(uint256 value) public onlyRole(INVARIANT_ADMINISTRATOR_ROLE) {
+    function setGovernanceTokensInvariant(
+        uint256 value
+    ) public onlyRole(INVARIANT_ADMINISTRATOR_ROLE) {
         governanceTokensInvariant = value;
     }
 
-    function setPrice(EtherLuxeCollection collection, uint256 price) public onlyRole(PRICE_MODERATOR_ROLE) {
+    function setPrice(
+        EtherLuxeCollection collection,
+        uint256 price
+    ) public onlyRole(PRICE_MODERATOR_ROLE) {
         collectionPrice[collection] = price;
     }
 
-    function setGovernanceToken(ERC20 token) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    function setGovernanceToken(
+        ERC20 token
+    ) public onlyRole(DEFAULT_ADMIN_ROLE) {
         governanceToken = token;
     }
 
-    function getPrice(EtherLuxeCollection collection) public view returns (uint256) {
+    function getPrice(
+        EtherLuxeCollection collection
+    ) public view returns (uint256) {
         uint256 price = collectionPrice[collection];
         require(price > 0, "BAD_COLLECTION");
         return price;
@@ -134,7 +154,7 @@ contract SaleContract is AccessControl {
         if (divisor == 0) {
             divisor = 1;
         }
-        return governanceTokensInvariant / divisor * 1 ether;
+        return (governanceTokensInvariant / divisor) * 1 ether;
     }
 
     function withdraw() public onlyRole(DEFAULT_ADMIN_ROLE) {
