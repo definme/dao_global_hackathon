@@ -1,14 +1,27 @@
 import { useState, useContext, useEffect } from 'react'
 import { utils } from 'ethers'
-import Container from '@mui/material/Container'
-import Typography from '@mui/material/Typography'
-import { Button } from '@mui/material'
-import Box from '@mui/material/Box'
 import VoteModal from '../VoteModal'
 import { ConnectionContext } from '../../contexts/ConnectionContext'
 import { APP_NETWORK } from '../../constants'
 import networks from '../../networks.json'
 import { shortenAddress } from '../../utils'
+import {
+  ProposalContainer,
+  ProposalInfoContainer,
+  ProposalTitle,
+  ProposalSummary,
+  ProposalBadge,
+  ProposalDescription,
+  ProposalAddresses,
+  ProposalAddress,
+  ProposalAddressSpan,
+  ProposalResults,
+  ProposalResult,
+  ProposalResultSpan,
+  ProposalVotingContainer,
+  ProposalVotingInfo,
+  ProposalButton,
+} from './Proposal.styled'
 
 function Proposal({ proposal, success }) {
   const { userCanVote, userAddress, getProposal, executeProposal } =
@@ -31,183 +44,94 @@ function Proposal({ proposal, success }) {
   }, [userAddress, proposal])
 
   return (
-    <Container sx={{ mb: '40px' }}>
-      <Box
-        sx={{
-          width: '90%',
-          boxSizing: 'border-box',
-          display: 'flex',
-          gap: '20px',
-          justifyContent: 'space-between',
-          background: 'rgba(0, 0, 0, 0.3);',
-          borderRadius: '20px',
-          m: '20px auto',
-          p: '40px',
-          position: 'relative',
-        }}
-      >
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'flex-start',
-            flexDirection: 'column',
-          }}
-        >
-          <Typography
-            variant='h4'
-            component='h1'
-            gutterBottom
-            sx={{
-              textAlign: 'center',
-              fontWeight: 700,
-              color: 'lightseagreen',
-            }}
-          >
-            {proposal.metadata.title}
-          </Typography>
-
-          <Box>
-            <Typography
-              sx={{
-                color: 'white',
-              }}
-            >
-              Yes: {Number(utils.formatEther(proposal.result.yes))}{' '}
-              {proposal.token.symbol}
-            </Typography>
-            <Typography
-              sx={{
-                color: 'white',
-              }}
-            >
-              No: {Number(utils.formatEther(proposal.result.no))}{' '}
-              {proposal.token.symbol}
-            </Typography>
-            <Typography
-              sx={{
-                color: 'white',
-              }}
-            >
-              Abstain: {Number(utils.formatEther(proposal.result.abstain))}{' '}
-              {proposal.token.symbol}
-            </Typography>
-            <Typography
-              sx={{
-                color: 'white',
-                mt: '10px',
-                borderTop: '1px solid rgba(0, 0, 0, 0.8)',
-              }}
-            >
-              out of the total number of tokens:{' '}
-              {Number(utils.formatEther(proposal.totalVotingWeight))}{' '}
-              {proposal.token.symbol}
-            </Typography>
-            {txHash ? (
-              <Button
-                variant='contained'
-                sx={{
-                  fontWeight: 'bold',
-                  minWidth: '150px',
-                  background: 'lightseagreen',
-                  minHeight: '36px',
-                  mt: '20px',
-                }}
+    <>
+      <ProposalContainer>
+        <ProposalInfoContainer>
+          <div>
+            <ProposalTitle>{proposal.metadata.title}</ProposalTitle>
+            <ProposalSummary>{proposal.metadata.summary}</ProposalSummary>
+          </div>
+          <ProposalBadge status={proposal.status}>
+            {proposal.status}
+          </ProposalBadge>
+        </ProposalInfoContainer>
+        <ProposalDescription>
+          <ProposalAddresses>
+            <ProposalAddress>
+              Proposal ID:{'   '}
+              <ProposalAddressSpan>
+                {shortenAddress(proposal.id)}
+              </ProposalAddressSpan>
+            </ProposalAddress>
+            <ProposalAddress>
+              Creator:{' '}
+              <ProposalAddressSpan>
+                {shortenAddress(proposal.creatorAddress)}
+              </ProposalAddressSpan>
+            </ProposalAddress>
+          </ProposalAddresses>
+          <ProposalResults>
+            <ProposalResult>
+              Yes:{' '}
+              <ProposalResultSpan>
+                {Number(utils.formatEther(proposal.result.yes))}{' '}
+                {proposal.token.symbol}
+              </ProposalResultSpan>
+            </ProposalResult>
+            <ProposalResult>
+              No:{' '}
+              <ProposalResultSpan>
+                {Number(utils.formatEther(proposal.result.no))}{' '}
+                {proposal.token.symbol}
+              </ProposalResultSpan>
+            </ProposalResult>
+            <ProposalResult>
+              Abstain:{' '}
+              <ProposalResultSpan>
+                {Number(utils.formatEther(proposal.result.abstain))}{' '}
+                {proposal.token.symbol}
+              </ProposalResultSpan>
+            </ProposalResult>
+          </ProposalResults>
+        </ProposalDescription>
+        <ProposalVotingContainer>
+          <ProposalVotingInfo>
+            Out of the total number of tokens:{' '}
+            {Number(utils.formatEther(proposal.totalVotingWeight))}{' '}
+            {proposal.token.symbol}
+          </ProposalVotingInfo>
+          {txHash ? (
+            <ProposalButton>
+              <a
+                href={`${networks[APP_NETWORK].params.blockExplorerUrls}tx/${txHash}`}
+                target='_blank'
+                rel='noreferrer'
               >
-                <a
-                  href={`${networks[APP_NETWORK].params.blockExplorerUrls}tx/${txHash}`}
-                  target='_blank'
-                  rel='noreferrer'
-                >
-                  {txSuccess ? txSuccess : txHash && shortenAddress(txHash)}
-                </a>
-              </Button>
-            ) : success ? (
-              <Button
-                disabled={!hasAction}
-                onClick={() =>
-                  executeProposal(proposal.id, setTxHash, setTxSuccess)
-                }
-                variant='contained'
-                sx={{
-                  fontWeight: 'bold',
-                  width: '100%',
-                  minWidth: '150px',
-                  background: 'lightseagreen',
-                  mt: '20px',
-                }}
-              >
-                Execute
-              </Button>
-            ) : (
-              <Button
-                disabled={!canVote}
-                onClick={handleOpenModal}
-                variant='contained'
-                sx={{
-                  fontWeight: 'bold',
-                  width: '100%',
-                  minWidth: '150px',
-                  background: 'lightseagreen',
-                  mt: '20px',
-                }}
-              >
-                VOTE
-              </Button>
-            )}
-            {}
-          </Box>
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-start',
-            gap: '20px',
-          }}
-        >
-          <Typography
-            variant='p'
-            component='p'
-            gutterBottom
-            sx={{
-              color: 'white',
-            }}
-          >
-            {proposal.metadata.summary}
-          </Typography>
-          <Typography
-            sx={{
-              color: 'white',
-            }}
-          >
-            Proposal ID: {proposal.id}
-          </Typography>
-          <Typography
-            sx={{
-              color: 'white',
-            }}
-          >
-            Creator: {proposal.creatorAddress}
-          </Typography>
-        </Box>
-        <Typography
-          sx={{
-            color: 'lightseagreen',
-            position: 'absolute',
-            bottom: '20px',
-            right: '20px',
-          }}
-        >
-          {proposal.status}
-        </Typography>
-      </Box>
+                {txSuccess ? txSuccess : txHash && shortenAddress(txHash)}
+              </a>
+            </ProposalButton>
+          ) : success ? (
+            <ProposalButton
+              disabled={!hasAction}
+              onClick={() =>
+                executeProposal(proposal.id, setTxHash, setTxSuccess)
+              }
+            >
+              Execute
+            </ProposalButton>
+          ) : (
+            <ProposalButton disabled={!canVote} onClick={handleOpenModal}>
+              VOTE
+            </ProposalButton>
+          )}
+        </ProposalVotingContainer>
+      </ProposalContainer>
       <VoteModal
         isOpen={voteModalOpen}
         onClose={handleCloseModal}
         proposalId={proposal.id}
       />
-    </Container>
+    </>
   )
 }
 

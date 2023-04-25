@@ -1,14 +1,30 @@
 import { useContext, useState } from 'react'
-import Container from '@mui/material/Container'
-import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
-import Box from '@mui/material/Box'
 import Proposal from '../../components/Proposal'
 import AddProposalModal from '../../components/AddProposalModal'
 import { ConnectionContext } from '../../contexts/ConnectionContext'
 import networks from '../../networks.json'
 import { APP_NETWORK } from '../../constants'
-import { DAOLink, DAOAddressLink, DAOImg, DAOATokenLink } from './DAO.styled'
+import { shortenAddress } from '../../utils'
+import {
+  DAOLink,
+  DAOAddressLink,
+  DAOImg,
+  DAOATokenLink,
+  DAOContainer,
+  DAOInfo,
+  DAOInfoContainer,
+  DAOInfoLinkContainer,
+  DAOInfoNameContainer,
+  DAOInfoTextContainer,
+  DAOInfoNameTitle,
+  DAOShareButton,
+  DAODescription,
+  DAOPromoContainer,
+  DAOButton,
+  DAOPromoText,
+  DAOBalanceImageContainer,
+  DAOSubtitle,
+} from './DAO.styled'
 
 function DAO() {
   const {
@@ -29,86 +45,59 @@ function DAO() {
   const handleCloseModal = () => setProposalModalOpen(false)
 
   return (
-    <Container sx={{ mb: '40px' }}>
+    <DAOContainer>
       {dao && (
-        <Box
-          sx={{
-            width: '100%',
-            boxSizing: 'border-box',
-            display: 'flex',
-            gap: '20px',
-            justifyContent: 'center',
-            flexDirection: 'column',
-            background: 'rgba(0, 0, 0, 0.8);',
-            borderRadius: '20px',
-            m: '40px auto 60px',
-            p: '40px',
-          }}
-        >
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
-            <Typography
-              variant='h4'
-              component='h1'
-              gutterBottom
-              sx={{
-                textAlign: 'center',
-                fontWeight: 700,
-                color: 'lightseagreen',
-              }}
-            >
-              {dao.dao?.metadata?.name}
-            </Typography>
-            <DAOAddressLink
-              href={
-                networks[APP_NETWORK].params.blockExplorerUrls[0] +
-                'address/' +
-                dao.dao?.address
-              }
-              target='_blank'
-            >
-              {dao.dao?.address}
-            </DAOAddressLink>
-          </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              gap: '20px',
-            }}
-          >
-            <Box
-              sx={{
-                maxWidth: '800px',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-              }}
-            >
-              <Typography
-                variant='p'
-                component='p'
-                gutterBottom
-                sx={{
-                  color: 'white',
-                }}
+        <DAOInfo>
+          <DAOInfoContainer>
+            <DAOInfoNameContainer>
+              <DAOImg
+                src={getIPFSLink(dao.dao?.metadata?.avatar)}
+                alt='avatar'
+              />
+              <DAOInfoTextContainer>
+                <DAOInfoNameTitle>{dao.dao?.metadata?.name}</DAOInfoNameTitle>{' '}
+                <DAOLink
+                  href={dao.dao?.metadata?.links[0]?.url}
+                  target='_blank'
+                >
+                  {dao.dao?.metadata?.links[0]?.url}
+                </DAOLink>
+              </DAOInfoTextContainer>
+            </DAOInfoNameContainer>
+            <DAOInfoLinkContainer>
+              <DAOShareButton
+                href={
+                  networks[APP_NETWORK].params.blockExplorerUrls[0] +
+                  'address/' +
+                  dao.dao?.address
+                }
+                target='_blank'
               >
-                {dao.dao?.metadata?.description}
-              </Typography>
-              <Typography
-                variant='p'
-                component='p'
-                gutterBottom
-                sx={{
-                  color: 'white',
-                }}
-              >
-                {Number(governanceContractBalance).toFixed(0)} free DAO
+                <img
+                  src={require('../../images/share.png')}
+                  width='20px'
+                  height='20px'
+                  alt='share'
+                />
+              </DAOShareButton>
+              <DAOAddressLink>
+                {shortenAddress(dao.dao?.address)}
+              </DAOAddressLink>
+            </DAOInfoLinkContainer>
+          </DAOInfoContainer>
+          <DAODescription> {dao.dao?.metadata?.description}</DAODescription>
+          <DAOPromoContainer>
+            <DAOPromoText>
+              <DAOBalanceImageContainer>
+                <img
+                  src={require('../../images/Logo.png')}
+                  alt='matic'
+                  width='21px'
+                  height='32px'
+                />
+              </DAOBalanceImageContainer>
+              <span>
+                {Number(governanceContractBalance).toFixed(0)} FREE DAO
                 Governance tokens!{' '}
                 <DAOATokenLink
                   href={`${networks[APP_NETWORK].params.blockExplorerUrls[0]}address/${networks[APP_NETWORK].contracts.governanceToken}`}
@@ -116,27 +105,13 @@ function DAO() {
                 >
                   (ELT)
                 </DAOATokenLink>
-              </Typography>
-              <DAOLink href={dao.dao?.metadata?.links[0]?.url} target='_blank'>
-                {dao.dao?.metadata?.links[0]?.url}
-              </DAOLink>
-              <Button
-                onClick={handleOpenModal}
-                variant='contained'
-                sx={{
-                  fontWeight: 'bold',
-                  background: 'lightseagreen',
-                  mt: '40px',
-                  maxWidth: '250px',
-                }}
-              >
-                Create new proposal
-              </Button>
-            </Box>
-            <DAOImg src={getIPFSLink(dao.dao?.metadata?.avatar)} alt='avatar' />
-          </Box>
-        </Box>
+              </span>
+            </DAOPromoText>
+            <DAOButton onClick={handleOpenModal}>Create new proposal</DAOButton>
+          </DAOPromoContainer>
+        </DAOInfo>
       )}
+      <DAOSubtitle>DAO Governance</DAOSubtitle>
       {pendingProposals &&
         pendingProposals.map((proposal, key) => (
           <Proposal key={key} proposal={proposal} />
@@ -150,7 +125,7 @@ function DAO() {
           <Proposal key={key} proposal={proposal} />
         ))}
       <AddProposalModal isOpen={proposalModalOpen} onClose={handleCloseModal} />
-    </Container>
+    </DAOContainer>
   )
 }
 
