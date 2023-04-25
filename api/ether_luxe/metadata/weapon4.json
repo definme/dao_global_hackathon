@@ -1,7 +1,7 @@
 {
-  "name": "Weapon 4",
+  "name": "Handmade grenade",
   "image": "https://ether-luxe.definme.com/images/weapon4.png",
-  "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad aut cupiditate earum eius error fuga hic id impedit ipsa iste itaque nisi quae quo recusandae sed sunt veniam, vero.",
+  "description": "Total destruction of the enemy at an average distance with a large radius of destruction in open areas. Requires cover on the battlefield to use.",
   "attributes": [
     {
       "trait_type": "Type",

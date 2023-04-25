@@ -68,13 +68,14 @@ class CollectionsIndexer:
                     metadata = requests.get(metadata_uri).json()
                     name = metadata['name']
                     image_uri = metadata['image']
+                    description = metadata['description']
                     exists_token = Token.objects.filter(collection=collection, contract_token_id=token_id)
                     if exists_token:
                         new_token = exists_token.first()
                         new_token.owner = address_to
                     else:
                         new_token = Token.objects.create(
-                            collection=collection, kind=kind, name=name, image_uri=image_uri,
+                            collection=collection, kind=kind, name=name, description=description, image_uri=image_uri,
                             contract_token_id=token_id, owner=address_to
                         )
                     new_token.save()

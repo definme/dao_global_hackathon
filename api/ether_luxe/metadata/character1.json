@@ -1,7 +1,7 @@
 {
-  "name": "Char 1",
+  "name": "Squad Leader",
   "image": "https://ether-luxe.definme.com/images/character1.png",
-  "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad aut cupiditate earum eius error fuga hic id impedit ipsa iste itaque nisi quae quo recusandae sed sunt veniam, vero.",
+  "description": "Possesses all the necessary skills for combat and squad control. Excellent firing at short and medium distances.",
   "attributes": [
     {
       "trait_type": "Type",

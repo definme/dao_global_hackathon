@@ -1,7 +1,7 @@
 {
-  "name": "Weapon 2",
+  "name": "Sawed-Off Shotgun",
   "image": "https://ether-luxe.definme.com/images/weapon2.png",
-  "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad aut cupiditate earum eius error fuga hic id impedit ipsa iste itaque nisi quae quo recusandae sed sunt veniam, vero.",
+  "description": "Huge damaging ability at close range. However, low rate of fire and high weight.",
   "attributes": [
     {
       "trait_type": "Type",

@@ -1,7 +1,7 @@
 {
-  "name": "Transport 3",
+  "name": "Helicopter on wheels",
   "image": "https://ether-luxe.definme.com/images/transport3.png",
-  "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad aut cupiditate earum eius error fuga hic id impedit ipsa iste itaque nisi quae quo recusandae sed sunt veniam, vero.",
+  "description": "It has the maneuverability of a motorcycle and the aerial advantages of a helicopter. But because of the large weight - not high speed. Equipped with medium level armor.",
   "attributes": [
     {
       "trait_type": "Type",

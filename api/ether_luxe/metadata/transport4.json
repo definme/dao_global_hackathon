@@ -1,7 +1,7 @@
 {
-  "name": "Transport 4",
+  "name": "Top car-airplane",
   "image": "https://ether-luxe.definme.com/images/transport4.png",
-  "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad aut cupiditate earum eius error fuga hic id impedit ipsa iste itaque nisi quae quo recusandae sed sunt veniam, vero.",
+  "description": "Fast and indispensable in the air at low altitudes. But you need an open landing area.",
   "attributes": [
     {
       "trait_type": "Type",

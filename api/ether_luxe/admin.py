@@ -14,6 +14,6 @@ class CollectionAdmin(admin.ModelAdmin):
 
 @admin.register(Token)
 class TokenAdmin(admin.ModelAdmin):
-    list_display = ('collection', 'kind', 'name', 'image_uri', 'contract_token_id',
+    list_display = ('collection', 'kind', 'name', 'description', 'image_uri', 'contract_token_id',
                     'owner', 'level', 'creation_time', 'last_update',)
     search_fields = ('kind', 'name', 'collection__name', 'contract_token_id')
