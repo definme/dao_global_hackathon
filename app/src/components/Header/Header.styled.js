@@ -150,4 +150,10 @@ export const ConnectButton = styled.button`
   border-radius: 8px;
   background-color: transparent;
   cursor: pointer;
+  transition: all 0.5s ease-in-out;
+
+  &:hover {
+    opacity: 0.7;
+    box-shadow: inset 0 0 15px 0 #ff6933;
+  }
 `
