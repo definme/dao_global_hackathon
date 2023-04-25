@@ -1,7 +1,7 @@
 {
-  "name": "Weapon 1",
+  "name": "Assault pistol",
   "image": "https://ether-luxe.definme.com/images/weapon1.png",
-  "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad aut cupiditate earum eius error fuga hic id impedit ipsa iste itaque nisi quae quo recusandae sed sunt veniam, vero.",
+  "description": "It has low aiming accuracy and damaging capabilities. Easy to transport due to its mobility. It also has a good rate of fire.",
   "attributes": [
     {
       "trait_type": "Type",

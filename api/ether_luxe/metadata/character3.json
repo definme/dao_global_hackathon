@@ -1,7 +1,7 @@
 {
-  "name": "Char 3",
+  "name": "Scout Saboteur",
   "image": "https://ether-luxe.definme.com/images/character3.png",
-  "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad aut cupiditate earum eius error fuga hic id impedit ipsa iste itaque nisi quae quo recusandae sed sunt veniam, vero.",
+  "description": "Able to destroy enemy vehicles at close range. And also can fight from a long distance - an excellent sniper.",
   "attributes": [
     {
       "trait_type": "Type",

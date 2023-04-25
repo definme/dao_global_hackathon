@@ -1,7 +1,7 @@
 {
-  "name": "Transport 1",
+  "name": "Restored motorcycle",
   "image": "https://ether-luxe.definme.com/images/transport1.png",
-  "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad aut cupiditate earum eius error fuga hic id impedit ipsa iste itaque nisi quae quo recusandae sed sunt veniam, vero.",
+  "description": "Lightness, speed and maneuverability compensate for the lack of armor. Indispensable in narrow streets.",
   "attributes": [
     {
       "trait_type": "Type",

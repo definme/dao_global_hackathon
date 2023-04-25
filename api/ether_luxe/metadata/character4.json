@@ -1,7 +1,7 @@
 {
-  "name": "Char 4",
+  "name": "Dungeon Doctor",
   "image": "https://ether-luxe.definme.com/images/character4.png",
-  "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad aut cupiditate earum eius error fuga hic id impedit ipsa iste itaque nisi quae quo recusandae sed sunt veniam, vero.",
+  "description": "Able to heal any member of the squad on the battlefield or quickly carry the wounded to cover. Possesses good skills in combat at medium distances.",
   "attributes": [
     {
       "trait_type": "Type",

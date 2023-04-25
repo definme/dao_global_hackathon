@@ -1,7 +1,7 @@
 {
-  "name": "Weapon 3",
+  "name": "Multipurpose sniper rifle",
   "image": "https://ether-luxe.definme.com/images/weapon3.png",
-  "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad aut cupiditate earum eius error fuga hic id impedit ipsa iste itaque nisi quae quo recusandae sed sunt veniam, vero.",
+  "description": "Heavy weight and low reload speed are offset by incomparable performance at long range in any conditions.",
   "attributes": [
     {
       "trait_type": "Type",

@@ -1,5 +1,5 @@
 from django.db.models import Model, IntegerField, CharField, DateTimeField, PositiveBigIntegerField, DecimalField, \
-    ForeignKey, CASCADE
+    ForeignKey, CASCADE, TextField
 
 
 class Chain(Model):
@@ -28,6 +28,7 @@ class Token(Model):
     collection = ForeignKey(Collection, related_name='character', on_delete=CASCADE)
     kind = DecimalField(max_digits=80, decimal_places=0)
     name = CharField(max_length=255)
+    description = TextField(blank=True, null=True)
     image_uri = CharField(max_length=255)
     contract_token_id = DecimalField(max_digits=80, decimal_places=0)
     owner = CharField(max_length=255)

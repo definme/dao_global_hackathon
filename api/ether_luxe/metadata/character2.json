@@ -1,7 +1,7 @@
 {
-  "name": "Char 2",
+  "name": "Repulsed Repairman",
   "image": "https://ether-luxe.definme.com/images/character2.png",
-  "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad aut cupiditate earum eius error fuga hic id impedit ipsa iste itaque nisi quae quo recusandae sed sunt veniam, vero.",
+  "description": "Able to repair any equipment on the battlefield. As well as a high level of use of heavy weapons.",
   "attributes": [
     {
       "trait_type": "Type",

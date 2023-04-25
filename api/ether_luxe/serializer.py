@@ -12,6 +12,6 @@ class TokenSerializer(ModelSerializer):
     collection = CollectionSerializer(many=False, read_only=True)
 
     class Meta:
-        fields = ('collection', 'kind', 'name', 'image_uri', 'contract_token_id',
+        fields = ('collection', 'kind', 'name', 'description', 'image_uri', 'contract_token_id',
                   'owner', 'level', 'creation_time', 'last_update')
         model = Token

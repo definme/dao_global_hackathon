@@ -1,7 +1,7 @@
 {
-  "name": "Transport 2",
+  "name": "Land boat",
   "image": "https://ether-luxe.definme.com/images/transport2.png",
-  "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium ad aut cupiditate earum eius error fuga hic id impedit ipsa iste itaque nisi quae quo recusandae sed sunt veniam, vero.",
+  "description": "Able to carry a squad both on land and on water. Maximum protected, but slow and clumsy on land.",
   "attributes": [
     {
       "trait_type": "Type",
