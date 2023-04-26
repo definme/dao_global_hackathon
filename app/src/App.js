@@ -1,23 +1,28 @@
 import * as React from 'react'
+import styled from 'styled-components'
 import { Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import Box from '@mui/material/Box'
 import Main from './pages/Main'
 import Marketplace from './pages/Marketplace'
 import Profile from './pages/Profile'
 import DAO from './pages/DAO'
 
+const AppContainer = styled.div`
+  min-height: 100vh;
+  background-color: #161819;
+  background-image: url(${require(`./images/BG.png`)});
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+`
+
 function App() {
   return (
-    <Box
-      sx={{
-        background: '#161819',
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
+    <AppContainer>
       <Header />
       <Routes>
         <Route exact path='/' element={<Main />} />
@@ -27,7 +32,7 @@ function App() {
         <Route path='*' element={<Main />} />
       </Routes>
       <Footer />
-    </Box>
+    </AppContainer>
   )
 }
 
