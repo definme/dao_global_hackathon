@@ -5,6 +5,7 @@ import { ConnectionContext } from '../../contexts/ConnectionContext'
 import networks from '../../networks.json'
 import { APP_NETWORK } from '../../constants'
 import { shortenAddress } from '../../utils'
+import { Button } from '../../components/Button'
 import {
   DAOLink,
   DAOAddressLink,
@@ -20,7 +21,6 @@ import {
   DAOShareButton,
   DAODescription,
   DAOPromoContainer,
-  DAOButton,
   DAOPromoText,
   DAOBalanceImageContainer,
   DAOSubtitle,
@@ -107,7 +107,7 @@ function DAO() {
                 </DAOATokenLink>
               </span>
             </DAOPromoText>
-            <DAOButton onClick={handleOpenModal}>Create new proposal</DAOButton>
+            <Button onClick={handleOpenModal}>Create new proposal</Button>
           </DAOPromoContainer>
         </DAOInfo>
       )}

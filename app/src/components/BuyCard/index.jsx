@@ -1,11 +1,12 @@
 import { useState, useContext } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+// import { Button } from '../Button'
 import { getCollectionSale } from '../../api/contracts'
 import { shortenAddress } from '../../utils'
 import { APP_NETWORK } from '../../constants'
 import networks from '../../networks.json'
-import { BuyButton, TxLink } from './BuyCard.styled'
+import { TxLink, BuyButton } from './BuyCard.styled'
 import { getCollectionTokens } from '../../api'
 import { ConnectionContext } from '../../contexts/ConnectionContext'
 
@@ -91,7 +92,7 @@ function BuyCard({
             </TxLink>
           </BuyButton>
         ) : (
-          <BuyButton variant='contained' onClick={buyCollectionToken}>
+          <BuyButton onClick={buyCollectionToken}>
             BUY for 0.0001 MATIC
           </BuyButton>
         )}

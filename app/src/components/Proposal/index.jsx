@@ -5,6 +5,7 @@ import { ConnectionContext } from '../../contexts/ConnectionContext'
 import { APP_NETWORK } from '../../constants'
 import networks from '../../networks.json'
 import { shortenAddress } from '../../utils'
+import { Button } from '../Button'
 import {
   ProposalContainer,
   ProposalInfoContainer,
@@ -20,7 +21,6 @@ import {
   ProposalResultSpan,
   ProposalVotingContainer,
   ProposalVotingInfo,
-  ProposalButton,
 } from './Proposal.styled'
 
 function Proposal({ proposal, success }) {
@@ -101,7 +101,7 @@ function Proposal({ proposal, success }) {
             {proposal.token.symbol}
           </ProposalVotingInfo>
           {txHash ? (
-            <ProposalButton>
+            <Button>
               <a
                 href={`${networks[APP_NETWORK].params.blockExplorerUrls}tx/${txHash}`}
                 target='_blank'
@@ -109,20 +109,20 @@ function Proposal({ proposal, success }) {
               >
                 {txSuccess ? txSuccess : txHash && shortenAddress(txHash)}
               </a>
-            </ProposalButton>
+            </Button>
           ) : success ? (
-            <ProposalButton
+            <Button
               disabled={!hasAction}
               onClick={() =>
                 executeProposal(proposal.id, setTxHash, setTxSuccess)
               }
             >
               Execute
-            </ProposalButton>
+            </Button>
           ) : (
-            <ProposalButton disabled={!canVote} onClick={handleOpenModal}>
+            <Button disabled={!canVote} onClick={handleOpenModal}>
               VOTE
-            </ProposalButton>
+            </Button>
           )}
         </ProposalVotingContainer>
       </ProposalContainer>

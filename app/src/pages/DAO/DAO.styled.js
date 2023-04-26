@@ -95,28 +95,6 @@ export const DAOPromoContainer = styled.div`
   align-items: center;
 `
 
-export const DAOButton = styled.button`
-  font-family: Open Sans;
-  font-size: 17px;
-  font-weight: 600;
-  line-height: 23px;
-  letter-spacing: 0.01em;
-  text-align: center;
-
-  color: #ff6933;
-  padding: 14px 24px;
-  border: 1px solid #ff6933;
-  border-radius: 8px;
-  background-color: transparent;
-  cursor: pointer;
-  transition: all 0.5s ease-in-out;
-
-  &:hover {
-    opacity: 0.7;
-    box-shadow: inset 0 0 15px 0 #ff6933;
-  }
-`
-
 export const DAOPromoText = styled.p`
   font-family: Open Sans;
   font-size: 17px;
