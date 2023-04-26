@@ -52,10 +52,16 @@ const useDAO = userAddress => {
     status: ProposalStatus.SUCCEEDED,
   }
 
-  async function createProposal(title, description, setTxHash, setSuccess) {
+  async function createProposal(
+    title,
+    summary,
+    description,
+    setTxHash,
+    setSuccess
+  ) {
     const metadata = {
       title,
-      summary: description,
+      summary,
       description,
     }
 

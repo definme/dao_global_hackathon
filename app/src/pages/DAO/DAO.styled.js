@@ -138,3 +138,14 @@ export const DAOSubtitle = styled.h3`
   margin: 0;
   margin-bottom: 32px;
 `
+
+export const DAOImageContainer = styled.div`
+  background: linear-gradient(
+    148.71deg,
+    rgba(255, 125, 79, 0.2) 5.67%,
+    rgba(142, 120, 240, 0.2) 97.94%
+  );
+  line-height: 0;
+  border-radius: 8px;
+  overflow: hidden;
+`

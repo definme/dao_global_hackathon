@@ -85,18 +85,9 @@ export const ProposalAddresses = styled.div`
   display: flex;
   gap: 32px;
   color: #ffffff;
-  padding: 24px 0;
-  width: 100%;
+  padding: 24px 48px;
+  width: 45%;
   position: relative;
-  &:before {
-    content: '';
-    position: absolute;
-    bottom: 12px;
-    right: 0;
-    top: 12px;
-    width: 1px;
-    background-color: rgba(255, 255, 255, 0.2);
-  }
 `
 
 export const ProposalAddress = styled.p`
@@ -120,9 +111,19 @@ export const ProposalResults = styled.ul`
   list-style: none;
   color: #ffffff;
   display: flex;
-  padding: 24px 52px;
+  padding: 24px 0;
   gap: 32px;
-  width: 100%;
+  width: 55%;
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    bottom: 12px;
+    right: 0;
+    top: 12px;
+    width: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+  }
 `
 
 export const ProposalResult = styled.li`
@@ -135,6 +136,7 @@ export const ProposalResult = styled.li`
   line-height: 27px;
   letter-spacing: 0.01em;
   text-align: left;
+  color: ${({ max }) => (max ? '#FF6933' : '#ffffff')};
 `
 
 export const ProposalResultSpan = styled.span`
@@ -156,4 +158,8 @@ export const ProposalVotingInfo = styled.p`
   text-align: left;
   margin: 0;
   color: #ffffff;
+`
+
+export const ProposalResultPercent = styled.span`
+  color: #a7a7ab;
 `
