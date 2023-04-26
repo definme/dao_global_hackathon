@@ -20,8 +20,8 @@ import { APP_NETWORK, IPFS_API_KEY } from '../constants'
 import CollectionAbi from '../abi/Collection.json'
 
 const useDAO = userAddress => {
-  const daoAddressOrEns = '0xf47cf722840a814f826cbe22d1ca6130974fcdc8'
-  const pluginAddress = '0x6bcc8dd13bc076d8b3fe8d075db8ca78acb576a0'
+  const daoAddressOrEns = networks[APP_NETWORK].contracts.daoAddress
+  const pluginAddress = networks[APP_NETWORK].contracts.pluginAddress
 
   const [client, setClient] = useState()
   const [dao, setDao] = useState()

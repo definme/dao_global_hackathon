@@ -54,7 +54,7 @@ function Characters({ collectionLength }) {
           networks[APP_NETWORK].contracts.charactersCollection
         }
         collectionLength={collectionLength}
-        kind={0x0000}
+        kind={0x0001}
       />
       <BuyCard
         title='Scout Saboteur'
@@ -64,7 +64,7 @@ function Characters({ collectionLength }) {
         collectionContract={
           networks[APP_NETWORK].contracts.charactersCollection
         }
-        kind={0x0000}
+        kind={0x0002}
       />
       <BuyCard
         title='Dungeon Doctor'
@@ -75,7 +75,7 @@ function Characters({ collectionLength }) {
           networks[APP_NETWORK].contracts.charactersCollection
         }
         collectionLength={collectionLength}
-        kind={0x0000}
+        kind={0x0003}
       />
     </Box>
   )
