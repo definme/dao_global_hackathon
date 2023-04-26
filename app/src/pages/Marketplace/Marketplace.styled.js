@@ -1,50 +1,45 @@
-import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const MenuLink = styled(Link)`
   background-color: aliceblue;
-  text-transform: uppercase;
   display: flex;
   align-items: center;
   position: relative;
   text-decoration: none;
   color: black;
-  background-color: ${({ current }) => {
+  opacity: ${({ current }) => {
     if (current === 'true') {
-      return 'lightseagreen'
+      return '1';
     }
-    return ' rgba(0, 0, 0, 0.6) '
+    return ' 0.2';
   }};
-  color: ${({ current }) => {
+  background: transparent;
+  color: white;
+  border: ${({ current }) => {
     if (current === 'true') {
-      return 'white'
+      return '1px solid rgb(143, 122, 235)';
     }
-    return ' lightseagreen '
+    return ' lightseagreen ';
   }};
   font-size: 22px;
-  font-style: italic;
-  font-weight: 700;
   line-height: 40px;
   letter-spacing: 1px;
   cursor: pointer;
-  padding: 13px;
+  padding: 13px 40px 13px 40px;
   text-align: center;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
-  padding-left: 40px;
-  padding-right: 30px;
-`
+  border-radius: 8px;
+`;
 
 export const MenuContainer = styled.div`
   display: flex;
-  flex-direction: column;
   gap: 8px;
-  margin-top: 40px;
-
-  position: fixed;
-  z-index: 20;
-`
+  margin: 120px 0;
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  width: max-content;
+`;
 
 export const PageContainer = styled.div`
   position: relative;
-`
+`;
