@@ -2,7 +2,6 @@ import { useState, useContext } from 'react';
 import ModalComponent from '../Modal';
 import Input from '../Input';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { ConnectionContext } from '../../contexts/ConnectionContext';
 import networks from '../../networks.json';
@@ -78,21 +77,14 @@ export default function AddProposalModal({ isOpen, onClose }) {
         />
 
         {txHash ? (
-          <Button
-            variant='contained'
-            sx={{
-              fontWeight: 'bold',
-              minWidth: '150px',
-              background: 'lightseagreen',
-              minHeight: '36px',
-            }}>
+          <BuyProposalButton>
             <a
               href={`${networks[APP_NETWORK].params.blockExplorerUrls}tx/${txHash}`}
               target='_blank'
               rel='noreferrer'>
               {success ? success : txHash && shortenAddress(txHash)}
             </a>
-          </Button>
+          </BuyProposalButton>
         ) : (
           <Box
             sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>

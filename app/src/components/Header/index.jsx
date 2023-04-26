@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import { ConnectionContext } from '../../contexts/ConnectionContext';
 import { shortenAddress } from '../../utils';
+import { Button } from '../Button'
 import {
   MainHeader,
   HeaderContainer,
@@ -14,7 +15,6 @@ import {
   BalanceFirstName,
   BalanceSecondName,
   AddressContainer,
-  ConnectButton,
   MenuBurger,
   LogoName,
   HeaderDrawer,
@@ -22,6 +22,7 @@ import {
 } from './Header.styled';
 import { APP_NETWORK } from '../../constants';
 import { useMediaQuery } from '@mui/material';
+
 
 function Header() {
   const { userAddress, chainId, connectWallet, balance, switchNetwork } =
@@ -115,14 +116,10 @@ function Header() {
                   </AddressContainer>
                 </>
               ) : (
-                <ConnectButton onClick={switchNetwork}>
-                  Wrong network
-                </ConnectButton>
+                <Button onClick={switchNetwork}>Wrong network</Button>
               )
             ) : (
-              <ConnectButton onClick={connectWallet}>
-                Connect Wallet
-              </ConnectButton>
+              <Button onClick={connectWallet}>Connect Wallet</Button>
             )}
           </Box>
         </HeaderContainer>
