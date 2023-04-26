@@ -1,28 +1,28 @@
-import { useState, useEffect } from 'react'
-import Box from '@mui/material/Box'
-import BuyCard from '../../components/BuyCard'
-import networks from '../../networks.json'
-import { APP_NETWORK } from '../../constants'
-import { getCollectionSale } from '../../api/contracts'
+import { useState, useEffect } from 'react';
+import Box from '@mui/material/Box';
+import BuyCard from '../../components/BuyCard';
+import networks from '../../networks.json';
+import { APP_NETWORK } from '../../constants';
+import { getCollectionSale } from '../../api/contracts';
 
 function Characters() {
-  const [price, setPrice] = useState()
+  const [price, setPrice] = useState();
 
   async function getPrice() {
-    const CollectionSale = getCollectionSale()
+    const CollectionSale = getCollectionSale();
 
     await CollectionSale.getPrice(
       networks[APP_NETWORK].contracts.charactersCollection
     )
-      .then(res => {
-        setPrice(res)
+      .then((res) => {
+        setPrice(res);
       })
-      .catch(e => console.log(e))
+      .catch((e) => console.log(e));
   }
 
   useEffect(() => {
-    getPrice()
-  }, [])
+    getPrice();
+  }, []);
 
   return (
     <Box
@@ -32,12 +32,11 @@ function Characters() {
         flexWrap: 'wrap',
         gap: '20px',
         justifyContent: 'center',
-      }}
-    >
+      }}>
       <BuyCard
-        title='Character'
-        description='Some Description'
-        image={require('../../images/char.png')}
+        title='Squad Leader'
+        description='Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin.'
+        image={'https://ether-luxe.definme.com/images/character1.png'}
         collectionContract={
           networks[APP_NETWORK].contracts.charactersCollection
         }
@@ -45,27 +44,37 @@ function Characters() {
         price={price}
       />
       <BuyCard
-        title='Character'
-        description='Some Description'
+        title='Repulsed Repairman'
+        description='Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin.'
         price={price}
-        image={require('../../images/char.png')}
+        image={'https://ether-luxe.definme.com/images/character2.png'}
         collectionContract={
           networks[APP_NETWORK].contracts.charactersCollection
         }
         kind={0x0000}
       />
       <BuyCard
-        title='Character'
-        description='Some Description'
+        title='Scout Saboteur'
+        description='Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin.'
         price={price}
-        image={require('../../images/char.png')}
+        image={'https://ether-luxe.definme.com/images/character3.png'}
+        collectionContract={
+          networks[APP_NETWORK].contracts.charactersCollection
+        }
+        kind={0x0000}
+      />
+      <BuyCard
+        title='Dungeon Doctor'
+        description='Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin.'
+        price={price}
+        image={'https://ether-luxe.definme.com/images/character4.png'}
         collectionContract={
           networks[APP_NETWORK].contracts.charactersCollection
         }
         kind={0x0000}
       />
     </Box>
-  )
+  );
 }
 
-export default Characters
+export default Characters;

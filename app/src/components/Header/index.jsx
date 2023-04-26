@@ -84,7 +84,7 @@ function Header() {
             </MenuLink>
             <MenuLink
               current={currentLocation.marketplace.toString()}
-              to='/marketplace'
+              to='/marketplace/characters'
             >
               Marketplace
             </MenuLink>

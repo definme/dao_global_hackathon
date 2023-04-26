@@ -1,29 +1,36 @@
-import React, { useEffect, useCallback, useRef } from 'react'
-import { Modal, ModalContainer } from './Modal.styled'
+import React, { useEffect, useCallback, useRef } from 'react';
+import { Close, Modal, ModalContainer } from './Modal.styled';
+import CloseIcon from '@mui/icons-material/Close';
+import { Box } from '@mui/material';
 
 export default function ModalComponent({ isOpen, onClose, children }) {
-  const modal = useRef(null)
+  const modal = useRef(null);
 
-  const handleOverlayClose = useCallback(event => {
+  const handleOverlayClose = useCallback((event) => {
     if (event.target === event.currentTarget) {
-      onClose()
+      onClose();
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (modal.current) {
-      modal.current.addEventListener('click', handleOverlayClose)
+      modal.current.addEventListener('click', handleOverlayClose);
     }
     return () => {
       if (modal.current) {
-        modal.current.removeEventListener('click', handleOverlayClose)
+        modal.current.removeEventListener('click', handleOverlayClose);
       }
-    }
-  }, [handleOverlayClose])
+    };
+  }, [handleOverlayClose]);
 
   return (
     <Modal isOpen={isOpen} ref={modal}>
-      <ModalContainer>{children}</ModalContainer>
+      <ModalContainer>
+        {children}
+        <Close onClick={onClose}>
+          <CloseIcon sx = {{color: 'white', fontSize: '32px'}}  />
+        </Close>
+      </ModalContainer>
     </Modal>
-  )
+  );
 }

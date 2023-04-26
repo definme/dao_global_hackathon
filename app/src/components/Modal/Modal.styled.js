@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const Modal = styled.section`
   position: fixed;
@@ -15,32 +15,41 @@ export const Modal = styled.section`
   transition: visibility 0.5s, opacity 0.5s ease;
   visibility: ${({ isOpen }) => {
     if (isOpen) {
-      return 'visible'
+      return 'visible';
     }
-    return 'hidden'
+    return 'hidden';
   }};
   opacity: ${({ isOpen }) => {
     if (isOpen) {
-      return '1'
+      return '1';
     }
-    return '0'
+    return '0';
   }};
-`
+`;
 
 export const ModalContainer = styled.div`
   width: 100%;
-  max-width: 477px;
-  background-color: rgba(0, 0, 0, 0.8);
+  max-width: 600px;
+  background-color: #22222e;
   backdrop-filter: blur(10px);
 
   padding: 40px;
   position: relative;
-  border-radius: 20px;
-  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
   box-sizing: border-box;
   @media (max-width: 768px) {
     max-width: 336px;
     border-radius: 12px;
     padding: 24px;
   }
-`
+`;
+
+export const Close = styled.div`
+  cursor: pointer;
+  border-radius: 8px;
+  background: #22222E;
+  position: absolute;
+  top: 0;
+  right: -70px;
+  padding: 10px;
+`;
