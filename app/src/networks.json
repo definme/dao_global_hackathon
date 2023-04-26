@@ -18,7 +18,9 @@
       "charactersCollection": "0x1B0aEdC47657Ca0488Db7a112221BE99957209fF",
       "transportCollection": "0xe850d9f15DD8469eebbDc0E42955222326640A53",
       "weaponCollection": "0xBa8Ab694cc247D65aAe6557784B0CCbf104DBAA2",
-      "governanceToken": "0x434a8abd38BE1d84Dd7aE8fF00F501773Bfd236f"
+      "governanceToken": "0xa6aB514431726c4fFAED4f9c93dba35a3709D7B6",
+      "daoAddress": "0x110d3b83447a3bd399d152343386ce5a94c9a324",
+      "pluginAddress": "0xf8d255fe693bce3b2d3cb0076852a85571a394f9"
     }
   }
 }
