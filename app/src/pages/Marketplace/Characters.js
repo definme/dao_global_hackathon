@@ -1,28 +1,28 @@
-import { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
-import BuyCard from '../../components/BuyCard';
-import networks from '../../networks.json';
-import { APP_NETWORK } from '../../constants';
-import { getCollectionSale } from '../../api/contracts';
+import { useState, useEffect } from 'react'
+import Box from '@mui/material/Box'
+import BuyCard from '../../components/BuyCard'
+import networks from '../../networks.json'
+import { APP_NETWORK } from '../../constants'
+import { getCollectionSale } from '../../api/contracts'
 
-function Characters() {
-  const [price, setPrice] = useState();
+function Characters({ collectionLength }) {
+  const [price, setPrice] = useState()
 
   async function getPrice() {
-    const CollectionSale = getCollectionSale();
+    const CollectionSale = getCollectionSale()
 
     await CollectionSale.getPrice(
       networks[APP_NETWORK].contracts.charactersCollection
     )
-      .then((res) => {
-        setPrice(res);
+      .then(res => {
+        setPrice(res)
       })
-      .catch((e) => console.log(e));
+      .catch(e => console.log(e))
   }
 
   useEffect(() => {
-    getPrice();
-  }, []);
+    getPrice()
+  }, [])
 
   return (
     <Box
@@ -32,7 +32,8 @@ function Characters() {
         flexWrap: 'wrap',
         gap: '20px',
         justifyContent: 'center',
-      }}>
+      }}
+    >
       <BuyCard
         title='Squad Leader'
         description='Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin.'
@@ -42,6 +43,7 @@ function Characters() {
         }
         kind={0x0000}
         price={price}
+        collectionLength={collectionLength}
       />
       <BuyCard
         title='Repulsed Repairman'
@@ -51,6 +53,7 @@ function Characters() {
         collectionContract={
           networks[APP_NETWORK].contracts.charactersCollection
         }
+        collectionLength={collectionLength}
         kind={0x0000}
       />
       <BuyCard
@@ -71,10 +74,11 @@ function Characters() {
         collectionContract={
           networks[APP_NETWORK].contracts.charactersCollection
         }
+        collectionLength={collectionLength}
         kind={0x0000}
       />
     </Box>
-  );
+  )
 }
 
-export default Characters;
+export default Characters

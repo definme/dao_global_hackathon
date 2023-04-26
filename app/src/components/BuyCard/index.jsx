@@ -1,11 +1,13 @@
-import { useState } from 'react';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import { getCollectionSale } from '../../api/contracts';
-import { shortenAddress } from '../../utils';
-import { APP_NETWORK } from '../../constants';
-import networks from '../../networks.json';
-import { BuyButton, TxLink } from './BuyCard.styled';
+import { useState, useContext } from 'react'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import { getCollectionSale } from '../../api/contracts'
+import { shortenAddress } from '../../utils'
+import { APP_NETWORK } from '../../constants'
+import networks from '../../networks.json'
+import { BuyButton, TxLink } from './BuyCard.styled'
+import { getCollectionTokens } from '../../api'
+import { ConnectionContext } from '../../contexts/ConnectionContext'
 
 function BuyCard({
   title,
@@ -14,26 +16,42 @@ function BuyCard({
   image,
   collectionContract,
   kind,
+  collectionLength,
 }) {
-  const [txHash, setTxHash] = useState();
-  const [success, setSuccess] = useState();
+  const { userAddress } = useContext(ConnectionContext)
+  const [txHash, setTxHash] = useState()
+  const [success, setSuccess] = useState()
 
   async function buyCollectionToken() {
-    const CollectionSale = getCollectionSale();
+    const CollectionSale = getCollectionSale()
 
     await CollectionSale.requestNFTPurchase(collectionContract, kind, {
       value: price,
     })
-      .then((tx) => {
-        setTxHash(tx.hash);
+      .then(tx => {
+        setTxHash(tx.hash)
         tx.wait()
-          .then((res) => setSuccess('SUCCESS!!'))
-          .catch((e) => setSuccess('FAILED'));
+          .then(res => {
+            setTimeout(function testTokens() {
+              getCollectionTokens(userAddress)
+                .then(res => {
+                  if (res.length > collectionLength) {
+                    setSuccess('SUCCESS!!')
+                  } else {
+                    setTimeout(testTokens, 2000)
+                  }
+                })
+                .catch(e => {
+                  console.log(e)
+                })
+            }, 1000)
+          })
+          .catch(e => setSuccess('FAILED'))
       })
-      .catch((e) => {
-        setSuccess('FAILED');
-        console.log(e);
-      });
+      .catch(e => {
+        setSuccess('FAILED')
+        console.log(e)
+      })
   }
 
   return (
@@ -43,7 +61,8 @@ function BuyCard({
         p: '2px',
         borderRadius: '8px',
         background: '#22222E',
-      }}>
+      }}
+    >
       <img
         src={image}
         width='100%'
@@ -53,7 +72,8 @@ function BuyCard({
       <Box
         sx={{
           p: '15px 15px',
-        }}>
+        }}
+      >
         <Typography textTransform='uppercase' gutterBottom color='white'>
           {title}
         </Typography>
@@ -65,7 +85,8 @@ function BuyCard({
             <TxLink
               href={`${networks[APP_NETWORK].params.blockExplorerUrls}tx/${txHash}`}
               target='_blank'
-              rel='noreferrer'>
+              rel='noreferrer'
+            >
               {success ? success : txHash && shortenAddress(txHash)}
             </TxLink>
           </BuyButton>
@@ -76,7 +97,7 @@ function BuyCard({
         )}
       </Box>
     </Box>
-  );
+  )
 }
 
-export default BuyCard;
+export default BuyCard
