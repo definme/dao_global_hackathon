@@ -24,6 +24,7 @@ import {
   DAOPromoText,
   DAOBalanceImageContainer,
   DAOSubtitle,
+  DAOImageContainer,
 } from './DAO.styled'
 
 function DAO() {
@@ -50,10 +51,14 @@ function DAO() {
         <DAOInfo>
           <DAOInfoContainer>
             <DAOInfoNameContainer>
-              <DAOImg
-                src={getIPFSLink(dao.dao?.metadata?.avatar)}
-                alt='avatar'
-              />
+              <DAOImageContainer>
+                {' '}
+                <DAOImg
+                  src={getIPFSLink(dao.dao?.metadata?.avatar)}
+                  alt='avatar'
+                />
+              </DAOImageContainer>
+
               <DAOInfoTextContainer>
                 <DAOInfoNameTitle>{dao.dao?.metadata?.name}</DAOInfoNameTitle>{' '}
                 <DAOLink

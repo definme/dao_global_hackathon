@@ -4,7 +4,7 @@ import VoteModal from '../VoteModal'
 import { ConnectionContext } from '../../contexts/ConnectionContext'
 import { APP_NETWORK } from '../../constants'
 import networks from '../../networks.json'
-import { shortenAddress } from '../../utils'
+import { shortenAddress, percentage } from '../../utils'
 import { Button } from '../Button'
 import {
   ProposalContainer,
@@ -21,6 +21,7 @@ import {
   ProposalResultSpan,
   ProposalVotingContainer,
   ProposalVotingInfo,
+  ProposalResultPercent,
 } from './Proposal.styled'
 
 function Proposal({ proposal, success }) {
@@ -34,6 +35,16 @@ function Proposal({ proposal, success }) {
 
   const handleOpenModal = () => setVoteModalOpen(true)
   const handleCloseModal = () => setVoteModalOpen(false)
+
+  function getMaxVotes() {
+    const maxValue = Math.max(
+      Number(utils.formatEther(proposal.result.yes)),
+      Number(utils.formatEther(proposal.result.no)),
+      Number(utils.formatEther(proposal.result.abstain))
+    )
+    if (maxValue === 0) return -1
+    return maxValue
+  }
 
   useEffect(() => {
     if (userAddress) {
@@ -56,6 +67,69 @@ function Proposal({ proposal, success }) {
           </ProposalBadge>
         </ProposalInfoContainer>
         <ProposalDescription>
+          <ProposalResults>
+            <ProposalResult
+              max={
+                Number(utils.formatEther(proposal.result.yes)) === getMaxVotes()
+              }
+            >
+              Yes:{' '}
+              <ProposalResultSpan>
+                {Number(utils.formatEther(proposal.result.yes))}{' '}
+                {proposal.token.symbol}
+              </ProposalResultSpan>
+              <ProposalResultPercent>
+                {' '}
+                (
+                {percentage(
+                  Number(utils.formatEther(proposal.result.yes)),
+                  Number(utils.formatEther(proposal.totalVotingWeight))
+                )}
+                %)
+              </ProposalResultPercent>
+            </ProposalResult>
+            <ProposalResult
+              max={
+                Number(utils.formatEther(proposal.result.no)) === getMaxVotes()
+              }
+            >
+              No:{' '}
+              <ProposalResultSpan>
+                {Number(utils.formatEther(proposal.result.no))}{' '}
+                {proposal.token.symbol}
+              </ProposalResultSpan>
+              <ProposalResultPercent>
+                {' '}
+                (
+                {percentage(
+                  Number(utils.formatEther(proposal.result.no)),
+                  Number(utils.formatEther(proposal.totalVotingWeight))
+                )}
+                %)
+              </ProposalResultPercent>
+            </ProposalResult>
+            <ProposalResult
+              max={
+                Number(utils.formatEther(proposal.result.abstain)) ===
+                getMaxVotes()
+              }
+            >
+              Abstain:{' '}
+              <ProposalResultSpan>
+                {Number(utils.formatEther(proposal.result.abstain))}{' '}
+                {proposal.token.symbol}
+              </ProposalResultSpan>
+              <ProposalResultPercent>
+                {' '}
+                (
+                {percentage(
+                  Number(utils.formatEther(proposal.result.abstain)),
+                  Number(utils.formatEther(proposal.totalVotingWeight))
+                )}
+                %)
+              </ProposalResultPercent>
+            </ProposalResult>
+          </ProposalResults>
           <ProposalAddresses>
             <ProposalAddress>
               Proposal ID:{'   '}
@@ -70,35 +144,14 @@ function Proposal({ proposal, success }) {
               </ProposalAddressSpan>
             </ProposalAddress>
           </ProposalAddresses>
-          <ProposalResults>
-            <ProposalResult>
-              Yes:{' '}
-              <ProposalResultSpan>
-                {Number(utils.formatEther(proposal.result.yes))}{' '}
-                {proposal.token.symbol}
-              </ProposalResultSpan>
-            </ProposalResult>
-            <ProposalResult>
-              No:{' '}
-              <ProposalResultSpan>
-                {Number(utils.formatEther(proposal.result.no))}{' '}
-                {proposal.token.symbol}
-              </ProposalResultSpan>
-            </ProposalResult>
-            <ProposalResult>
-              Abstain:{' '}
-              <ProposalResultSpan>
-                {Number(utils.formatEther(proposal.result.abstain))}{' '}
-                {proposal.token.symbol}
-              </ProposalResultSpan>
-            </ProposalResult>
-          </ProposalResults>
         </ProposalDescription>
         <ProposalVotingContainer>
           <ProposalVotingInfo>
             Out of the total number of tokens:{' '}
-            {Number(utils.formatEther(proposal.totalVotingWeight))}{' '}
-            {proposal.token.symbol}
+            <ProposalResultSpan>
+              {Number(utils.formatEther(proposal.totalVotingWeight))}{' '}
+              {proposal.token.symbol}
+            </ProposalResultSpan>
           </ProposalVotingInfo>
           {txHash ? (
             <Button>
