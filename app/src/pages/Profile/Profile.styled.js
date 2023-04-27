@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom'
 export const ProfileContainer = styled.div`
   max-width: 1224px;
   margin: 88px auto 120px;
+  padding: 0 24px;
   width: 100%;
+  box-sizing: border-box;
 `
 
 export const ProfileTitle = styled.h1`
@@ -25,16 +27,23 @@ export const ProfileBalances = styled.div`
   gap: 24px;
   margin: auto;
   margin-bottom: 60px;
+
+  @media (max-width: 820px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `
 
 export const ProfileBalanceItem = styled.div`
   background: #22222e;
   border-radius: 8px;
   width: 100%;
+  box-sizing: border-box;
   padding: 34px 32px 30px;
   display: flex;
   gap: 24px;
   align-items: flex-start;
+  max-width: 420px;
 `
 
 export const ProfileBalanceWrapper = styled.div``

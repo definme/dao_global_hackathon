@@ -17,13 +17,15 @@ import {
   MainTableBodyRow,
   TableBodySpan,
   TableIndicator,
+  TableWrapper,
+  MainLogo,
 } from './Main.styled'
 
 function Main() {
   return (
     <MainContainer>
       <MainTitleContainer>
-        <img
+        <MainLogo
           src={require('../../images/Logo.png')}
           alt='logo'
           width='126px'
@@ -67,50 +69,52 @@ function Main() {
       <MainDistributionTitle>
         Token Distribution Graphics:
       </MainDistributionTitle>
-      <MainTable>
-        <MainTableHeader>
-          <TableHeaderItem first>
-            <TableIndicator />I stage
-          </TableHeaderItem>
-          <TableHeaderItem>II stage</TableHeaderItem>
-          <TableHeaderItem>III stage</TableHeaderItem>
-          <TableHeaderItem>IV stage</TableHeaderItem>
-        </MainTableHeader>
-        <MainTableBody>
-          <MainTableBodyRow>
-            <TableBodyItem first>
-              <TableBodySpan>10,000</TableBodySpan> voting tokens
-            </TableBodyItem>
-            <TableBodyItem top>
-              <TableBodySpan>+5,000</TableBodySpan> voting tokens
-            </TableBodyItem>
-            <TableBodyItem top>
-              <TableBodySpan>+2,500</TableBodySpan> voting tokens
-            </TableBodyItem>
-            <TableBodyItem top>
-              <TableBodySpan>+1,000</TableBodySpan> voting tokens
-            </TableBodyItem>
-          </MainTableBodyRow>
-          <MainTableBodyRow>
-            <TableBodyItem first withoutAfter>
-              For <TableBodySpan>1</TableBodySpan> character you get{' '}
-              <TableBodySpan>25</TableBodySpan> tokens
-            </TableBodyItem>
-            <TableBodyItem bottom withoutAfter>
-              For <TableBodySpan>1</TableBodySpan> character you get{' '}
-              <TableBodySpan>15</TableBodySpan> tokens
-            </TableBodyItem>
-            <TableBodyItem bottom withoutAfter>
-              For <TableBodySpan>1</TableBodySpan> character you get{' '}
-              <TableBodySpan>10</TableBodySpan> tokens
-            </TableBodyItem>
-            <TableBodyItem bottom withoutAfter>
-              For <TableBodySpan>1</TableBodySpan> character you get{' '}
-              <TableBodySpan>5</TableBodySpan> tokens
-            </TableBodyItem>
-          </MainTableBodyRow>
-        </MainTableBody>
-      </MainTable>
+      <TableWrapper>
+        <MainTable>
+          <MainTableHeader>
+            <TableHeaderItem first>
+              <TableIndicator />I stage
+            </TableHeaderItem>
+            <TableHeaderItem>II stage</TableHeaderItem>
+            <TableHeaderItem>III stage</TableHeaderItem>
+            <TableHeaderItem>IV stage</TableHeaderItem>
+          </MainTableHeader>
+          <MainTableBody>
+            <MainTableBodyRow>
+              <TableBodyItem first>
+                <TableBodySpan>10,000</TableBodySpan> voting tokens
+              </TableBodyItem>
+              <TableBodyItem top>
+                <TableBodySpan>+5,000</TableBodySpan> voting tokens
+              </TableBodyItem>
+              <TableBodyItem top>
+                <TableBodySpan>+2,500</TableBodySpan> voting tokens
+              </TableBodyItem>
+              <TableBodyItem top>
+                <TableBodySpan>+1,000</TableBodySpan> voting tokens
+              </TableBodyItem>
+            </MainTableBodyRow>
+            <MainTableBodyRow>
+              <TableBodyItem first withoutAfter>
+                For <TableBodySpan>1</TableBodySpan> character you get{' '}
+                <TableBodySpan>25</TableBodySpan> tokens
+              </TableBodyItem>
+              <TableBodyItem bottom withoutAfter>
+                For <TableBodySpan>1</TableBodySpan> character you get{' '}
+                <TableBodySpan>15</TableBodySpan> tokens
+              </TableBodyItem>
+              <TableBodyItem bottom withoutAfter>
+                For <TableBodySpan>1</TableBodySpan> character you get{' '}
+                <TableBodySpan>10</TableBodySpan> tokens
+              </TableBodyItem>
+              <TableBodyItem bottom withoutAfter>
+                For <TableBodySpan>1</TableBodySpan> character you get{' '}
+                <TableBodySpan>5</TableBodySpan> tokens
+              </TableBodyItem>
+            </MainTableBodyRow>
+          </MainTableBody>
+        </MainTable>
+      </TableWrapper>
     </MainContainer>
   )
 }
