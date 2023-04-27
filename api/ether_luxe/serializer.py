@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from .models import Collection, Token
+from .models import Collection, Token, SaleToken
 
 
 class CollectionSerializer(ModelSerializer):
@@ -15,3 +15,11 @@ class TokenSerializer(ModelSerializer):
         fields = ('collection', 'kind', 'name', 'description', 'image_uri', 'contract_token_id',
                   'owner', 'level', 'creation_time', 'last_update')
         model = Token
+
+
+class SaleTokenSerializer(ModelSerializer):
+    collection = CollectionSerializer(many=False, read_only=True)
+
+    class Meta:
+        fields = ('collection', 'kind', 'name', 'description', 'image_uri', 'price', 'creation_time', 'last_update')
+        model = SaleToken

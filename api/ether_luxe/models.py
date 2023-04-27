@@ -25,7 +25,7 @@ class Collection(Model):
 
 
 class Token(Model):
-    collection = ForeignKey(Collection, related_name='character', on_delete=CASCADE)
+    collection = ForeignKey(Collection, related_name='user_token', on_delete=CASCADE)
     kind = DecimalField(max_digits=80, decimal_places=0)
     name = CharField(max_length=255)
     description = TextField(blank=True, null=True)
@@ -38,3 +38,17 @@ class Token(Model):
 
     def __str__(self):
         return f'{self.name} {self.contract_token_id}'
+
+
+class SaleToken(Model):
+    collection = ForeignKey(Collection, related_name='sale_token', on_delete=CASCADE)
+    kind = DecimalField(max_digits=80, decimal_places=0)
+    name = CharField(max_length=255)
+    description = TextField(blank=True, null=True)
+    image_uri = CharField(max_length=255)
+    price = DecimalField(max_digits=256, decimal_places=0, default=0)
+    creation_time = DateTimeField(auto_now_add=True)
+    last_update = DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.name} {self.image_uri}'
