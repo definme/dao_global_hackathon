@@ -97,13 +97,14 @@ const useDAO = userAddress => {
 
   async function createProposalWithAction(
     title,
+    summary,
     description,
     setTxHash,
     setSuccess
   ) {
     const metadata = {
       title,
-      summary: description,
+      summary,
       description,
     }
 

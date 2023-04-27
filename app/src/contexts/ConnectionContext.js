@@ -15,6 +15,7 @@ const ConnectionProvider = ({ children }) => {
     balance,
     governanceUserBalance,
     governanceContractBalance,
+    getAllBalances,
   } = useConnection()
 
   const {
@@ -28,7 +29,6 @@ const ConnectionProvider = ({ children }) => {
     successProposals,
     createProposalWithAction,
     executeProposal,
-    getAllBalances,
   } = useDAO(userAddress)
 
   return (

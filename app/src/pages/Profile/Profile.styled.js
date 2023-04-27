@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 export const ProfileContainer = styled.div`
-  max-width: 1224px;
+  max-width: 1272px;
   margin: 88px auto 120px;
   padding: 0 24px;
   width: 100%;

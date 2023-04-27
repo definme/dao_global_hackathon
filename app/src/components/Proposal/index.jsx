@@ -164,6 +164,8 @@ function Proposal({ proposal, success }) {
                 {txSuccess ? txSuccess : txHash && shortenAddress(txHash)}
               </TxLink>
             </Button>
+          ) : success && !hasAction ? (
+            ''
           ) : success ? (
             <Button
               disabled={!hasAction}
