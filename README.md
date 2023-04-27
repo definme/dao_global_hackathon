@@ -10,7 +10,10 @@ Live on 🤖 🦾 🌃 🌐 🚀 https://ether-luxe.definme.com/ 🤖 🦾 🌃 
 
 The concept of the project is related to the implementation of allowing users to participate in the process of adding new game elements. At the initial stage, the user can buy an NFT character on the marketplace and receive tokens along with the in-game NFT governess tokens that give the right to participate in voting.
 
-Basic project configuration:
+### Scheme for obtaining governance tokens when buying NFT
+![governance-for-purchase](https://user-images.githubusercontent.com/25884190/234820533-61cf124b-ed38-42b5-a1f1-6bcff69ac88c.png)
+
+### Basic project configuration:
 
 - 3 collection contracts (Characters, Vehicles, Weapons)
 - in each collection there is a basic type of NFT (kind 0)
