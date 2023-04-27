@@ -29,7 +29,6 @@ export const CardTitle = styled.h2`
   margin: 0;
   color: #ffffff;
   padding-bottom: 12px;
-  margin-bottom: 12px;
   border-bottom: 1px solid rgba(143, 122, 235, 0.1);
 `
 
@@ -42,5 +41,16 @@ export const CardText = styled.p`
   text-align: left;
   color: #e2e2e2;
   margin: 0;
-  margin-bottom: 6px;
+`
+
+export const CardBlock = styled.div`
+  display: flex;
+  gap: 24px;
+  padding: 12px 0;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(143, 122, 235, 0.1);
+`
+
+export const CardTextSpan = styled.span`
+  color: #ff6933;
 `

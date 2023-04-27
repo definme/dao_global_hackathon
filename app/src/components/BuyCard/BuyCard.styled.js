@@ -8,4 +8,6 @@ export const TxLink = styled.a`
 
 export const BuyButton = styled(StyledButton)`
   max-width: 400px;
+  align-self: flex-end;
+  margin-top: auto;
 `

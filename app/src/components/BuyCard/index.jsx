@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-// import { Button } from '../Button'
+import { ethers } from 'ethers'
 import { getCollectionSale } from '../../api/contracts'
 import { shortenAddress } from '../../utils'
 import { APP_NETWORK } from '../../constants'
@@ -62,6 +62,8 @@ function BuyCard({
         p: '2px',
         borderRadius: '8px',
         background: '#22222E',
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
       <img
@@ -73,6 +75,9 @@ function BuyCard({
       <Box
         sx={{
           p: '15px 15px',
+          display: 'flex',
+          flexDirection: 'column',
+          flexGrow: 1,
         }}
       >
         <Typography textTransform='uppercase' gutterBottom color='white'>
@@ -92,8 +97,8 @@ function BuyCard({
             </TxLink>
           </BuyButton>
         ) : (
-          <BuyButton onClick={buyCollectionToken}>
-            BUY for 0.0001 MATIC
+          <BuyButton onClick={buyCollectionToken} disabled={!userAddress}>
+            BUY for {price ? ethers.utils.formatEther(price) : '0'} MATIC
           </BuyButton>
         )}
       </Box>
