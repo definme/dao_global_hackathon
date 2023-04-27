@@ -6,6 +6,25 @@ Designed for [DAO Global Hakathon](https://daoglobalhackathon.hackerearth.com/)
 
 Live on 🤖 🦾 🌃 🌐 🚀 https://ether-luxe.definme.com/ 🤖 🦾 🌃 🌐 🚀
 
+## About
+
+The concept of the project is related to the implementation of allowing users to participate in the process of adding new game elements. At the initial stage, the user can buy an NFT character on the marketplace and receive tokens along with the in-game NFT governess tokens that give the right to participate in voting.
+
+Basic project configuration:
+
+- 3 collection contracts (Characters, Vehicles, Weapons)
+- in each collection there is a basic type of NFT (kind 0)
+- sale contract in which one governance collection (characters) and one non-governance collection (weapons) are added
+- oracle contract, which is responsible for the user's purchase of NFT
+- Aragon DAO for voting
+
+Votings are created by the platform administrator and the following options are available in the presented MVP:
+
+- Adding new nft types to existing collections
+- Adding new collections to the sale contract
+- Changed the governanceTokensInvariant attribute, which affects the number of government tokens received when buying NFT in a collection that is added as CollectionGovernance
+- Mint additional governance tokens
+
 ## Technical design
 
 ### Smart contracts
