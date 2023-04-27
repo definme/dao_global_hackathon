@@ -30,8 +30,7 @@ const useConnection = () => {
 
     GovernanceToken.balanceOf(userAddress)
       .then(res => {
-        const token = Number(utils.formatEther(res))
-        setGovernanceUserBalance(token)
+        setGovernanceUserBalance(res)
       })
       .catch(e => console.log(e))
   }
@@ -103,6 +102,12 @@ const useConnection = () => {
     getChain()
   }
 
+  function getAllBalances() {
+    getBalance()
+    getGovernanceUserBalance()
+    getGovernanceContractBalance()
+  }
+
   useEffect(() => {
     getUserAddress()
   }, [])
@@ -110,11 +115,15 @@ const useConnection = () => {
   useEffect(() => {
     if (userAddress) {
       getChain()
-      getBalance()
-      getGovernanceUserBalance()
-      getGovernanceContractBalance()
+      getAllBalances()
     }
   }, [userAddress])
+
+  useEffect(() => {
+    if (chainId) {
+      getBalance()
+    }
+  }, [chainId])
 
   useEffect(() => {
     if (window.ethereum) {
@@ -139,6 +148,7 @@ const useConnection = () => {
     balance,
     governanceUserBalance,
     governanceContractBalance,
+    getAllBalances,
   }
 }
 

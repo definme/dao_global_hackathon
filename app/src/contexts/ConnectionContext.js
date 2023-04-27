@@ -28,6 +28,7 @@ const ConnectionProvider = ({ children }) => {
     successProposals,
     createProposalWithAction,
     executeProposal,
+    getAllBalances,
   } = useDAO(userAddress)
 
   return (
@@ -52,6 +53,7 @@ const ConnectionProvider = ({ children }) => {
         successProposals,
         createProposalWithAction,
         executeProposal,
+        getAllBalances,
       }}
     >
       {children}

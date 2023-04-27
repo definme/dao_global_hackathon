@@ -3,7 +3,7 @@ import Proposal from '../../components/Proposal'
 import AddProposalModal from '../../components/AddProposalModal'
 import { ConnectionContext } from '../../contexts/ConnectionContext'
 import networks from '../../networks.json'
-import { APP_NETWORK } from '../../constants'
+import { APP_NETWORK, MIN_GOVERNANCE_TOKEN_TO_PROPOSAL } from '../../constants'
 import { shortenAddress } from '../../utils'
 import { Button } from '../../components/Button'
 import {
@@ -32,6 +32,7 @@ function DAO() {
     dao,
     proposals,
     governanceContractBalance,
+    governanceUserBalance,
     pendingProposals,
     successProposals,
     userAddress,
@@ -113,7 +114,14 @@ function DAO() {
                 </DAOATokenLink>
               </span>
             </DAOPromoText>
-            <Button onClick={handleOpenModal}>Create new proposal</Button>
+            <Button
+              onClick={handleOpenModal}
+              disabled={
+                MIN_GOVERNANCE_TOKEN_TO_PROPOSAL > governanceUserBalance
+              }
+            >
+              Create new proposal
+            </Button>
           </DAOPromoContainer>
         </DAOInfo>
       )}

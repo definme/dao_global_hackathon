@@ -39,6 +39,7 @@ export const MenuLink = styled(Link)`
     background: #8f7aeb;
   }
   &:before {
+    transition: all 1s ease;
     content: '';
     position: absolute;
     bottom: 0;
@@ -52,6 +53,13 @@ export const MenuLink = styled(Link)`
       return 'transparent';
     }};
     z-index: 1;
+  }
+  &:hover:before {
+    background: linear-gradient(
+      180deg,
+      rgba(37, 33, 33, 0) 0%,
+      rgba(143, 122, 235, 0.18) 91.11%
+    );
   }
 `;
 
