@@ -136,7 +136,7 @@ export const ProposalResult = styled.li`
   line-height: 27px;
   letter-spacing: 0.01em;
   text-align: left;
-  color: ${({ max }) => (max ? '#FF6933' : '#ffffff')};
+  color: ${({ isMax }) => (isMax ? '#FF6933' : '#ffffff')};
 `
 
 export const ProposalResultSpan = styled.span`
@@ -162,4 +162,9 @@ export const ProposalVotingInfo = styled.p`
 
 export const ProposalResultPercent = styled.span`
   color: #a7a7ab;
+`
+
+export const TxLink = styled.a`
+  color: #ff6933;
+  text-decoration: none;
 `

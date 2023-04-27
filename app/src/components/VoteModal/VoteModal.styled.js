@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const Container = styled.div`
   display: flex;
@@ -6,7 +6,7 @@ export const Container = styled.div`
   width: 100%;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   padding-bottom: 24px;
-`;
+`
 
 export const Vote = styled.input`
   all: unset;
@@ -14,15 +14,15 @@ export const Vote = styled.input`
   text-transform: uppercase;
   border: ${({ active }) => {
     if (active) {
-      return '1px solid #8F7AEB';
+      return '1px solid #8F7AEB'
     }
-    return '1px solid rgba(255, 255, 255, 0.2)';
+    return '1px solid rgba(255, 255, 255, 0.2)'
   }};
   color: ${({ active }) => {
     if (active) {
-      return '#8F7AEB';
+      return '#8F7AEB'
     }
-    return 'rgba(255, 255, 255, 0.5)';
+    return 'rgba(255, 255, 255, 0.5)'
   }};
   width: 155px;
   display: flex;
@@ -31,4 +31,9 @@ export const Vote = styled.input`
   height: 52px;
   border-radius: 8px;
   cursor: pointer;
-`;
+`
+
+export const TxLink = styled.a`
+  color: #ff6933;
+  text-decoration: none;
+`

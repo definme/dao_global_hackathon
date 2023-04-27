@@ -22,6 +22,7 @@ import {
   ProposalVotingContainer,
   ProposalVotingInfo,
   ProposalResultPercent,
+  TxLink,
 } from './Proposal.styled'
 
 function Proposal({ proposal, success }) {
@@ -69,7 +70,7 @@ function Proposal({ proposal, success }) {
         <ProposalDescription>
           <ProposalResults>
             <ProposalResult
-              max={
+              isMax={
                 Number(utils.formatEther(proposal.result.yes)) === getMaxVotes()
               }
             >
@@ -89,7 +90,7 @@ function Proposal({ proposal, success }) {
               </ProposalResultPercent>
             </ProposalResult>
             <ProposalResult
-              max={
+              isMax={
                 Number(utils.formatEther(proposal.result.no)) === getMaxVotes()
               }
             >
@@ -109,7 +110,7 @@ function Proposal({ proposal, success }) {
               </ProposalResultPercent>
             </ProposalResult>
             <ProposalResult
-              max={
+              isMax={
                 Number(utils.formatEther(proposal.result.abstain)) ===
                 getMaxVotes()
               }
@@ -155,13 +156,13 @@ function Proposal({ proposal, success }) {
           </ProposalVotingInfo>
           {txHash ? (
             <Button>
-              <a
+              <TxLink
                 href={`${networks[APP_NETWORK].params.blockExplorerUrls}tx/${txHash}`}
                 target='_blank'
                 rel='noreferrer'
               >
                 {txSuccess ? txSuccess : txHash && shortenAddress(txHash)}
-              </a>
+              </TxLink>
             </Button>
           ) : success ? (
             <Button
