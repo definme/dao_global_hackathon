@@ -34,10 +34,14 @@ export const MenuLink = styled(Link)`
 export const MenuContainer = styled.div`
   display: flex;
   gap: 8px;
-  margin: 120px 0;
+  margin: 120px 45px;
   border: 1.5px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   width: max-content;
+  @media (max-width: 694px) {
+    flex-direction: column;
+    width: 100%;
+  }
 `;
 
 export const PageContainer = styled.div`
