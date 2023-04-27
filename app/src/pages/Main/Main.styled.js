@@ -3,7 +3,9 @@ import styled from 'styled-components'
 export const MainContainer = styled.div`
   max-width: 840px;
   margin: 70px auto 120px;
+  padding: 0 24px;
   width: 100%;
+  box-sizing: border-box;
 `
 
 export const MainTitleContainer = styled.div`
@@ -71,6 +73,11 @@ export const MainRules = styled.p`
   border-radius: 2px;
   margin: 0;
   margin-bottom: 48px;
+  word-wrap: break-word;
+
+  @media (max-width: 650px) {
+    width: auto;
+  }
 `
 
 export const MainRulesSpan = styled.span`
@@ -89,10 +96,17 @@ export const MainDistributionTitle = styled.h2`
   margin-bottom: 18px;
 `
 
+export const TableWrapper = styled.div`
+  overflow-y: scroll;
+  max-width: 100%;
+  box-sizing: border-box;
+`
+
 export const MainTable = styled.div`
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   overflow: hidden;
+  min-width: 400px;
 `
 
 export const MainTableHeader = styled.div`
@@ -155,6 +169,10 @@ export const TableBodyItem = styled.div`
     height: ${({ withoutAfter }) => (withoutAfter ? '0px' : '1px')};
     background-color: rgba(255, 255, 255, 0.1);
   }
+
+  @media (max-width: 650px) {
+    font-size: 12px;
+  }
 `
 
 export const MainTableBodyRow = styled.div`
@@ -173,4 +191,11 @@ export const TableIndicator = styled.span`
   width: 11px;
   height: 11px;
   margin-right: 8px;
+`
+
+export const MainLogo = styled.img`
+  @media (max-width: 650px) {
+    width: 63px;
+    height: 92px;
+  }
 `
