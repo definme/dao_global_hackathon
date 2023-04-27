@@ -34,6 +34,7 @@ function DAO() {
     governanceContractBalance,
     pendingProposals,
     successProposals,
+    userAddress,
   } = useContext(ConnectionContext)
   const [proposalModalOpen, setProposalModalOpen] = useState(false)
 
@@ -116,7 +117,9 @@ function DAO() {
           </DAOPromoContainer>
         </DAOInfo>
       )}
-      <DAOSubtitle>DAO Governance</DAOSubtitle>
+      <DAOSubtitle>
+        {!userAddress ? 'Please connect to metamask' : 'DAO Governance'}
+      </DAOSubtitle>
       {pendingProposals &&
         pendingProposals.map((proposal, key) => (
           <Proposal key={key} proposal={proposal} />

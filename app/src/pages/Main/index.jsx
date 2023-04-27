@@ -79,8 +79,7 @@ function Main() {
         <MainTableBody>
           <MainTableBodyRow>
             <TableBodyItem first>
-              <TableBodySpan>10,000</TableBodySpan>
-              voting tokens
+              <TableBodySpan>10,000</TableBodySpan> voting tokens
             </TableBodyItem>
             <TableBodyItem top>
               <TableBodySpan>+5,000</TableBodySpan> voting tokens
