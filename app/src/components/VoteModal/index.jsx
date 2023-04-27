@@ -7,7 +7,7 @@ import { ConnectionContext } from '../../contexts/ConnectionContext'
 import networks from '../../networks.json'
 import { APP_NETWORK } from '../../constants'
 import { shortenAddress } from '../../utils'
-import { Container, Vote } from './VoteModal.styled'
+import { Container, Vote, TxLink } from './VoteModal.styled'
 
 export default function VoteModal({ isOpen, onClose, proposalId }) {
   const { voteProposal } = useContext(ConnectionContext)
@@ -58,33 +58,33 @@ export default function VoteModal({ isOpen, onClose, proposalId }) {
           ></Vote>
           <Vote
             type='button'
-            value={'abstian'}
+            value={'abstain'}
             onClick={handleChange}
-            active={vote === 'abstian'}
+            active={vote === 'abstain'}
           ></Vote>
         </Container>
-        {txHash ? (
-          <Button>
-            <a
-              href={`${networks[APP_NETWORK].params.blockExplorerUrls}tx/${txHash}`}
-              target='_blank'
-              rel='noreferrer'
-            >
-              {success ? success : txHash && shortenAddress(txHash)}
-            </a>
-          </Button>
-        ) : (
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-              width: '100%',
-              mt: '20px',
-            }}
-          >
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            width: '100%',
+            mt: '20px',
+          }}
+        >
+          {txHash ? (
+            <Button>
+              <TxLink
+                href={`${networks[APP_NETWORK].params.blockExplorerUrls}tx/${txHash}`}
+                target='_blank'
+                rel='noreferrer'
+              >
+                {success ? success : txHash && shortenAddress(txHash)}
+              </TxLink>
+            </Button>
+          ) : (
             <Button onClick={onSubmit}>SUBMIT</Button>
-          </Box>
-        )}
+          )}
+        </Box>
       </Box>
     </ModalComponent>
   )

@@ -7,3 +7,8 @@ export const BuyProposalButton = styled(StyledButton)`
   padding-right: 40px;
   text-transform: uppercase;
 `
+
+export const TxLink = styled.a`
+  color: #ff6933;
+  text-decoration: none;
+`
