@@ -19,7 +19,7 @@ function BuyCard({
   kind,
   collectionLength,
 }) {
-  const { userAddress } = useContext(ConnectionContext)
+  const { userAddress, getAllBalances } = useContext(ConnectionContext)
   const [txHash, setTxHash] = useState()
   const [success, setSuccess] = useState()
 
@@ -38,6 +38,7 @@ function BuyCard({
                 .then(res => {
                   if (res.length > collectionLength) {
                     setSuccess('SUCCESS!!')
+                    getAllBalances()
                   } else {
                     setTimeout(testTokens, 2000)
                   }

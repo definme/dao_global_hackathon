@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
+import { utils } from 'ethers'
 import Box from '@mui/material/Box'
 import ProfileCard from '../../components/ProfileCard'
 import { ConnectionContext } from '../../contexts/ConnectionContext'
@@ -71,7 +72,7 @@ function Profile() {
           <ProfileBalanceWrapper>
             <ProfileBalanceAmount>
               <ProfileBalanceAmountSpan>
-                {Number(governanceUserBalance).toFixed(2)}
+                {Number(utils.formatEther(governanceUserBalance)).toFixed(2)}
               </ProfileBalanceAmountSpan>{' '}
               ELT
             </ProfileBalanceAmount>
