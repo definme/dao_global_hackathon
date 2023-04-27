@@ -38,7 +38,7 @@ export const ModalContainer = styled.div`
   border-radius: 8px;
   box-sizing: border-box;
   @media (max-width: 768px) {
-    max-width: 336px;
+    max-width: 70%;
     border-radius: 12px;
     padding: 24px;
   }
@@ -47,9 +47,13 @@ export const ModalContainer = styled.div`
 export const Close = styled.div`
   cursor: pointer;
   border-radius: 8px;
-  background: #22222E;
+  background: #22222e;
   position: absolute;
   top: 0;
   right: -70px;
   padding: 10px;
+  @media (max-width: 510px) {
+    top: -70px;
+    right: 0;
+  }
 `;

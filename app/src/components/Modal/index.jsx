@@ -1,7 +1,6 @@
 import React, { useEffect, useCallback, useRef } from 'react';
 import { Close, Modal, ModalContainer } from './Modal.styled';
 import CloseIcon from '@mui/icons-material/Close';
-import { Box } from '@mui/material';
 
 export default function ModalComponent({ isOpen, onClose, children }) {
   const modal = useRef(null);
