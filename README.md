@@ -8,35 +8,35 @@ Live on 🤖 🦾 🌃 🌐 🚀 https://ether-luxe.definme.com/ 🤖 🦾 🌃 
 
 ## About
 
-The concept of the project is related to the implementation of allowing users to participate in the process of adding new game elements. At the initial stage, the user can buy an NFT character on the marketplace and receive tokens along with the in-game NFT governess tokens that give the right to participate in voting.
+The concept of the project is allow users to participate in adding new game elements. At the initial stage, the user can buy an NFT character on the marketplace and receive tokens along with the NFT governance tokens which give the right to participate in voting.
 
-### Scheme for obtaining governance tokens when buying NFT
+### A plot describing balanced distribution of governance token for every NFT purchase
 ![governance-for-purchase](https://user-images.githubusercontent.com/25884190/234820533-61cf124b-ed38-42b5-a1f1-6bcff69ac88c.png)
 
 ### Basic project configuration:
 
 - 3 collection contracts (Characters, Vehicles, Weapons)
-- in each collection there is a basic type of NFT (kind 0)
-- sale contract in which one governance collection (characters) and one non-governance collection (weapons) are added
-- oracle contract, which is responsible for the user's purchase of NFT
+- every collection has several kinds, there is a basic one (kind 0)
+- sale contract with one governance collection (Characters) and one non-governance collection (Weapons; Vehicles will be added on-vote)
+- oracle contract storing data of every NFT purchase
 - Aragon DAO for voting
 
 Votings are created by the platform administrator and the following options are available in the presented MVP:
 
-- Adding new nft types to existing collections
+- Adding new NFT kinds to existing collections
 - Adding new collections to the sale contract
-- Changed the governanceTokensInvariant attribute, which affects the number of government tokens received when buying NFT in a collection that is added as CollectionGovernance
+- Changing the `governanceTokensInvariant` attribute which affects the number of government tokens received on NFT purchase in a collection that is added as CollectionGovernance
 - Mint additional governance tokens
 
 ## Technical design
 
 ### Smart contracts
 
-The main idea and the key part of the project are the Solidity smart contracts used to implement the Gamefi parts, which are represented by collection contracts, the sale contract and the [Aragon OSx](https://devs.aragon.org/docs/osx/) DAO functionality.
+The key part of the project are the Solidity smart contracts used to implement the GameFi parts, which are represented by collection contracts, the sale contract and the [Aragon OSx](https://devs.aragon.org/docs/osx/) DAO functionality.
 
 ### Backend
 
-Built using the Django web framework, which is a popular Python-based tool for building web applications. For building RESTful APIs, the Django Rest Framework (DRF) has been utilized to simplify the process of building APIs and make them more modular and scalable.
+Built using the Django web framework, which is a popular Python-based tool for building web applications. We use RESTful APIs, the Django Rest Framework (DRF) to simplify the process of building APIs and make them more modular and scalable.
 
 ### Frontend
 
