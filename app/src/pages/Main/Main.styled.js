@@ -97,9 +97,11 @@ export const MainDistributionTitle = styled.h2`
 `
 
 export const TableWrapper = styled.div`
-  overflow-y: scroll;
-  max-width: 100%;
-  box-sizing: border-box;
+  @media (max-width: 650px) {
+    overflow-x: scroll;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
 `
 
 export const MainTable = styled.div`
