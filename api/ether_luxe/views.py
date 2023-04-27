@@ -3,8 +3,8 @@ import json
 from rest_framework import views, renderers, response, viewsets
 from django_filters import rest_framework, FilterSet, CharFilter
 
-from .models import Token
-from .serializer import TokenSerializer
+from .models import Token, SaleToken
+from .serializer import TokenSerializer, SaleTokenSerializer
 
 
 class CharacterMetadataView(views.APIView):
@@ -100,3 +100,18 @@ class TokenViewSet(viewsets.ModelViewSet):
     serializer_class = TokenSerializer
     filter_backends = [rest_framework.DjangoFilterBackend]
     filterset_class = TokenFilter
+
+
+class SaleTokenFilter(FilterSet):
+    collection_address = CharFilter(field_name='collection__contract_address')
+    collection_name = CharFilter(field_name='collection__name')
+    token_name = CharFilter(field_name='name')
+    kind = CharFilter(field_name='kind')
+
+
+class SaleTokenViewSet(viewsets.ModelViewSet):
+    http_method_names = ["get", "options", "head"]
+    queryset = SaleToken.objects.all()
+    serializer_class = SaleTokenSerializer
+    filter_backends = [rest_framework.DjangoFilterBackend]
+    filterset_class = SaleTokenFilter
