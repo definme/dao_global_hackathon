@@ -1,28 +1,12 @@
-import { useState, useEffect } from 'react'
-import Box from '@mui/material/Box'
-import BuyCard from '../../components/BuyCard'
-import networks from '../../networks.json'
-import { APP_NETWORK } from '../../constants'
-import { getCollectionSale } from '../../api/contracts'
+import Box from '@mui/material/Box';
+import BuyCard from '../../components/BuyCard';
+import networks from '../../networks.json';
+import { APP_NETWORK } from '../../constants';
 
-function Weapon({ collectionLength }) {
-  const [price, setPrice] = useState()
-
-  async function getPrice() {
-    const CollectionSale = getCollectionSale()
-
-    await CollectionSale.getPrice(
-      networks[APP_NETWORK].contracts.charactersCollection
-    )
-      .then(res => {
-        setPrice(res)
-      })
-      .catch(e => console.log(e))
-  }
-
-  useEffect(() => {
-    getPrice()
-  }, [])
+function Weapon({ collectionLength, saleTokens }) {
+  const weapons = saleTokens.filter(
+    (token) => token.collection.name === 'Weapons'
+  );
 
   return (
     <Box
@@ -32,45 +16,23 @@ function Weapon({ collectionLength }) {
         flexWrap: 'wrap',
         gap: '20px',
         justifyContent: 'center',
-      }}
-    >
-      <BuyCard
-        title='Strong Melee'
-        description='Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin.'
-        price={price}
-        image={'https://ether-luxe.definme.com/images/weapon1.png'}
-        collectionContract={networks[APP_NETWORK].contracts.weaponCollection}
-        kind={0x0000}
-        collectionLength={collectionLength}
-      />
-      <BuyCard
-        title='Strong Melee'
-        description='Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin.'
-        price={price}
-        image={'https://ether-luxe.definme.com/images/weapon2.png'}
-        collectionContract={networks[APP_NETWORK].contracts.weaponCollection}
-        collectionLength={collectionLength}
-        kind={0x0000}
-      />
-      <BuyCard
-        title='Strong Melee'
-        description='Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin.'
-        price={price}
-        image={'https://ether-luxe.definme.com/images/weapon3.png'}
-        collectionContract={networks[APP_NETWORK].contracts.weaponCollection}
-        kind={0x0000}
-      />
-      <BuyCard
-        title='Strong Melee'
-        description='Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin.'
-        price={price}
-        image={'https://ether-luxe.definme.com/images/weapon4.png'}
-        collectionContract={networks[APP_NETWORK].contracts.weaponCollection}
-        collectionLength={collectionLength}
-        kind={0x0000}
-      />
+      }}>
+      {weapons.map((character, key) => (
+        <BuyCard
+          key={key}
+          title={character.name}
+          image={character.image_uri}
+          description={character.description}
+          kind={character.kind}
+          price={character.price}
+          collectionLength={collectionLength}
+          collectionContract={
+            networks[APP_NETWORK].contracts.charactersCollection
+          }
+        />
+      ))}
     </Box>
-  )
+  );
 }
 
-export default Weapon
+export default Weapon;

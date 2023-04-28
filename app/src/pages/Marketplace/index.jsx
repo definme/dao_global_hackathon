@@ -1,36 +1,38 @@
-import { useState, useEffect, useContext } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
-import Container from '@mui/material/Container'
-import Box from '@mui/material/Box'
-import Characters from './Characters'
-import Weapon from './Weapon'
-import Transport from './Transport'
-import { ConnectionContext } from '../../contexts/ConnectionContext'
-import { getCollectionTokens } from '../../api'
-import { MenuContainer, MenuLink, PageContainer } from './Marketplace.styled'
+import { useState, useEffect, useContext } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
+import Characters from './Characters';
+import Weapon from './Weapon';
+import Transport from './Transport';
+import { ConnectionContext } from '../../contexts/ConnectionContext';
+import { getCollectionTokens, getSaleTokens } from '../../api';
+import { MenuContainer, MenuLink, PageContainer } from './Marketplace.styled';
 
 function Marketplace() {
-  const location = useLocation()
-  const { userAddress } = useContext(ConnectionContext)
-  const [collectionLength, setCollectionLength] = useState(0)
+  const location = useLocation();
+  const { userAddress } = useContext(ConnectionContext);
+  const [collectionLength, setCollectionLength] = useState(0);
+  const [saleTokens, setSaleTokens] = useState([]);
 
   function getNFTsLength() {
     getCollectionTokens(userAddress)
-      .then(res => {
-        setCollectionLength(res.length)
+      .then((res) => {
+        setCollectionLength(res.length);
       })
-      .catch(e => console.log(e))
+      .catch((e) => console.log(e));
   }
 
   useEffect(() => {
-    if (userAddress) getNFTsLength()
-  }, [userAddress])
+    if (userAddress) getNFTsLength();
+    getSaleTokens().then((data) => setSaleTokens(data));
+  }, [userAddress]);
 
   const [currentLocation, setCurrentLocation] = useState({
     characters: false,
     weapon: false,
     transport: false,
-  })
+  });
 
   useEffect(() => {
     if (location.pathname.includes('/weapon')) {
@@ -38,21 +40,21 @@ function Marketplace() {
         characters: false,
         weapon: true,
         transport: false,
-      })
+      });
     } else if (location.pathname.includes('/transport')) {
       setCurrentLocation({
         characters: false,
         weapon: false,
         transport: true,
-      })
+      });
     } else {
       setCurrentLocation({
         characters: true,
         weapon: false,
         transport: false,
-      })
+      });
     }
-  }, [location])
+  }, [location]);
 
   return (
     <PageContainer>
@@ -60,20 +62,17 @@ function Marketplace() {
         <MenuContainer>
           <MenuLink
             current={currentLocation.characters.toString()}
-            to='/marketplace/characters'
-          >
+            to='/marketplace/characters'>
             Characters
           </MenuLink>
           <MenuLink
             current={currentLocation.weapon.toString()}
-            to='/marketplace/weapon'
-          >
+            to='/marketplace/weapon'>
             Weapon
           </MenuLink>
           <MenuLink
             current={currentLocation.transport.toString()}
-            to='/marketplace/transport'
-          >
+            to='/marketplace/transport'>
             Transport
           </MenuLink>
         </MenuContainer>
@@ -84,27 +83,47 @@ function Marketplace() {
             <Route
               exact
               path='/characters'
-              element={<Characters collectionLength={collectionLength} />}
+              element={
+                <Characters
+                  collectionLength={collectionLength}
+                  saleTokens={saleTokens}
+                />
+              }
             />
             <Route
               exact
               path='/weapon'
-              element={<Weapon collectionLength={collectionLength} />}
+              element={
+                <Weapon
+                  collectionLength={collectionLength}
+                  saleTokens={saleTokens}
+                />
+              }
             />
             <Route
               exact
               path='/transport'
-              element={<Transport collectionLength={collectionLength} />}
+              element={
+                <Transport
+                  collectionLength={collectionLength}
+                  saleTokens={saleTokens}
+                />
+              }
             />
             <Route
               path='*'
-              element={<Characters collectionLength={collectionLength} />}
+              element={
+                <Characters
+                  collectionLength={collectionLength}
+                  saleTokens={saleTokens}
+                />
+              }
             />
           </Routes>
         </Box>
       </Container>
     </PageContainer>
-  )
+  );
 }
 
-export default Marketplace
+export default Marketplace;
