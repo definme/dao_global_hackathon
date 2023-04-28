@@ -42,29 +42,29 @@ function Main() {
         </MainTitleWrapper>
       </MainTitleContainer>
       <MainText>
-        To achieve our goals, we used Aragon DAO and ERC721 game tokens. The
-        principle of our project is: <br />
+        We use Aragon DAO and ERC721 game tokens. The concept of our project is:{' '}
+        <br />
         <br />
         - user buys a game character token on the "Marketplace" page using the
-        network's native tokens(MATIC) <br />
-        <br />- for the purchase of a character, user is credited with a certain
-        number of game governance tokens(ELT). The starting number of tokens
-        awarded for purchasing a character is 250 ELT. The more characters sold,
-        the less governance tokens will be credited for the purchase - this is
+        network's native tokens (MATIC) <br />
+        <br />- user is credited with a certain number of game governance tokens
+        (ELT) for the purchase of a character. The starting number of tokens
+        awarded for purchasing a character is 25 ELT. The more characters sold,
+        the less governance tokens will be credited for the purchase — this is
         how we encourage our first users. The total balance of governance tokens
-        is 10000 ELT, before they are distributed among users, they are stored
-        on the "CollectionSale" contract.
+        is changed on every round, before they are distributed among users, they
+        are stored on the "CollectionSale" contract.
         <br />
-        <br />- when 7000 ELT are distributed among users, we will enable the
-        ability to create promotions with suggestions for improvements in the
-        game.
+        <br />- when distribution of round tokens among users is reached we
+        enable the ability to create promotions with suggestions for
+        improvements
         <br />
-        <br />- if the proposal gets enough “yes” votes, then we will take it
-        into development and add it to the game!
+        <br />- if the proposal gets enough votes then we will take it into
+        development and add it to the game!
       </MainText>
       <MainRules>
-        Rules for taking proposal:{' '}
-        <MainRulesSpan>- 15% participants, - 50% "yes" votes.</MainRulesSpan>
+        Needed quorum:{' '}
+        <MainRulesSpan>- 35% participants, - 50% "yes" votes.</MainRulesSpan>
       </MainRules>
       <MainDistributionTitle>
         Token Distribution Graphics:
@@ -72,44 +72,105 @@ function Main() {
       <TableWrapper>
         <MainTable>
           <MainTableHeader>
-            <TableHeaderItem first>
-              <TableIndicator />I stage
+            <TableHeaderItem first>Round</TableHeaderItem>
+            <TableHeaderItem>
+              <TableIndicator />
+              Initial state
             </TableHeaderItem>
-            <TableHeaderItem>II stage</TableHeaderItem>
-            <TableHeaderItem>III stage</TableHeaderItem>
-            <TableHeaderItem>IV stage</TableHeaderItem>
+            <TableHeaderItem>First round</TableHeaderItem>
+            <TableHeaderItem>Second round</TableHeaderItem>
           </MainTableHeader>
           <MainTableBody>
             <MainTableBodyRow>
-              <TableBodyItem first>
-                <TableBodySpan>10,000</TableBodySpan> voting tokens
+              <TableBodyItem first>Tokens given per NFT purchase</TableBodyItem>
+              <TableBodyItem top>
+                <TableBodySpan>25</TableBodySpan>
               </TableBodyItem>
               <TableBodyItem top>
-                <TableBodySpan>+5,000</TableBodySpan> voting tokens
+                <TableBodySpan>15</TableBodySpan>
               </TableBodyItem>
               <TableBodyItem top>
-                <TableBodySpan>+2,500</TableBodySpan> voting tokens
-              </TableBodyItem>
-              <TableBodyItem top>
-                <TableBodySpan>+1,000</TableBodySpan> voting tokens
+                <TableBodySpan>5</TableBodySpan>
               </TableBodyItem>
             </MainTableBodyRow>
             <MainTableBodyRow>
-              <TableBodyItem first withoutAfter>
-                For <TableBodySpan>1</TableBodySpan> character you get{' '}
-                <TableBodySpan>25</TableBodySpan> tokens
+              <TableBodyItem first>Total supply</TableBodyItem>
+              <TableBodyItem>
+                <TableBodySpan>151</TableBodySpan>
               </TableBodyItem>
-              <TableBodyItem bottom withoutAfter>
-                For <TableBodySpan>1</TableBodySpan> character you get{' '}
-                <TableBodySpan>15</TableBodySpan> tokens
+              <TableBodyItem>
+                <TableBodySpan>302</TableBodySpan>
               </TableBodyItem>
-              <TableBodyItem bottom withoutAfter>
-                For <TableBodySpan>1</TableBodySpan> character you get{' '}
-                <TableBodySpan>10</TableBodySpan> tokens
+              <TableBodyItem>
+                <TableBodySpan>453</TableBodySpan>
               </TableBodyItem>
-              <TableBodyItem bottom withoutAfter>
-                For <TableBodySpan>1</TableBodySpan> character you get{' '}
-                <TableBodySpan>5</TableBodySpan> tokens
+            </MainTableBodyRow>
+            <MainTableBodyRow>
+              <TableBodyItem first>
+                Admin balance at the start of round
+              </TableBodyItem>
+              <TableBodyItem>
+                <TableBodySpan>51</TableBodySpan>
+              </TableBodyItem>
+              <TableBodyItem>
+                <TableBodySpan>152</TableBodySpan>
+              </TableBodyItem>
+              <TableBodyItem>
+                <TableBodySpan>227</TableBodySpan>
+              </TableBodyItem>
+            </MainTableBodyRow>
+            <MainTableBodyRow>
+              <TableBodyItem first>
+                SaleContract balance at the start of round
+              </TableBodyItem>
+              <TableBodyItem>
+                <TableBodySpan>100</TableBodySpan>
+              </TableBodyItem>
+              <TableBodyItem>
+                <TableBodySpan>150</TableBodySpan>
+              </TableBodyItem>
+              <TableBodyItem>
+                <TableBodySpan>226</TableBodySpan>
+              </TableBodyItem>
+            </MainTableBodyRow>
+            <MainTableBodyRow>
+              <TableBodyItem first>
+                Invariant value at the start of round
+              </TableBodyItem>
+              <TableBodyItem>
+                <TableBodySpan>3775</TableBodySpan>
+              </TableBodyItem>
+              <TableBodyItem>
+                <TableBodySpan>4530</TableBodySpan>
+              </TableBodyItem>
+              <TableBodyItem>
+                <TableBodySpan>2265</TableBodySpan>
+              </TableBodyItem>
+            </MainTableBodyRow>
+            <MainTableBodyRow>
+              <TableBodyItem first>Approximated users count</TableBodyItem>
+              <TableBodyItem>
+                <TableBodySpan>4</TableBodySpan>
+              </TableBodyItem>
+              <TableBodyItem>
+                <TableBodySpan>10</TableBodySpan>
+              </TableBodyItem>
+              <TableBodyItem>
+                <TableBodySpan>45.2</TableBodySpan>
+              </TableBodyItem>
+            </MainTableBodyRow>
+            <MainTableBodyRow>
+              <TableBodyItem first>
+                Minted governance tokens for the next round
+              </TableBodyItem>
+              <TableBodyItem bottom>
+                <TableBodySpan>151</TableBodySpan>
+              </TableBodyItem>
+              <TableBodyItem bottom>
+                <TableBodySpan>151</TableBodySpan>
+              </TableBodyItem>
+              <TableBodyItem bottom>
+                <TableBodySpan></TableBodySpan>
               </TableBodyItem>
             </MainTableBodyRow>
           </MainTableBody>
