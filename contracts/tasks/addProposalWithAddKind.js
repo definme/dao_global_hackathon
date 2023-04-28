@@ -4,9 +4,12 @@ const {
   Context,
   ContextPlugin,
 } = require('@aragon/sdk-client')
+const { Web3Storage, File } = require('web3.storage')
+const { Buffer } = require('buffer')
 
 const pk = process.env.PK
 const IPFS_API_KEY = process.env.IPFS_API_KEY
+const ACCESS_TOKEN = process.env.ACCESS_TOKEN
 
 async function getTokenVotingClient(signer) {
   const contextParams = {
@@ -33,6 +36,20 @@ async function getTokenVotingClient(signer) {
   return new TokenVotingClient(contextPlugin)
 }
 
+async function uploadToIPFS(text) {
+  // Create a Web3Storage client instance
+  const client = new Web3Storage({ token: ACCESS_TOKEN })
+
+  // Convert the string to a Buffer
+  const textBuffer = Buffer.from(text)
+
+  // Create a File object with the text buffer
+  const file = new File([textBuffer], '')
+
+  // Store the File object on web3.storage without wrapping it in a directory
+  return await client.put([file], { wrapWithDirectory: false })
+}
+
 task('add-proposal-with-add-kind', 'Add proposal with add kind').setAction(
   async (taskArgs, hre) => {
     const provider = new hre.ethers.providers.JsonRpcProvider(
@@ -47,7 +64,10 @@ task('add-proposal-with-add-kind', 'Add proposal with add kind').setAction(
       description: 'Description',
     }
 
-    const metadataUri = await tokenVotingClient.methods.pinMetadata(metadata)
+    // const metadataUri = await tokenVotingClient.methods.pinMetadata(metadata)
+    const metadataUri = hre.ethers.utils.toUtf8Bytes(
+      `ipfs://${await uploadToIPFS('text')}`
+    )
 
     const saleArtifact = await hre.deployments.get('SaleContract')
     const saleContractInstance = await hre.ethers.getContractAt(
