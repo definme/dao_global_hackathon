@@ -4,6 +4,9 @@ export const DAOContainer = styled.div`
   margin: 88px auto 120px;
   max-width: 1200px;
   width: 100%;
+  padding: 0 24px;
+  width: 100%;
+  box-sizing: border-box;
 `
 
 export const DAOInfo = styled.div`
@@ -18,11 +21,17 @@ export const DAOInfoContainer = styled.div`
   justify-content: space-between;
   margin-bottom: 24px;
   align-items: center;
+  @media (max-width: 820px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
 `
 
 export const DAOInfoNameContainer = styled.div`
   display: flex;
   gap: 24px;
+  align-items: flex-start;
 `
 export const DAOInfoNameTitle = styled.h2`
   font-family: Open Sans;
@@ -33,6 +42,11 @@ export const DAOInfoNameTitle = styled.h2`
   text-align: left;
   color: #ffffff;
   margin: 0;
+
+  @media (max-width: 820px) {
+    font-size: 32px;
+    line-height: 36px;
+  }
 `
 
 export const DAOLink = styled.a`
@@ -50,11 +64,19 @@ export const DAOInfoLinkContainer = styled.div`
   display: flex;
   gap: 12px;
   align-items: center;
+
+  @media (max-width: 820px) {
+    align-self: flex-start;
+  }
 `
 export const DAOImg = styled.img`
   width: 88px;
   height: 88px;
   border-radius: 8px;
+  @media (max-width: 820px) {
+    width: 44px;
+    height: 44px;
+  }
 `
 
 export const DAOAddressLink = styled.span`
@@ -93,6 +115,11 @@ export const DAOPromoContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media (max-width: 820px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+  }
 `
 
 export const DAOPromoText = styled.p`
@@ -148,4 +175,9 @@ export const DAOImageContainer = styled.div`
   line-height: 0;
   border-radius: 8px;
   overflow: hidden;
+
+  @media (max-width: 820px) {
+    width: 100%;
+    max-width: 44px;
+  }
 `
