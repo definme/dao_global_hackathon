@@ -108,7 +108,7 @@ export const MainTable = styled.div`
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   overflow: hidden;
-  min-width: 400px;
+  min-width: 450px;
 `
 
 export const MainTableHeader = styled.div`
@@ -144,6 +144,9 @@ export const TableHeaderItem = styled.div`
 `
 
 export const TableBodyItem = styled.div`
+  display: ${({ first }) => (first ? 'block' : 'flex')};
+  align-items: center;
+  justify-content: center;
   padding: 16px;
   position: relative;
   font-family: Open Sans;
@@ -151,7 +154,7 @@ export const TableBodyItem = styled.div`
   font-weight: 400;
   line-height: 22px;
   letter-spacing: 0.01em;
-  text-align: left;
+  text-align: ${({ first }) => (first ? 'left' : 'center')};
 
   &:before {
     content: '';
