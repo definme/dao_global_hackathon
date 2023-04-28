@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { StyledButton } from '../Button/Button.styled'
 
 export const ProposalContainer = styled.div`
   background: #22222e;
@@ -7,6 +8,9 @@ export const ProposalContainer = styled.div`
   margin-bottom: 32px;
   display: flex;
   flex-direction: column;
+  @media (max-width: 820px) {
+    padding: 24px;
+  }
 `
 
 export const ProposalInfoContainer = styled.div`
@@ -14,6 +18,10 @@ export const ProposalInfoContainer = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  @media (max-width: 820px) {
+    flex-direction: column-reverse;
+    gap: 32px;
+  }
 `
 
 export const ProposalTitle = styled.h2`
@@ -26,6 +34,10 @@ export const ProposalTitle = styled.h2`
   color: #ffffff;
   margin: 0;
   margin-bottom: 16px;
+  @media (max-width: 820px) {
+    font-size: 28px;
+    line-height: 34px;
+  }
 `
 
 export const ProposalSummary = styled.p`
@@ -73,12 +85,19 @@ export const ProposalBadge = styled.p`
     }
   }};
   text-transform: uppercase;
+  @media (max-width: 820px) {
+    align-self: flex-end;
+  }
 `
 
 export const ProposalDescription = styled.div`
   display: flex;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   margin-bottom: 32px;
+  @media (max-width: 820px) {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
 `
 
 export const ProposalAddresses = styled.div`
@@ -88,6 +107,9 @@ export const ProposalAddresses = styled.div`
   padding: 24px 48px;
   width: 45%;
   position: relative;
+  @media (max-width: 820px) {
+    width: 100%;
+  }
 `
 
 export const ProposalAddress = styled.p`
@@ -115,6 +137,7 @@ export const ProposalResults = styled.ul`
   gap: 32px;
   width: 55%;
   position: relative;
+
   &:before {
     content: '';
     position: absolute;
@@ -123,6 +146,23 @@ export const ProposalResults = styled.ul`
     top: 12px;
     width: 1px;
     background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  @media (max-width: 820px) {
+    width: 100%;
+    &:before {
+      height: 0;
+    }
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background-color: rgba(255, 255, 255, 0.2);
+    }
   }
 `
 
@@ -147,6 +187,11 @@ export const ProposalVotingContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media (max-width: 820px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+  }
 `
 
 export const ProposalVotingInfo = styled.p`
@@ -167,4 +212,12 @@ export const ProposalResultPercent = styled.span`
 export const TxLink = styled.a`
   color: #ff6933;
   text-decoration: none;
+`
+
+export const ProposalButton = styled(StyledButton)`
+  @media (max-width: 820px) {
+    width: 100%;
+    max-width: 350px;
+    align-self: center;
+  }
 `
