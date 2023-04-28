@@ -115,3 +115,14 @@ class SaleTokenViewSet(viewsets.ModelViewSet):
     serializer_class = SaleTokenSerializer
     filter_backends = [rest_framework.DjangoFilterBackend]
     filterset_class = SaleTokenFilter
+
+
+class VotersViewSet(viewsets.ViewSet):
+    renderer_classes = [renderers.JSONRenderer]
+    http_method_names = ['get', 'options', 'head']
+
+    def list(self, request, *args, **kwargs):
+        distinct_owners = []
+        for owner in Token.objects.values('owner').distinct():
+            distinct_owners.append(owner['owner'])
+        return response.Response(distinct_owners)
