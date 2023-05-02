@@ -52,3 +52,14 @@ class SaleToken(Model):
 
     def __str__(self):
         return f'{self.name} {self.image_uri}'
+
+
+class Message(Model):
+    subject = CharField(max_length=255)
+    body = TextField(blank=True, null=True)
+    plane_text = TextField(blank=True, null=True)
+    creation_time = DateTimeField(auto_now_add=True)
+    last_update = DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.subject}'
