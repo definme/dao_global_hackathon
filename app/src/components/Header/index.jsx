@@ -1,8 +1,8 @@
-import { useContext, useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import Box from '@mui/material/Box';
-import { ConnectionContext } from '../../contexts/ConnectionContext';
-import { shortenAddress } from '../../utils';
+import { useContext, useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
+import Box from '@mui/material/Box'
+import { ConnectionContext } from '../../contexts/ConnectionContext'
+import { shortenAddress } from '../../utils'
 import { Button } from '../Button'
 import {
   MainHeader,
@@ -19,28 +19,29 @@ import {
   LogoName,
   HeaderDrawer,
   CloseDrawer,
-} from './Header.styled';
-import { APP_NETWORK } from '../../constants';
-import { useMediaQuery } from '@mui/material';
-
+} from './Header.styled'
+import { APP_NETWORK, ADMIN_ADDRESS } from '../../constants'
+import { useMediaQuery } from '@mui/material'
 
 function Header() {
   const { userAddress, chainId, connectWallet, balance, switchNetwork } =
-    useContext(ConnectionContext);
-  const location = useLocation();
-  const isMobile = useMediaQuery('(max-width:741px)');
-  const [openDraw, setOpenDraw] = useState(false);
+    useContext(ConnectionContext)
+  const location = useLocation()
+  const isMobile = useMediaQuery('(max-width:741px)')
+  const [openDraw, setOpenDraw] = useState(false)
+  const isAdmin = userAddress === ADMIN_ADDRESS
 
   const handleDrawer = () => {
-    setOpenDraw(!openDraw);
-  };
+    setOpenDraw(!openDraw)
+  }
 
   const [currentLocation, setCurrentLocation] = useState({
     home: false,
     marketplace: false,
     profile: false,
     dao: false,
-  });
+    admin: false,
+  })
 
   useEffect(() => {
     if (location.pathname.includes('/marketplace')) {
@@ -49,33 +50,45 @@ function Header() {
         marketplace: true,
         profile: false,
         dao: false,
-      });
+        admin: false,
+      })
     } else if (location.pathname.includes('/profile')) {
       setCurrentLocation({
         home: false,
         marketplace: false,
         profile: true,
         dao: false,
-      });
+        admin: false,
+      })
     } else if (location.pathname.includes('/dao')) {
       setCurrentLocation({
         home: false,
         marketplace: false,
         profile: false,
         dao: true,
-      });
+        admin: false,
+      })
+    } else if (location.pathname.includes('/admin')) {
+      setCurrentLocation({
+        home: false,
+        marketplace: false,
+        profile: false,
+        dao: false,
+        admin: true,
+      })
     } else {
       setCurrentLocation({
         home: true,
         marketplace: false,
         profile: false,
         dao: false,
-      });
+        admin: false,
+      })
     }
     if (openDraw) {
-      handleDrawer();
+      handleDrawer()
     }
-  }, [location]);
+  }, [location])
 
   return (
     <Box>
@@ -86,13 +99,16 @@ function Header() {
               <MenuBurger onClick={handleDrawer} />
               <HeaderDrawer open={openDraw} onClose={handleDrawer}>
                 <>
-                  <Header.Menu currentLocation={currentLocation} />
+                  <Header.Menu
+                    currentLocation={currentLocation}
+                    isAdmin={isAdmin}
+                  />
                   <CloseDrawer onClick={handleDrawer} />
                 </>
               </HeaderDrawer>
             </>
           ) : (
-            <Header.Menu currentLocation={currentLocation} />
+            <Header.Menu currentLocation={currentLocation} isAdmin={isAdmin} />
           )}
 
           <Box
@@ -101,7 +117,8 @@ function Header() {
               flexDirection: 'row',
               alignItems: 'center',
               gap: '25px',
-            }}>
+            }}
+          >
             {userAddress ? (
               chainId === APP_NETWORK ? (
                 <>
@@ -125,10 +142,10 @@ function Header() {
         </HeaderContainer>
       </MainHeader>
     </Box>
-  );
+  )
 }
 
-Header.Menu = ({ currentLocation }) => {
+Header.Menu = ({ currentLocation, isAdmin }) => {
   return (
     <>
       <LogoLink to='/'>
@@ -149,7 +166,8 @@ Header.Menu = ({ currentLocation }) => {
         </MenuLink>
         <MenuLink
           current={currentLocation.marketplace.toString()}
-          to='/marketplace/characters'>
+          to='/marketplace/characters'
+        >
           Marketplace
         </MenuLink>
         <MenuLink current={currentLocation.profile.toString()} to='/profile'>
@@ -158,9 +176,14 @@ Header.Menu = ({ currentLocation }) => {
         <MenuLink current={currentLocation.dao.toString()} to='/dao'>
           DAO
         </MenuLink>
+        {isAdmin && (
+          <MenuLink current={currentLocation.admin.toString()} to='/admin'>
+            Admin
+          </MenuLink>
+        )}
       </MenuContainer>
     </>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

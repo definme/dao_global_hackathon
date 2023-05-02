@@ -7,6 +7,7 @@ import Main from './pages/Main'
 import Marketplace from './pages/Marketplace'
 import Profile from './pages/Profile'
 import DAO from './pages/DAO'
+import AdminPage from './pages/AdminPage'
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -29,6 +30,7 @@ function App() {
         <Route path='/marketplace/*' element={<Marketplace />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/dao' element={<DAO />} />
+        <Route path='/admin' element={<AdminPage />} />
         <Route path='*' element={<Main />} />
       </Routes>
       <Footer />
