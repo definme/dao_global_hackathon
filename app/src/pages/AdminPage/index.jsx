@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react'
-import AddProposalModal from '../../components/AddProposalModal'
+import AddProposalWithsActionModal from '../../components/AddProposalWithActionModal'
 import { ConnectionContext } from '../../contexts/ConnectionContext'
 import {
   MIN_GOVERNANCE_TOKEN_TO_PROPOSAL,
@@ -12,9 +12,13 @@ function AdminPage() {
   const { dao, governanceUserBalance, userAddress } =
     useContext(ConnectionContext)
   const [proposalModalOpen, setProposalModalOpen] = useState(false)
+  const [proposalType, setProposalType] = useState('')
   const isAdmin = userAddress === ADMIN_ADDRESS
 
-  const handleOpenModal = () => setProposalModalOpen(true)
+  const handleOpenModal = type => {
+    setProposalModalOpen(true)
+    setProposalType(type)
+  }
   const handleCloseModal = () => setProposalModalOpen(false)
 
   return (
@@ -35,7 +39,7 @@ function AdminPage() {
             Proposal with addition new NFT collection to the game
           </Button>
           <Button
-            onClick={handleOpenModal}
+            onClick={() => handleOpenModal('kind')}
             disabled={MIN_GOVERNANCE_TOKEN_TO_PROPOSAL > governanceUserBalance}
           >
             Proposal with addition new kind to existing NFT
@@ -55,7 +59,11 @@ function AdminPage() {
         </DAOInfo>
       )}
 
-      <AddProposalModal isOpen={proposalModalOpen} onClose={handleCloseModal} />
+      <AddProposalWithsActionModal
+        isOpen={proposalModalOpen}
+        onClose={handleCloseModal}
+        type={proposalType}
+      />
     </DAOContainer>
   )
 }

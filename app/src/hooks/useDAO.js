@@ -95,12 +95,14 @@ const useDAO = userAddress => {
     getProposals()
   }
 
-  async function createProposalWithAction(
+  async function createProposalWithActionAddKind(
     title,
     summary,
     description,
     setTxHash,
-    setSuccess
+    setSuccess,
+    kindNum,
+    kindName
   ) {
     const metadata = {
       title,
@@ -114,14 +116,12 @@ const useDAO = userAddress => {
       networks[APP_NETWORK].contracts.charactersCollection,
       CollectionAbi
     ).interface
-    const data = iface.encodeFunctionData('addKind', ['1', 'newKind'])
+    const data = iface.encodeFunctionData('addKind', [kindNum, kindName])
     const configAction = {
       to: networks[APP_NETWORK].contracts.charactersCollection,
       value: ethers.BigNumber.from(0),
       data: hexToBytes(data),
     }
-
-    // const configAction = { to: userAddress, value: ethers.utils.parseEther('0.01'), data: new Uint8Array() }
 
     const proposalParams = {
       pluginAddress,
@@ -290,7 +290,7 @@ const useDAO = userAddress => {
     voteProposal,
     userCanVote,
     getProposal,
-    createProposalWithAction,
+    createProposalWithActionAddKind,
     executeProposal,
   }
 }
