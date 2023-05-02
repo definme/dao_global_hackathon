@@ -1,6 +1,8 @@
 from django.contrib import admin
 from .models import Chain, Collection, Token, SaleToken, Message
+from django_object_actions import DjangoObjectActions
 
+import requests
 
 @admin.register(Chain)
 class ChainAdmin(admin.ModelAdmin):
@@ -26,5 +28,9 @@ class SaleTokenAdmin(admin.ModelAdmin):
 
 
 @admin.register(Message)
-class MessageAdmin(admin.ModelAdmin):
-    pass
+class MessageAdmin(DjangoObjectActions, admin.ModelAdmin):
+    def mail_token_holders(self, request, queryset):
+        self.message_user(request, "All token holders have been notified!")
+    changelist_actions = ('mail_token_holders', )
+
+
