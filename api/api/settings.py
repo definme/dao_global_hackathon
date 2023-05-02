@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'ether_luxe',
-    'django_filters'
+    'django_filters',
+    'django_object_actions'
 ]
 
 MIDDLEWARE = [
