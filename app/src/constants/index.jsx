@@ -7,3 +7,5 @@ export const IPFS_API_KEY = process.env.REACT_APP_IPFS_API_KEY
 export const API_HOST = 'https://api-ether-luxe.definme.com/api'
 
 export const MIN_GOVERNANCE_TOKEN_TO_PROPOSAL = ethers.utils.parseEther('5')
+
+export const ADMIN_ADDRESS = '0x22E837C1E3380e8f38758C8490d9865433bF3ad5'
