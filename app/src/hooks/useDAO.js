@@ -272,6 +272,69 @@ const useDAO = userAddress => {
     getProposals()
   }
 
+  async function createProposalWithActionAddNFT(
+    title,
+    summary,
+    description,
+    setTxHash,
+    setSuccess,
+    nftAddress,
+    price,
+    isGovernance
+  ) {
+    const metadata = {
+      title,
+      summary,
+      description,
+    }
+
+    const metadataUri = await tokenVotingClient.methods.pinMetadata(metadata)
+
+    const iface = new Contract(
+      networks[APP_NETWORK].contracts.collectionSale,
+      CollectionSaleAbi
+    ).interface
+
+    const data = iface.encodeFunctionData('addNFT', [
+      nftAddress,
+      price,
+      isGovernance,
+    ])
+    const configAction = {
+      to: networks[APP_NETWORK].contracts.collectionSale,
+      value: ethers.BigNumber.from(0),
+      data: hexToBytes(data),
+    }
+
+    const proposalParams = {
+      pluginAddress,
+      metadataUri,
+      actions: [configAction],
+      startDate: new Date(Date.now() + 300000), // 5 minutes
+      endDate: new Date(Date.now() + 3900000), // min 1 hour
+      // endDate: new Date(Date.now() + 86400000), // 24 hours
+    }
+
+    const steps = tokenVotingClient.methods.createProposal(proposalParams)
+    for await (const step of steps) {
+      try {
+        // eslint-disable-next-line default-case
+        switch (step.key) {
+          case ProposalCreationSteps.CREATING:
+            setTxHash(step.txHash)
+            break
+          case ProposalCreationSteps.DONE:
+            console.log(step.proposalId)
+            setSuccess('SUCCESS!!')
+            break
+        }
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    getProposals()
+  }
+
   async function voteProposal(proposalId, voteValue, setTxHash, setSuccess) {
     let vote
     switch (voteValue) {
@@ -413,6 +476,7 @@ const useDAO = userAddress => {
     createProposalWithActionAddKind,
     createProposalWithActionSetInvariant,
     createProposalWithActionMintGovernanceTokens,
+    createProposalWithActionAddNFT,
     executeProposal,
   }
 }
