@@ -30,6 +30,7 @@ const ConnectionProvider = ({ children }) => {
     createProposalWithActionAddKind,
     executeProposal,
     createProposalWithActionSetInvariant,
+    createProposalWithActionMintGovernanceTokens,
   } = useDAO(userAddress)
 
   return (
@@ -56,6 +57,7 @@ const ConnectionProvider = ({ children }) => {
         executeProposal,
         getAllBalances,
         createProposalWithActionSetInvariant,
+        createProposalWithActionMintGovernanceTokens,
       }}
     >
       {children}

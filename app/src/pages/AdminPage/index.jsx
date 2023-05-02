@@ -45,7 +45,7 @@ function AdminPage() {
             Proposal with addition new kind to existing NFT
           </Button>
           <Button
-            onClick={handleOpenModal}
+            onClick={() => handleOpenModal('mint')}
             disabled={MIN_GOVERNANCE_TOKEN_TO_PROPOSAL > governanceUserBalance}
           >
             Proposal with minting new Governance tokens to SaleContract
