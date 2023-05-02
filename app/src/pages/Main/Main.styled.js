@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const MainContainer = styled.div`
   max-width: 840px;
@@ -6,14 +6,14 @@ export const MainContainer = styled.div`
   padding: 0 24px;
   width: 100%;
   box-sizing: border-box;
-`
+`;
 
 export const MainTitleContainer = styled.div`
   display: flex;
   gap: 40px;
   align-items: center;
   margin-bottom: 65px;
-`
+`;
 
 export const MainTitle = styled.h1`
   font-family: Open Sans;
@@ -24,17 +24,17 @@ export const MainTitle = styled.h1`
   text-align: left;
   color: #ffffff;
   margin: 0;
-`
+`;
 
 export const MainTitleSpan = styled.span`
   font-weight: 300;
-`
+`;
 
 export const MainTitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
-`
+`;
 
 export const MainSubtitle = styled.p`
   font-family: Open Sans;
@@ -46,7 +46,7 @@ export const MainSubtitle = styled.p`
   color: #e2e2e2;
   margin: 0;
   max-width: 514px;
-`
+`;
 
 export const MainText = styled.p`
   font-family: Open Sans;
@@ -57,7 +57,7 @@ export const MainText = styled.p`
   text-align: left;
   color: #e2e2e2;
   margin-bottom: 23px;
-`
+`;
 
 export const MainRules = styled.p`
   font-family: Open Sans;
@@ -78,11 +78,40 @@ export const MainRules = styled.p`
   @media (max-width: 650px) {
     width: auto;
   }
-`
+`;
+
+export const Banner = styled.div`
+  background: #22222e;
+  color: #e2e2e2;
+  position: relative;
+  margin-top: -30px;
+  margin-bottom: 50px;
+  padding: 15px 20px 25px 20px;
+  border-radius: 8px;
+  font-size: 22px;
+  @media (max-width: 650px) {
+    width: auto;
+  }
+`;
+
+export const BannerLink = styled.a`
+  color: rgb(255, 105, 51);
+  font-weight: 800;
+  align-items: center;
+  line-height: 55px;
+`;
+
+export const BannerLogo = styled.img`
+  border-radius: 8px;
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  width: 40px;
+`;
 
 export const MainRulesSpan = styled.span`
   font-weight: 700;
-`
+`;
 
 export const MainDistributionTitle = styled.h2`
   font-family: Open Sans;
@@ -94,7 +123,7 @@ export const MainDistributionTitle = styled.h2`
   color: #ffffff;
   margin: 0;
   margin-bottom: 18px;
-`
+`;
 
 export const TableWrapper = styled.div`
   @media (max-width: 650px) {
@@ -102,25 +131,25 @@ export const TableWrapper = styled.div`
     max-width: 100%;
     box-sizing: border-box;
   }
-`
+`;
 
 export const MainTable = styled.div`
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   overflow: hidden;
   min-width: 450px;
-`
+`;
 
 export const MainTableHeader = styled.div`
   background: #22222e;
   padding: 12px 0;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-`
+`;
 
 export const MainTableBody = styled.div`
   color: #ffffff;
-`
+`;
 
 export const TableHeaderItem = styled.div`
   position: relative;
@@ -141,7 +170,7 @@ export const TableHeaderItem = styled.div`
     width: ${({ first }) => (first ? '0px' : '1px')};
     background-color: rgba(255, 255, 255, 0.1);
   }
-`
+`;
 
 export const TableBodyItem = styled.div`
   display: ${({ first }) => (first ? 'block' : 'flex')};
@@ -178,16 +207,16 @@ export const TableBodyItem = styled.div`
   @media (max-width: 650px) {
     font-size: 12px;
   }
-`
+`;
 
 export const MainTableBodyRow = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-`
+`;
 
 export const TableBodySpan = styled.span`
   font-weight: 700;
-`
+`;
 
 export const TableIndicator = styled.span`
   display: inline-block;
@@ -196,11 +225,11 @@ export const TableIndicator = styled.span`
   width: 11px;
   height: 11px;
   margin-right: 8px;
-`
+`;
 
 export const MainLogo = styled.img`
   @media (max-width: 650px) {
     width: 63px;
     height: 92px;
   }
-`
+`;
