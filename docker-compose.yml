@@ -103,7 +103,23 @@ services:
       driver: "json-file"
       options:
         max-size: "50m"
-    
+
+  mailchain_integrator:
+      image: mailchain_integrator
+      build: ./mailchain
+      environment:
+        MAILCHAIN_SECRET_RECOVERY_PHRASE: '${MAILCHAIN_SECRET_RECOVERY_PHRASE}'
+      expose:
+        - 5021
+      ports:
+        - "8080:5021"
+      restart: on-failure
+      logging:
+        driver: "json-file"
+        options:
+          max-size: "50m"
+
+
 
 volumes:
   static:
