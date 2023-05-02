@@ -13,6 +13,7 @@ export default function AddProposalWithsActionModal({ isOpen, onClose, type }) {
   const {
     createProposalWithActionAddKind,
     createProposalWithActionSetInvariant,
+    createProposalWithActionMintGovernanceTokens,
   } = useContext(ConnectionContext)
   const [title, setTitle] = useState('')
   const [summary, setSummary] = useState('')
@@ -36,6 +37,12 @@ export default function AddProposalWithsActionModal({ isOpen, onClose, type }) {
 
   // add NFT
   //mint tokens
+  const [mintValue, setMintValue] = useState()
+
+  function onMintValueChange(value) {
+    setMintValue(value)
+  }
+
   // set invariant
 
   const [invariant, setInvariant] = useState()
@@ -68,6 +75,15 @@ export default function AddProposalWithsActionModal({ isOpen, onClose, type }) {
           setTxHash,
           setSuccess,
           invariant
+        )
+      } else if (type === 'mint') {
+        await createProposalWithActionMintGovernanceTokens(
+          title,
+          summary,
+          description,
+          setTxHash,
+          setSuccess,
+          mintValue
         )
       }
 
@@ -142,6 +158,12 @@ export default function AddProposalWithsActionModal({ isOpen, onClose, type }) {
             placeholder={'Token invariant'}
             value={invariant}
             onChange={onInvariantChange}
+          />
+        ) : type === 'mint' ? (
+          <Input
+            placeholder={'Mint value'}
+            value={mintValue}
+            onChange={onMintValueChange}
           />
         ) : (
           ''
