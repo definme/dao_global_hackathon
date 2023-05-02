@@ -19,7 +19,10 @@ import {
   TableIndicator,
   TableWrapper,
   MainLogo,
-} from './Main.styled'
+  Banner,
+  BannerLink,
+  BannerLogo,
+} from './Main.styled';
 
 function Main() {
   return (
@@ -41,6 +44,17 @@ function Main() {
           </MainSubtitle>
         </MainTitleWrapper>
       </MainTitleContainer>
+      <Banner>
+        Note: to get all updates on voting rounds, please also sign in{' '}
+        <BannerLink
+          href='https://mailchain.com/'
+          target='_blank'
+          rel='noreferrer'>
+          MailChain
+        </BannerLink>{' '}
+        with your ethereum address.
+        <BannerLogo src={require('../../images/mailchain.png')}></BannerLogo>
+      </Banner>
       <MainText>
         We use Aragon DAO and ERC721 game tokens. The concept of our project is:{' '}
         <br />
@@ -177,7 +191,7 @@ function Main() {
         </MainTable>
       </TableWrapper>
     </MainContainer>
-  )
+  );
 }
 
-export default Main
+export default Main;
