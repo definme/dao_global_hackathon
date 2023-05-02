@@ -10,7 +10,10 @@ import { shortenAddress } from '../../utils'
 import { BuyProposalButton, TxLink } from './AddProposalWithActionModal.styled'
 
 export default function AddProposalWithsActionModal({ isOpen, onClose, type }) {
-  const { createProposalWithActionAddKind } = useContext(ConnectionContext)
+  const {
+    createProposalWithActionAddKind,
+    createProposalWithActionSetInvariant,
+  } = useContext(ConnectionContext)
   const [title, setTitle] = useState('')
   const [summary, setSummary] = useState('')
   const [description, setDescription] = useState('')
@@ -35,6 +38,12 @@ export default function AddProposalWithsActionModal({ isOpen, onClose, type }) {
   //mint tokens
   // set invariant
 
+  const [invariant, setInvariant] = useState()
+
+  function onInvariantChange(value) {
+    setInvariant(value)
+  }
+
   async function onSubmit(e) {
     e.preventDefault()
 
@@ -50,6 +59,15 @@ export default function AddProposalWithsActionModal({ isOpen, onClose, type }) {
           setSuccess,
           kindNum,
           kindName
+        )
+      } else if (type === 'invariant') {
+        await createProposalWithActionSetInvariant(
+          title,
+          summary,
+          description,
+          setTxHash,
+          setSuccess,
+          invariant
         )
       }
 
@@ -119,6 +137,12 @@ export default function AddProposalWithsActionModal({ isOpen, onClose, type }) {
               onChange={onKindNameChange}
             />
           </>
+        ) : type === 'invariant' ? (
+          <Input
+            placeholder={'Token invariant'}
+            value={invariant}
+            onChange={onInvariantChange}
+          />
         ) : (
           ''
         )}

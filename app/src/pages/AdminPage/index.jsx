@@ -51,7 +51,7 @@ function AdminPage() {
             Proposal with minting new Governance tokens to SaleContract
           </Button>
           <Button
-            onClick={handleOpenModal}
+            onClick={() => handleOpenModal('invariant')}
             disabled={MIN_GOVERNANCE_TOKEN_TO_PROPOSAL > governanceUserBalance}
           >
             Proposal with changing Governance token Invariant

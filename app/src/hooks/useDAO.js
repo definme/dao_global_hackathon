@@ -18,6 +18,7 @@ import { Contract } from '@ethersproject/contracts'
 import networks from '../networks.json'
 import { APP_NETWORK, IPFS_API_KEY } from '../constants'
 import CollectionAbi from '../abi/Collection.json'
+import CollectionSaleAbi from '../abi/CollectionSale.json'
 
 const useDAO = userAddress => {
   const daoAddressOrEns = networks[APP_NETWORK].contracts.daoAddress
@@ -119,6 +120,64 @@ const useDAO = userAddress => {
     const data = iface.encodeFunctionData('addKind', [kindNum, kindName])
     const configAction = {
       to: networks[APP_NETWORK].contracts.charactersCollection,
+      value: ethers.BigNumber.from(0),
+      data: hexToBytes(data),
+    }
+
+    const proposalParams = {
+      pluginAddress,
+      metadataUri,
+      actions: [configAction],
+      startDate: new Date(Date.now() + 300000), // 5 minutes
+      endDate: new Date(Date.now() + 3900000), // min 1 hour
+      // endDate: new Date(Date.now() + 86400000), // 24 hours
+    }
+
+    const steps = tokenVotingClient.methods.createProposal(proposalParams)
+    for await (const step of steps) {
+      try {
+        // eslint-disable-next-line default-case
+        switch (step.key) {
+          case ProposalCreationSteps.CREATING:
+            setTxHash(step.txHash)
+            break
+          case ProposalCreationSteps.DONE:
+            console.log(step.proposalId)
+            setSuccess('SUCCESS!!')
+            break
+        }
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    getProposals()
+  }
+
+  async function createProposalWithActionSetInvariant(
+    title,
+    summary,
+    description,
+    setTxHash,
+    setSuccess,
+    invariant
+  ) {
+    const metadata = {
+      title,
+      summary,
+      description,
+    }
+
+    const metadataUri = await tokenVotingClient.methods.pinMetadata(metadata)
+
+    const iface = new Contract(
+      networks[APP_NETWORK].contracts.collectionSale,
+      CollectionSaleAbi
+    ).interface
+    const data = iface.encodeFunctionData('setGovernanceTokensInvariant', [
+      invariant,
+    ])
+    const configAction = {
+      to: networks[APP_NETWORK].contracts.collectionSale,
       value: ethers.BigNumber.from(0),
       data: hexToBytes(data),
     }
@@ -291,6 +350,7 @@ const useDAO = userAddress => {
     userCanVote,
     getProposal,
     createProposalWithActionAddKind,
+    createProposalWithActionSetInvariant,
     executeProposal,
   }
 }
