@@ -1,8 +1,10 @@
+import django.contrib.messages as msg
 from django.contrib import admin
 from .models import Chain, Collection, Token, SaleToken, Message
 from django_object_actions import DjangoObjectActions
 
 import requests
+
 
 @admin.register(Chain)
 class ChainAdmin(admin.ModelAdmin):
@@ -30,7 +32,20 @@ class SaleTokenAdmin(admin.ModelAdmin):
 @admin.register(Message)
 class MessageAdmin(DjangoObjectActions, admin.ModelAdmin):
     def mail_token_holders(self, request, queryset):
-        self.message_user(request, "All token holders have been notified!")
+        message = queryset.get()
+        try:
+            requests.post(url="http://mailchain_integrator:5021/mailing", json={
+                "subject": message.subject,
+                "contentPlain": message.plane_text,
+                "contentHTML": message.body
+            })
+        except Exception as e:
+            print(e)
+            self.message_user(
+                request, "Something went wrong, token holders possibly have not been notified!", level=msg.ERROR
+            )
+            return
+        self.message_user(request, "All token holders have been notified!", level=msg.INFO)
     changelist_actions = ('mail_token_holders', )
 
 
