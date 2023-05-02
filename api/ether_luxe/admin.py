@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Chain, Collection, Token, SaleToken
+from .models import Chain, Collection, Token, SaleToken, Message
 
 
 @admin.register(Chain)
@@ -23,3 +23,8 @@ class TokenAdmin(admin.ModelAdmin):
 class SaleTokenAdmin(admin.ModelAdmin):
     list_display = ('collection', 'kind', 'name', 'description', 'image_uri', 'price', 'creation_time', 'last_update',)
     search_fields = ('kind', 'name', 'collection__name')
+
+
+@admin.register(Message)
+class MessageAdmin(admin.ModelAdmin):
+    pass
