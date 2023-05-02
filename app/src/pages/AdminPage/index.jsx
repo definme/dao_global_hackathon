@@ -33,7 +33,7 @@ function AdminPage() {
       {isAdmin && dao && (
         <DAOInfo>
           <Button
-            onClick={handleOpenModal}
+            onClick={() => handleOpenModal('nft')}
             disabled={MIN_GOVERNANCE_TOKEN_TO_PROPOSAL > governanceUserBalance}
           >
             Proposal with addition new NFT collection to the game

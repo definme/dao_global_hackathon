@@ -3,17 +3,24 @@ import ModalComponent from '../Modal'
 import Input from '../Input'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
+import Checkbox from '@mui/material/Checkbox'
+import FormControlLabel from '@mui/material/FormControlLabel'
 import { ConnectionContext } from '../../contexts/ConnectionContext'
 import networks from '../../networks.json'
 import { APP_NETWORK } from '../../constants'
 import { shortenAddress } from '../../utils'
-import { BuyProposalButton, TxLink } from './AddProposalWithActionModal.styled'
+import {
+  BuyProposalButton,
+  TxLink,
+  CheckboxContainer,
+} from './AddProposalWithActionModal.styled'
 
 export default function AddProposalWithsActionModal({ isOpen, onClose, type }) {
   const {
     createProposalWithActionAddKind,
     createProposalWithActionSetInvariant,
     createProposalWithActionMintGovernanceTokens,
+    createProposalWithActionAddNFT,
   } = useContext(ConnectionContext)
   const [title, setTitle] = useState('')
   const [summary, setSummary] = useState('')
@@ -36,6 +43,22 @@ export default function AddProposalWithsActionModal({ isOpen, onClose, type }) {
   }
 
   // add NFT
+  const [nftAddress, setNFTAddress] = useState('')
+  const [nftPrice, setNFTPrice] = useState()
+  const [nftIsGovernance, setNFTIsGovernance] = useState(false)
+
+  function onNFTAddressChange(value) {
+    setNFTAddress(value)
+  }
+
+  function onNFTPriceChange(value) {
+    setNFTPrice(value)
+  }
+
+  function onNFTIsGovernanceChange(event) {
+    setNFTIsGovernance(event.target.checked)
+  }
+
   //mint tokens
   const [mintValue, setMintValue] = useState()
 
@@ -84,6 +107,17 @@ export default function AddProposalWithsActionModal({ isOpen, onClose, type }) {
           setTxHash,
           setSuccess,
           mintValue
+        )
+      } else if (type === 'nft') {
+        await createProposalWithActionAddNFT(
+          title,
+          summary,
+          description,
+          setTxHash,
+          setSuccess,
+          nftAddress,
+          nftPrice,
+          nftIsGovernance
         )
       }
 
@@ -165,6 +199,37 @@ export default function AddProposalWithsActionModal({ isOpen, onClose, type }) {
             value={mintValue}
             onChange={onMintValueChange}
           />
+        ) : type === 'nft' ? (
+          <>
+            <Input
+              placeholder={'Nft address'}
+              value={nftAddress}
+              onChange={onNFTAddressChange}
+            />
+            <Input
+              placeholder={'Nft price'}
+              value={nftPrice}
+              onChange={onNFTPriceChange}
+            />
+            <CheckboxContainer>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    sx={{
+                      color: 'rgb(143, 122, 235)',
+                      fontFamily: 'Open Sans',
+                      '&.Mui-checked': {
+                        color: 'rgb(143, 122, 235)',
+                      },
+                    }}
+                    checked={nftIsGovernance}
+                    onChange={onNFTIsGovernanceChange}
+                  />
+                }
+                label='Is Governance'
+              />
+            </CheckboxContainer>
+          </>
         ) : (
           ''
         )}
