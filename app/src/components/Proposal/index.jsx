@@ -23,14 +23,24 @@ import {
   ProposalResultPercent,
   TxLink,
   ProposalButton,
+  ProposalTokenIneligible,
 } from './Proposal.styled'
 
 function Proposal({ proposal, success }) {
-  const { userCanVote, userAddress, getProposal, executeProposal } =
-    useContext(ConnectionContext)
+  const {
+    userCanVote,
+    userAddress,
+    getProposal,
+    executeProposal,
+    chainId,
+    governanceUserBalance,
+  } = useContext(ConnectionContext)
   const [voteModalOpen, setVoteModalOpen] = useState(false)
   const [canVote, setCanVote] = useState(false)
+  const [votes, setVotes] = useState()
   const [hasAction, setHasAction] = useState(false)
+  const [voted, setVoted] = useState(true)
+  const [ineligible, setIneligible] = useState(false)
   const [description, setDescription] = useState('')
   const [txHash, setTxHash] = useState()
   const [txSuccess, setTxSuccess] = useState()
@@ -48,14 +58,49 @@ function Proposal({ proposal, success }) {
     return maxValue
   }
 
+  const getVoted = () => {
+    if (!userAddress || !votes) {
+      setVoted(false)
+      return
+    }
+    setVoted(
+      votes.some(
+        voter =>
+          voter.address.toLowerCase() === userAddress.toLowerCase() &&
+          voter.vote !== undefined
+      )
+    )
+  }
+
+  const isIneligebleToken = () => {
+    if (
+      proposal &&
+      proposal.status === 'Active' && // active proposal
+      userAddress && // logged in
+      chainId === APP_NETWORK && // on proper network
+      !voted && // haven't voted
+      !canVote // cannot vote
+    ) {
+      setIneligible(true)
+    } else setIneligible(false)
+  }
+
+  useEffect(() => {
+    getVoted()
+  }, [userAddress, votes])
+
+  useEffect(() => {
+    isIneligebleToken()
+  }, [userAddress, canVote, chainId, proposal, voted])
+
   useEffect(() => {
     if (userAddress) {
       userCanVote(proposal.id).then(res => setCanVote(res.canVote))
-      if (success)
-        getProposal(proposal.id).then(res => {
-          setDescription(res.metadata?.description)
-          setHasAction(res.actions[0])
-        })
+      getProposal(proposal.id).then(res => {
+        setDescription(res.metadata?.description)
+        setHasAction(res.actions[0])
+        setVotes(res.votes)
+      })
     }
   }, [userAddress, proposal])
 
@@ -173,7 +218,7 @@ function Proposal({ proposal, success }) {
             ''
           ) : success ? (
             <ProposalButton
-              disabled={!hasAction}
+              disabled={!hasAction || !(governanceUserBalance > 0)}
               onClick={() =>
                 executeProposal(proposal.id, setTxHash, setTxSuccess)
               }
@@ -186,6 +231,12 @@ function Proposal({ proposal, success }) {
             </ProposalButton>
           )}
         </ProposalVotingContainer>
+        {ineligible && governanceUserBalance > 0 && (
+          <ProposalTokenIneligible>
+            You had to hold EtherLuxe Token when proposal was created to be able
+            to vote
+          </ProposalTokenIneligible>
+        )}
       </ProposalContainer>
       <VoteModal
         isOpen={voteModalOpen}
