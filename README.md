@@ -9,6 +9,7 @@ Live on 🤖 🦾 🌃 🌐 🚀 https://ether-luxe.definme.com/ 🤖 🦾 🌃 
 ## About
 
 The concept of the project is allow users to participate in adding new game elements. At the initial stage, the user can buy an NFT character on the marketplace and receive tokens along with the NFT governance tokens which give the right to participate in voting.
+![Third](https://user-images.githubusercontent.com/25884190/235886856-4567c469-dab5-44c5-aefa-196e847c4aea.png)
 
 ### A plot describing balanced distribution of governance token for every NFT purchase
 ![governance-for-purchase](https://user-images.githubusercontent.com/25884190/234820533-61cf124b-ed38-42b5-a1f1-6bcff69ac88c.png)
