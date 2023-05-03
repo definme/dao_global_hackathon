@@ -243,3 +243,22 @@ export const ProposalButton = styled(StyledButton)`
     align-self: center;
   }
 `
+
+export const ProposalTokenIneligible = styled.div`
+  background: linear-gradient(
+    148.71deg,
+    rgba(255, 125, 79, 0.2) 5.67%,
+    rgba(142, 120, 240, 0.2) 97.94%
+  );
+  color: #e2e2e2;
+  position: relative;
+  margin-top: 20px;
+  font-size: 14px;
+  padding: 12px;
+  border-radius: 8px;
+
+  text-align: center;
+  @media (max-width: 650px) {
+    width: auto;
+  }
+`
