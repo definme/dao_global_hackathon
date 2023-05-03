@@ -181,3 +181,54 @@ export const DAOImageContainer = styled.div`
     max-width: 44px;
   }
 `
+export const TooltipWrapper = styled.div`
+  position: relative;
+  margin-left: auto;
+`
+
+export const Tooltip = styled.div`
+  font-family: Open Sans;
+  border: transparent;
+  white-space: nowrap;
+  position: absolute;
+  bottom: -20%;
+  left: 50%;
+  transform: translate(-50%, calc(120% - 7px));
+  padding: 4px 16px 6px;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 10px 21px 0 rgba(173, 182, 217, 0.3);
+  border: none;
+  font-size: 14px;
+  transition: all 0.5s ease-out;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0.4px;
+  text-align: center;
+
+  visibility: hidden;
+  opacity: 0;
+
+  ${TooltipWrapper}:hover & {
+    visibility: ${({ opened }) => (opened ? 'visible' : 'hidden')};
+    opacity: ${({ opened }) => (opened ? 1 : 0)};
+  }
+
+  &:after {
+    content: '';
+    border: transparent;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-bottom: 7px solid white;
+    position: absolute;
+    bottom: 97%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  @media (max-width: 768px) {
+    font-size: 12px;
+    padding: 3px 8px 3px;
+  }
+`

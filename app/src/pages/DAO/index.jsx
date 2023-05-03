@@ -25,6 +25,8 @@ import {
   DAOBalanceImageContainer,
   DAOSubtitle,
   DAOImageContainer,
+  Tooltip,
+  TooltipWrapper,
 } from './DAO.styled'
 
 function DAO() {
@@ -114,14 +116,25 @@ function DAO() {
                 </DAOATokenLink>
               </span>
             </DAOPromoText>
-            <Button
-              onClick={handleOpenModal}
-              disabled={
-                MIN_GOVERNANCE_TOKEN_TO_PROPOSAL > governanceUserBalance
-              }
-            >
-              Create new proposal
-            </Button>
+            <TooltipWrapper>
+              <Tooltip
+                opened={
+                  MIN_GOVERNANCE_TOKEN_TO_PROPOSAL > governanceUserBalance
+                    ? true
+                    : false
+                }
+              >
+                You must have at least 5 ELT
+              </Tooltip>
+              <Button
+                onClick={handleOpenModal}
+                disabled={
+                  MIN_GOVERNANCE_TOKEN_TO_PROPOSAL > governanceUserBalance
+                }
+              >
+                Create new proposal
+              </Button>
+            </TooltipWrapper>
           </DAOPromoContainer>
         </DAOInfo>
       )}
@@ -130,15 +143,15 @@ function DAO() {
       </DAOSubtitle>
       {pendingProposals &&
         pendingProposals.map((proposal, key) => (
-          <Proposal key={key} proposal={proposal} />
+          <Proposal key={key + proposal.id} proposal={proposal} />
         ))}
       {successProposals &&
         successProposals.map((proposal, key) => (
-          <Proposal key={key} proposal={proposal} success />
+          <Proposal key={key + proposal.id} proposal={proposal} success />
         ))}
       {proposals &&
         proposals.map((proposal, key) => (
-          <Proposal key={key} proposal={proposal} />
+          <Proposal key={key + proposal.id} proposal={proposal} />
         ))}
       <AddProposalModal isOpen={proposalModalOpen} onClose={handleCloseModal} />
     </DAOContainer>
