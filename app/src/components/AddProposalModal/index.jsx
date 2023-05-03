@@ -1,13 +1,17 @@
 import { useState, useContext } from 'react'
 import ModalComponent from '../Modal'
 import Input from '../Input'
-import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import { ConnectionContext } from '../../contexts/ConnectionContext'
 import networks from '../../networks.json'
 import { APP_NETWORK } from '../../constants'
 import { shortenAddress } from '../../utils'
-import { BuyProposalButton, TxLink } from './AddProposalModal.styled'
+import {
+  BuyProposalButton,
+  TxLink,
+  Title,
+  ModalContainer,
+} from './AddProposalModal.styled'
 
 export default function AddProposalModal({ isOpen, onClose }) {
   const { createProposal } = useContext(ConnectionContext)
@@ -44,22 +48,8 @@ export default function AddProposalModal({ isOpen, onClose }) {
 
   return (
     <ModalComponent isOpen={isOpen} onClose={onClose}>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '12px',
-        }}
-      >
-        <Typography
-          align='center'
-          gutterBottom
-          color='white'
-          sx={{ fontWeight: 700, fontSize: '40px' }}
-        >
-          Create proposal
-        </Typography>
+      <ModalContainer>
+        <Title>Create proposal</Title>
         <Input
           placeholder={'Title'}
           error={titleError}
@@ -103,7 +93,7 @@ export default function AddProposalModal({ isOpen, onClose }) {
             </BuyProposalButton>
           )}
         </Box>
-      </Box>
+      </ModalContainer>
     </ModalComponent>
   )
 }

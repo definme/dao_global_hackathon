@@ -1,7 +1,6 @@
 import { useState, useContext } from 'react'
 import ModalComponent from '../Modal'
 import Input from '../Input'
-import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
@@ -13,6 +12,9 @@ import {
   BuyProposalButton,
   TxLink,
   CheckboxContainer,
+  Title,
+  ModalContainer,
+  Description,
 } from './AddProposalWithActionModal.styled'
 
 export default function AddProposalWithsActionModal({ isOpen, onClose, type }) {
@@ -29,10 +31,26 @@ export default function AddProposalWithsActionModal({ isOpen, onClose, type }) {
   const [txHash, setTxHash] = useState()
   const [success, setSuccess] = useState()
 
+  function getModalDescription(type) {
+    switch (type) {
+      case 'kind':
+        return 'with add kind action'
+      case 'invariant':
+        return 'with set invariant action'
+      case 'mint':
+        return 'with mint governance tokens action'
+      case 'nft':
+        return 'with add new nft collection action'
+      default:
+        break
+    }
+  }
+
   // add kind
 
   const [kindNum, setKindNum] = useState('')
   const [kindName, setKindName] = useState('')
+  const [contractToAddKind, setContractToAddKind] = useState('')
 
   function onKindNumChange(value) {
     setKindNum(value)
@@ -40,6 +58,10 @@ export default function AddProposalWithsActionModal({ isOpen, onClose, type }) {
 
   function onKindNameChange(value) {
     setKindName(value)
+  }
+
+  function onContractNameChange(value) {
+    setContractToAddKind(value)
   }
 
   // add NFT
@@ -88,7 +110,8 @@ export default function AddProposalWithsActionModal({ isOpen, onClose, type }) {
           setTxHash,
           setSuccess,
           kindNum,
-          kindName
+          kindName,
+          contractToAddKind
         )
       } else if (type === 'invariant') {
         await createProposalWithActionSetInvariant(
@@ -140,22 +163,9 @@ export default function AddProposalWithsActionModal({ isOpen, onClose, type }) {
 
   return (
     <ModalComponent isOpen={isOpen} onClose={onClose}>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '12px',
-        }}
-      >
-        <Typography
-          align='center'
-          gutterBottom
-          color='white'
-          sx={{ fontWeight: 700, fontSize: '40px' }}
-        >
-          Create proposal
-        </Typography>
+      <ModalContainer>
+        <Title>Create proposal</Title>
+        <Description>{getModalDescription(type)}</Description>
         <Input
           placeholder={'Title'}
           error={titleError}
@@ -186,6 +196,11 @@ export default function AddProposalWithsActionModal({ isOpen, onClose, type }) {
               value={kindName}
               onChange={onKindNameChange}
             />
+            <Input
+              placeholder={'Collection contract'}
+              value={contractToAddKind}
+              onChange={onContractNameChange}
+            />
           </>
         ) : type === 'invariant' ? (
           <Input
@@ -195,7 +210,7 @@ export default function AddProposalWithsActionModal({ isOpen, onClose, type }) {
           />
         ) : type === 'mint' ? (
           <Input
-            placeholder={'Mint value'}
+            placeholder={'Mint value(wei)'}
             value={mintValue}
             onChange={onMintValueChange}
           />
@@ -207,7 +222,7 @@ export default function AddProposalWithsActionModal({ isOpen, onClose, type }) {
               onChange={onNFTAddressChange}
             />
             <Input
-              placeholder={'Nft price'}
+              placeholder={'Nft price(wei)'}
               value={nftPrice}
               onChange={onNFTPriceChange}
             />
@@ -259,7 +274,7 @@ export default function AddProposalWithsActionModal({ isOpen, onClose, type }) {
             </BuyProposalButton>
           )}
         </Box>
-      </Box>
+      </ModalContainer>
     </ModalComponent>
   )
 }

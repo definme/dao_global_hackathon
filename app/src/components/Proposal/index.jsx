@@ -31,6 +31,7 @@ function Proposal({ proposal, success }) {
   const [voteModalOpen, setVoteModalOpen] = useState(false)
   const [canVote, setCanVote] = useState(false)
   const [hasAction, setHasAction] = useState(false)
+  const [description, setDescription] = useState('')
   const [txHash, setTxHash] = useState()
   const [txSuccess, setTxSuccess] = useState()
 
@@ -51,7 +52,10 @@ function Proposal({ proposal, success }) {
     if (userAddress) {
       userCanVote(proposal.id).then(res => setCanVote(res.canVote))
       if (success)
-        getProposal(proposal.id).then(res => setHasAction(res.actions[0]))
+        getProposal(proposal.id).then(res => {
+          setDescription(res.metadata?.description)
+          setHasAction(res.actions[0])
+        })
     }
   }, [userAddress, proposal])
 
@@ -62,6 +66,7 @@ function Proposal({ proposal, success }) {
           <div>
             <ProposalTitle>{proposal.metadata.title}</ProposalTitle>
             <ProposalSummary>{proposal.metadata.summary}</ProposalSummary>
+            <ProposalSummary>{description}</ProposalSummary>
           </div>
           <ProposalBadge status={proposal.status}>
             {proposal.status}
