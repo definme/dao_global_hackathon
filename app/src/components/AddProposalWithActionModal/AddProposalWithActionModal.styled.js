@@ -23,3 +23,34 @@ export const CheckboxContainer = styled.div`
     font-family: 'Open Sans';
   }
 `
+
+export const Title = styled.h2`
+  font-weight: 700;
+  font-size: 40px;
+  font-family: Open Sans;
+  color: white;
+  margin: 0;
+  margin-bottom: 6px;
+  @media (max-width: 820px) {
+    font-size: 26px;
+  }
+`
+
+export const ModalContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  @media (max-width: 820px) {
+    gap: 0;
+  }
+`
+
+export const Description = styled.p`
+  font-weight: 400;
+  font-size: 20px;
+  font-family: Open Sans;
+  color: white;
+  margin: 0;
+  margin-bottom: 16px;
+`

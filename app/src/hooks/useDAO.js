@@ -104,7 +104,8 @@ const useDAO = userAddress => {
     setTxHash,
     setSuccess,
     kindNum,
-    kindName
+    kindName,
+    contractToAddKind
   ) {
     const metadata = {
       title,
@@ -114,13 +115,10 @@ const useDAO = userAddress => {
 
     const metadataUri = await tokenVotingClient.methods.pinMetadata(metadata)
 
-    const iface = new Contract(
-      networks[APP_NETWORK].contracts.charactersCollection,
-      CollectionAbi
-    ).interface
+    const iface = new Contract(contractToAddKind, CollectionAbi).interface
     const data = iface.encodeFunctionData('addKind', [kindNum, kindName])
     const configAction = {
-      to: networks[APP_NETWORK].contracts.charactersCollection,
+      to: contractToAddKind,
       value: ethers.BigNumber.from(0),
       data: hexToBytes(data),
     }

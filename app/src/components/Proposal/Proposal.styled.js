@@ -18,9 +18,11 @@ export const ProposalInfoContainer = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 24px;
   @media (max-width: 820px) {
     flex-direction: column-reverse;
     gap: 32px;
+    padding-bottom: 12px;
   }
 `
 
@@ -50,7 +52,26 @@ export const ProposalSummary = styled.p`
   max-width: 900px;
   color: #ffffff;
   margin: 0;
-  margin-bottom: 48px;
+  margin-bottom: 24px;
+  @media (max-width: 820px) {
+    margin-bottom: 12px;
+  }
+`
+
+export const ProposalDescriptionText = styled.p`
+  font-family: Open Sans;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 27px;
+  letter-spacing: 0.01em;
+  text-align: left;
+  max-width: 900px;
+  color: #ffffff;
+  margin: 0;
+  margin-bottom: 24px;
+  @media (max-width: 820px) {
+    margin-bottom: 12px;
+  }
 `
 
 export const ProposalBadge = styled.p`
@@ -94,6 +115,7 @@ export const ProposalDescription = styled.div`
   display: flex;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   margin-bottom: 32px;
+
   @media (max-width: 820px) {
     flex-direction: column-reverse;
     align-items: center;
