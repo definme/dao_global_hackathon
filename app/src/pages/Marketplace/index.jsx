@@ -26,6 +26,7 @@ function Marketplace() {
   useEffect(() => {
     if (userAddress) getNFTsLength();
     getSaleTokens().then((data) => setSaleTokens(data));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAddress]);
 
   const [currentLocation, setCurrentLocation] = useState({

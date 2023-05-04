@@ -87,10 +87,12 @@ function Proposal({ proposal, success }) {
 
   useEffect(() => {
     getVoted()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAddress, votes])
 
   useEffect(() => {
     isIneligebleToken()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAddress, canVote, chainId, proposal, voted])
 
   useEffect(() => {
@@ -102,6 +104,7 @@ function Proposal({ proposal, success }) {
         setVotes(res.votes)
       })
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAddress, proposal])
 
   return (

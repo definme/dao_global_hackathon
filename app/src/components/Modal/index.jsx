@@ -9,6 +9,7 @@ export default function ModalComponent({ isOpen, onClose, children }) {
     if (event.target === event.currentTarget) {
       onClose();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -17,6 +18,7 @@ export default function ModalComponent({ isOpen, onClose, children }) {
     }
     return () => {
       if (modal.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         modal.current.removeEventListener('click', handleOverlayClose);
       }
     };
