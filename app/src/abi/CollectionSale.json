@@ -259,6 +259,11 @@
         "internalType": "uint256",
         "name": "initialPrice",
         "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "isGovernance",
+        "type": "bool"
       }
     ],
     "name": "addNFT",
@@ -394,6 +399,25 @@
       }
     ],
     "name": "hasRole",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract EtherLuxeCollection",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "isCollectionGovernance",
     "outputs": [
       {
         "internalType": "bool",
