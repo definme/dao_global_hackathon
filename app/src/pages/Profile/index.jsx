@@ -35,6 +35,7 @@ function Profile() {
 
   useEffect(() => {
     if (userAddress) getNFTs()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAddress])
 
   return (

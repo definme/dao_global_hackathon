@@ -117,12 +117,14 @@ const useConnection = () => {
       getChain()
       getAllBalances()
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAddress])
 
   useEffect(() => {
     if (chainId) {
       getBalance()
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId])
 
   useEffect(() => {
@@ -136,6 +138,7 @@ const useConnection = () => {
         window.ethereum.removeListener('chainChanged', onChainChanged)
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return {

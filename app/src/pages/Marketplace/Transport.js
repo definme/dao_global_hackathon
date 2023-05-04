@@ -1,9 +1,7 @@
-import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import BuyCard from '../../components/BuyCard';
 import networks from '../../networks.json';
 import { APP_NETWORK } from '../../constants';
-import { getCollectionSale } from '../../api/contracts';
 
 function Transport({ collectionLength, saleTokens }) {
   const transports = saleTokens.filter(

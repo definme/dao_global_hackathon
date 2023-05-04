@@ -456,10 +456,12 @@ const useDAO = userAddress => {
 
   useEffect(() => {
     if (client) getDao()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [client])
 
   useEffect(() => {
     if (tokenVotingClient) getProposals()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tokenVotingClient])
 
   return {
