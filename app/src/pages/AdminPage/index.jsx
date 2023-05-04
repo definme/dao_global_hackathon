@@ -36,25 +36,25 @@ function AdminPage() {
             onClick={() => handleOpenModal('nft')}
             disabled={MIN_GOVERNANCE_TOKEN_TO_PROPOSAL > governanceUserBalance}
           >
-            Proposal with addition new NFT collection to the game
+            Create Proposal to add new NFT collection
           </Button>
           <Button
             onClick={() => handleOpenModal('kind')}
             disabled={MIN_GOVERNANCE_TOKEN_TO_PROPOSAL > governanceUserBalance}
           >
-            Proposal with addition new kind to existing NFT
+            Create Proposal to add new kind to existing NFT
           </Button>
           <Button
             onClick={() => handleOpenModal('mint')}
             disabled={MIN_GOVERNANCE_TOKEN_TO_PROPOSAL > governanceUserBalance}
           >
-            Proposal with minting new Governance tokens to SaleContract
+            Create Proposal to mint ELT tokens
           </Button>
           <Button
             onClick={() => handleOpenModal('invariant')}
             disabled={MIN_GOVERNANCE_TOKEN_TO_PROPOSAL > governanceUserBalance}
           >
-            Proposal with changing Governance token Invariant
+            Create Proposal to change ELT distribution invariant
           </Button>
         </DAOInfo>
       )}
