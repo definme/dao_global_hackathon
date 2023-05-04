@@ -34,13 +34,13 @@ export default function AddProposalWithsActionModal({ isOpen, onClose, type }) {
   function getModalDescription(type) {
     switch (type) {
       case 'kind':
-        return 'with add kind action'
+        return 'to add new kind to existing NFT'
       case 'invariant':
-        return 'with set invariant action'
+        return 'to change ELT distribution invariant'
       case 'mint':
-        return 'with mint governance tokens action'
+        return 'to mint ELT tokens'
       case 'nft':
-        return 'with add new nft collection action'
+        return 'to add new NFT collection'
       default:
         break
     }
@@ -217,7 +217,7 @@ export default function AddProposalWithsActionModal({ isOpen, onClose, type }) {
         ) : type === 'nft' ? (
           <>
             <Input
-              placeholder={'Nft address'}
+              placeholder={'Nft collection address'}
               value={nftAddress}
               onChange={onNFTAddressChange}
             />
