@@ -14,13 +14,13 @@
       "blockExplorerUrls": ["https://mumbai.polygonscan.com/"]
     },
     "contracts": {
-      "collectionSale": "0x83280fF66f592Fa76346f1bF19081C6592Db6F12",
-      "charactersCollection": "0x1B0aEdC47657Ca0488Db7a112221BE99957209fF",
-      "transportCollection": "0xe850d9f15DD8469eebbDc0E42955222326640A53",
-      "weaponCollection": "0xBa8Ab694cc247D65aAe6557784B0CCbf104DBAA2",
-      "governanceToken": "0xa6aB514431726c4fFAED4f9c93dba35a3709D7B6",
-      "daoAddress": "0x110d3b83447a3bd399d152343386ce5a94c9a324",
-      "pluginAddress": "0xf8d255fe693bce3b2d3cb0076852a85571a394f9"
+      "collectionSale": "0xcD9EfcDDa9c42BFee06958C1EA1164c5a78D3500",
+      "charactersCollection": "0x2FC99d7DeedEFA2A5973AECdEA3CB39DdA33dDBC",
+      "transportCollection": "0xc4DBf7594D2A329023CE537F688762B6a49BaaD3",
+      "weaponCollection": "0xE49A00aD4075fC7d996c6FFF6F3Dd01666aaC3F7",
+      "governanceToken": "0xbCe4A275cE01FCB4857e7D3fc2b971615A99eb71",
+      "daoAddress": "0x2167652d32328e7546093897a83c43b2d48d73ae",
+      "pluginAddress": "0xa96e850f634d827da9b420569bb61001631895a6"
     }
   }
 }
