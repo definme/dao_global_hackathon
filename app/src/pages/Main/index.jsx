@@ -78,7 +78,7 @@ function Main() {
       </MainText>
       <MainRules>
         Needed quorum:{' '}
-        <MainRulesSpan>- 35% participants, - 50% "yes" votes.</MainRulesSpan>
+        <MainRulesSpan>35%, 50% of them should be "yes" votes.</MainRulesSpan>
       </MainRules>
       <MainDistributionTitle>
         Token Distribution Graphics:
@@ -127,10 +127,10 @@ function Main() {
                 <TableBodySpan>51</TableBodySpan>
               </TableBodyItem>
               <TableBodyItem>
-                <TableBodySpan>152</TableBodySpan>
+                <TableBodySpan>51</TableBodySpan>
               </TableBodyItem>
               <TableBodyItem>
-                <TableBodySpan>227</TableBodySpan>
+                <TableBodySpan>51</TableBodySpan>
               </TableBodyItem>
             </MainTableBodyRow>
             <MainTableBodyRow>
