@@ -15,7 +15,9 @@ module.exports = async function main(hre: HardhatRuntimeEnvironment) {
     console.log(`Minter: ${minter}`);
 
     const tokenKind = 0;
-    const kindName = "Base"
+    const charactrersKind = "SQUAD LEADER"
+    const transportsKind = "RESTORED MOTORCYCLE"
+    const weaponsKind = "ASSAULT PISTOL"
 
     await hre.deployments.execute(
       "EtherLuxeCollectionCharacters",
@@ -25,7 +27,7 @@ module.exports = async function main(hre: HardhatRuntimeEnvironment) {
       },
       "addKind",
       tokenKind,
-      kindName
+      charactrersKind
     );
     await hre.deployments.execute(
       "EtherLuxeCollectionTransports",
@@ -35,7 +37,7 @@ module.exports = async function main(hre: HardhatRuntimeEnvironment) {
       },
       "addKind",
       tokenKind,
-      kindName
+      transportsKind
     );
     await hre.deployments.execute(
       "EtherLuxeCollectionWeapons",
@@ -45,7 +47,7 @@ module.exports = async function main(hre: HardhatRuntimeEnvironment) {
       },
       "addKind",
       tokenKind,
-      kindName
+      weaponsKind
     );
 
 }

@@ -10,7 +10,7 @@ module.exports = async function main(hre: HardhatRuntimeEnvironment) {
     const priceModerator = signers[2].address;
     const purchaseAdministrator = signers[3].address;
     const invariantAdministrator = signers[4].address;
-    const governanceTokensInvariant = hre.ethers.utils.parseEther("10000");
+    const governanceTokensInvariant = hre.ethers.utils.parseEther("3775");
     console.log(`Deployer: ${deployer}`);
     console.log(`nftAdministrator: ${nftAdministrator}`);
     console.log(`priceModerator: ${priceModerator}`);
