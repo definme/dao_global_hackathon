@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react'
+import { ethers } from 'ethers'
 import Proposal from '../../components/Proposal'
 import AddProposalModal from '../../components/AddProposalModal'
 import { ConnectionContext } from '../../contexts/ConnectionContext'
@@ -124,7 +125,13 @@ function DAO() {
                     : false
                 }
               >
-                You must have at least 5 ELT
+                You must have at least{' '}
+                {Number(
+                  ethers.utils
+                    .formatEther(MIN_GOVERNANCE_TOKEN_TO_PROPOSAL)
+                    .toString()
+                )}{' '}
+                ELT
               </Tooltip>
               <Button
                 onClick={handleOpenModal}
